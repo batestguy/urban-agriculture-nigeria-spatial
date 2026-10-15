@@ -152,8 +152,17 @@ run correctly and the discrepancy is recorded rather than hidden.
 
 ## Submitting
 
-Venue shortlist, AI-policy guidance and a pre-submission checklist:
-**[docs/venue-options.md](docs/venue-options.md)**.
+Target venue: **African Journal on Land Policy and Geospatial Sciences** (ISSN 2657-2664,
+no APC). The manuscript has been reformatted to that journal's template.
+
+- [docs/submission-ajlpgs.md](docs/submission-ajlpgs.md) - gap analysis and submission package
+- [docs/ajlpgs-author-guidelines.md](docs/ajlpgs-author-guidelines.md) - the journal's own
+  guidelines, extracted verbatim from its template file
+- [docs/venue-options.md](docs/venue-options.md) - shortlist and AI-policy guidance
+
+> **Open question: Scopus indexing.** The journal's own site lists DOAJ and Cairn under
+> "Indexed In" and does **not** list Scopus. Verify ISSN 2657-2664 at
+> <https://www.scopus.com/sources> before submitting if Scopus recognition matters to you.
 
 Two points worth stating plainly, because they are easy to get wrong:
 

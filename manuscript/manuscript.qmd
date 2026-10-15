@@ -1,6 +1,6 @@
 ---
-title: "Where Does Urban Agriculture Concentrate in Nigerian Cities?"
-subtitle: "A spatial analysis of 484 cultivated-land features across 775 Local Government Areas, with an explicit correction for mapping coverage"
+title: "Where urban agriculture concentrates in Nigerian cities"
+subtitle: "A spatial analysis with coverage correction"
 author:
   - name: "Ibrahim Yohanna"
     affiliation: "Department of Urban and Regional Planning, Abubakar Tafawa Balewa University, Bauchi, Nigeria"
@@ -9,15 +9,47 @@ author:
 date: last-modified
 date-format: "D MMMM YYYY"
 abstract: |
-  Urban agriculture is widely promoted as a lever for urban food security in Nigeria, yet its spatial distribution has rarely been measured. Policy questions about where land should be protected require spatial evidence, and the existing literature, dominated by single-city household surveys, cannot supply it.
+  **Context and background.** Urban agriculture is widely promoted as a lever for urban food
+  security in Nigeria, yet its spatial distribution has rarely been measured. Policy questions
+  about where land should be protected require spatial evidence, and the existing literature,
+  dominated by single-city household surveys, cannot supply it. The principal obstacle to
+  spatial measurement is that the best available open data — volunteered geographic
+  information — is contributed unevenly, so that mapping density and agricultural density are
+  easily confused.
 
-  We map cultivated land across five Nigerian cities spanning the country's agro-ecological gradient — Abuja, Lagos, Kano, Port Harcourt and Gombe — using 484 features from OpenStreetMap, and analyse their density across 775 Local Government Areas. We test three hypotheses: that cultivation is spatially clustered; that density declines as administrative area grows; and that any apparent pattern survives correction for OpenStreetMap's uneven coverage, which is the principal threat to validity in volunteered geographic data.
+  **Goal and objectives.** This study measures where cultivated land concentrates across
+  Nigerian Local Government Areas and tests whether the observed pattern survives correction for
+  that coverage problem. Three questions are addressed: whether cultivation is spatially
+  clustered; whether density depends on the size of the administrative unit; and whether any
+  pattern survives an explicit control for how much of each unit has been mapped.
 
-  Density is strongly clustered (Moran's I = 0.300, z = 17.6, p < 1e-69), and the clustering survives the exclusion of Kano State, the best-mapped region (I = 0.274). A point-pattern analysis finds significant clustering within all five cities independently. Density falls by approximately 66% per doubling of LGA area (negative binomial with area as an exposure offset, p = 8.5e-11), and this effect *strengthens* rather than weakens when per-LGA mapped-building counts are added as a second offset (coefficient −1.001 to −1.421, ΔAIC = 20.0).
+  **Methodology.** Cultivated-land features were extracted from OpenStreetMap for five cities
+  spanning the country's agro-ecological gradient — Abuja, Lagos, Kano, Port Harcourt and
+  Gombe — and analysed across 775 Local Government Areas. Spatial clustering was assessed using
+  Moran's I, local indicators of spatial association with false-discovery-rate control, a
+  join-count test and Ripley's K within each city. The scale effect was modelled with a
+  negative binomial specification using area as an exposure offset, re-estimated with per-area
+  counts of mapped buildings and highways as an additional offset.
 
-  We also report what the data cannot support. Coverage is uneven and demonstrably confounded with the outcome: features correlate with mapped highway density at ρ = 0.613, and LGAs containing cultivation have nearly twice the median mapped buildings of those without. A climate hypothesis had to be withdrawn because rainfall was sampled at city centroids, leaving only five distinct values. The corrected findings are narrower than the uncorrected ones and, we argue, more useful: a defensible spatial account of where cultivation concentrates, with the limits of the evidence stated alongside it.
+  **Results.** Density is strongly clustered (Moran's I equal to 0.300; z equal to 17.6), and the
+  clustering survives the exclusion of Kano State, the best-mapped region (I equal to 0.274).
+  Point-pattern analysis finds significant clustering within all five cities independently.
+  Density falls by approximately 66 per cent per doubling of Local Government Area, and this
+  effect strengthens rather than weakens when mapping coverage is controlled, with an
+  improvement of 20 AIC points. Coverage is itself demonstrably confounded with the outcome:
+  features correlate with mapped highway density at a Spearman coefficient of 0.613, and areas
+  containing cultivation have nearly twice the median mapped buildings of those without.
 
-  *Keywords:* urban agriculture; Nigeria; OpenStreetMap; spatial autocorrelation; volunteered geographic information; urban food security
+  **Conclusion.** Clustering means that targeted land protection is feasible: 39 of 775 Local
+  Government Areas contain any mapped cultivation, and 19 show statistically significant local
+  clustering. The coverage control strengthens rather than undermines the principal finding,
+  which is a result of methodological as well as substantive interest. A climate hypothesis
+  forming part of the original design could not be tested, for reasons reported in the paper.
+
+  *Keywords:* urban agriculture; Nigeria; OpenStreetMap; spatial autocorrelation; volunteered
+  geographic information; land policy
+bibliography: references.bib
+csl: apa.csl
 format:
   html:
     toc: true
@@ -35,9 +67,12 @@ format:
     toc: true
     number-sections: true
     colorlinks: true
-bibliography: references.bib
-csl: apa.csl
+  docx:
+    toc: false
+    number-sections: true
+    reference-doc: reference.docx
 ---
+
 
 ```{r setup}
 #| include: false
@@ -580,6 +615,60 @@ Analysis code, figure-generation scripts and two verification gates are committe
 re-derive every headline number from the raw data and check every value quoted in the text; both
 exit non-zero on disagreement. The manuscript is rendered from source, so text, tables and figures
 cannot drift apart.
+
+# Funding
+
+NO FUNDING. This research received no external financial support. All data are openly licensed
+and were collected by the author through public application programming interfaces.
+
+# Author Contributions
+
+The author is the sole contributor and is responsible for the following: conceptualisation;
+research design; data acquisition from the OpenStreetMap, NASA POWER and World Bank APIs;
+spatial and statistical analysis; interpretation of results; and preparation of the manuscript.
+The author has approved the final version and takes responsibility for the integrity of the work.
+
+# Declaration of Generative AI Use
+
+An AI coding assistant was used during preparation of this work. Its role was to assist with
+implementing and debugging the analysis pipeline, writing the verification scripts, and drafting
+and editing the prose. All research design, data collection, analytical decisions and
+interpretation are the author's own. Every numerical result reported here was independently
+re-derived from the frozen data by committed verification scripts, and every cited reference was
+resolved against the Crossref registry rather than transcribed. The author takes full
+responsibility for the content.
+
+# Additional Reading
+
+- Herfort, B., Lautenbach, S., Porto de Albuquerque, J., Anderson, J. & Zipf, A. (2023). A
+  spatio-temporal analysis investigating completeness and inequalities of global urban building
+  data in OpenStreetMap. *Nature Communications*, 14(1), 3985.
+- Haklay, M. (2010). How good is volunteered geographical information? A comparative study of
+  OpenStreetMap and Ordnance Survey datasets. *Environment and Planning B*, 37(4), pp.682–703.
+- Anselin, L. (1995). Local indicators of spatial association—LISA. *Geographical Analysis*,
+  27(2), pp.93–115.
+- FAO (2023). *The State of Food Security and Nutrition in the World 2023*. Rome: FAO.
+
+# Key Terms and Definitions
+
+**Areal unit.** A bounded administrative area for which observations are aggregated; here the
+Local Government Area, the tier of government responsible for local land allocation in Nigeria.
+
+**Coverage bias.** The systematic tendency of a volunteered geographic dataset to be more
+complete in some places than others, so that counts of features reflect where contributors have
+been active as well as where a phenomenon occurs.
+
+**Exposure offset.** A term entered into a count model with a fixed coefficient of one, used when
+units are observed over unequal extents. Area as an offset converts a model of counts into a
+model of density.
+
+**Local indicators of spatial association.** Statistics that decompose a global measure of
+spatial autocorrelation into a contribution from each areal unit, permitting the location of
+clusters to be identified rather than merely their existence.
+
+**Spatial autocorrelation.** The tendency of nearby locations to hold similar values. Positive
+autocorrelation indicates clustering; a value near zero indicates spatial randomness.
+
 
 # References
 

@@ -117,7 +117,8 @@ chk('K=5 rainfall p', round(summary(lm(density ~ rain, data = city))$coefficient
 hr('6. Prose values in the manuscript')
 for (pair in list(
   c('Moran I quoted', 'I = 0.300'), c('Kano-excluded I quoted', 'I = 0.274'),
-  c('per-doubling fall quoted', '66% per doubling'), c('coverage rho quoted', '\u03c1 = 0.613'),
+  c('per-doubling fall quoted', '66 per cent per doubling'),
+  c('coverage rho quoted', '\u03c1 = 0.613'),
   c('delta AIC quoted', '\u0394AIC = 20.0'), c('zero-inflation quoted', '95% of LGAs'),
   c('LISA adjusted quoted', '19 of 775'), c('leakage quoted', '8.9%'))) {
   chk_has(pair[1], text, pair[2])

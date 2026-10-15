@@ -3,6 +3,11 @@ project:
 
 # Manuscript renders from manuscript/, so figures and data are referenced one level up.
 # Paths in manuscript.qmd are relative to THIS file (../results/..., ../data/...).
+#
+# The docx settings encode the AJLP&GS author guidelines (docs/ajlpgs-author-guidelines.md):
+#   Cambria throughout; body 12 pt justified; line spacing 1.2
+#   margins top 2 cm, bottom/left/right 1.5 cm
+# Word applies the reference-doc styles; fix_docx_format.py enforces the rest post-render.
 
 format:
   docx:

@@ -87,7 +87,21 @@ Ordered by how well they fit, not by prestige.
   manuscript's subject matter — where cultivation concentrates, and what that means for land
   allocation — sits exactly in its scope. Its readership includes the planning practitioners
   the paper addresses.
-- **Scopus:** widely reported as indexed; **verify yourself**.
+
+> **⚠ SCOPUS STATUS: LIKELY NOT INDEXED — treat this as a blocker if Scopus matters.**
+>
+> I checked the journal's **own website** (revues.imist.ma), and its "Indexed In" block lists
+> **DOAJ and Cairn only. It does not list Scopus.** A Scopus-indexed journal almost always
+> displays the badge; this one does not.
+>
+> A search summary claimed Scopus indexing and pointed at a SCImago record
+> (SID 21101056111). I could not confirm that: SCImago is behind a Cloudflare challenge this
+> environment cannot pass, and the alternate journal domain (ajlp-gs.org) does not resolve.
+>
+> **Two sources disagree, and the primary one says no.** Before submitting here, check
+> <https://www.scopus.com/sources> for ISSN 2657-2664. If Scopus indexing is a requirement for
+> you — for promotion, funding, or institutional recognition — do not assume this journal
+> qualifies. Verify, and if it fails, move to the next candidate.
 
 ### 2. Town and Regional Planning
 
@@ -156,8 +170,9 @@ withdrawn — is precisely the material a good reviewer probes, and it holds up.
 
 **Manuscript-level**
 
-1. **Choose a venue** and reformat to its house style (reference style, section order, abstract
-   length, figure resolution).
+1. **Reformat to the venue's house style.** The AJLP&GS guidelines have now been downloaded and
+   extracted to `docs/ajlpgs-author-guidelines.md`. They differ substantially from what this
+   manuscript currently uses — see `docs/submission-ajlpgs.md` for the gap analysis.
 2. **Add the AI declaration** from the template above.
 3. **Confirm the author list** and corresponding-author details.
 4. **Check the figure count** against the venue's limit. The manuscript has five; some journals
