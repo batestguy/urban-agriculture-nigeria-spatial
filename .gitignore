@@ -56,3 +56,21 @@ desktop.ini
 .env
 secrets.toml
 *-secret.json
+
+# Agent / tooling working artefacts (not part of the research record)
+.codewhale/
+.playwright-mcp/
+
+# Large source documents kept out of git history
+# (the thesis is the source of the survey statistics; it lives on Drive D and is
+#  referenced from data/raw/README-survey-data.md rather than versioned here)
+MR. YOHAN FINAL BINDING.docx
+
+# Quarto scratch
+manuscript/.quarto/
+docs/.quarto/
+
+# Render intermediates (methodology.qmd is the source; these are derived)
+#  .typ is produced by --to typst, .tex by --to latex (the earlier attempt)
+docs/methodology.typ
+docs/methodology.tex
