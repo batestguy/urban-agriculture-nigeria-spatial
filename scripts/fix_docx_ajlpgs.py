@@ -29,7 +29,8 @@ import zipfile
 
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
-DOCX = pathlib.Path(r'D:\YohannaPaper\manuscript\manuscript.docx')
+ROOT = pathlib.Path(__file__).resolve().parents[1]
+DOCX = ROOT / 'manuscript' / 'manuscript.docx'
 
 FONT = 'Cambria'
 CM = 567          # twips per cm
@@ -52,15 +53,44 @@ def patch_rfonts(xml: str, font: str = FONT) -> str:
 # Inject the author's affiliation and e-mail into the Word file.
 #
 # Pandoc's docx template renders ONLY the author name and silently drops the
-# `affiliation` and `email` YAML fields. The journal's author block requires all
+# affiliation and e-mail; Quarto's author normalisation makes the affiliation
+# unavailable to the template at all. The journal's author block requires all
 # three, so the source alone cannot produce a compliant Word file. The missing
 # lines are appended to the paragraph that holds the author's name.
+#
+# The three strings are READ FROM THE MANUSCRIPT FRONT MATTER rather than repeated
+# here, so the paper and the Word file cannot drift apart. E-mail
+# is read from `author[].email`, the affiliation from the top-level
+# `author-affiliation` key (see the note beside it in manuscript.qmd).
+# scripts/verify_author_block.py re-checks the rendered file.
 # ---------------------------------------------------------------------------
-AUTHOR_NAME = 'Jerry Bannister Zachary'
+QMD = ROOT / 'manuscript' / 'manuscript.qmd'
+
+
+def _front_matter() -> dict:
+    """Minimal YAML reader for the four author fields; avoids a PyYAML dependency."""
+    text = QMD.read_text(encoding='utf-8')
+    block = text.split('---', 2)[1]
+    out = {}
+    for key in ('author-affiliation',):
+        for line in block.splitlines():
+            s = line.strip()
+            if s.startswith(key + ':'):
+                out[key] = s.split(':', 1)[1].strip().strip('"\'')
+    for line in block.splitlines():
+        s = line.strip()
+        if s.startswith('name:') and 'AUTHOR_NAME' not in out:
+            out['name'] = s.split(':', 1)[1].strip().strip('"\'')
+        if s.startswith('email:') and 'email' not in out:
+            out['email'] = s.split(':', 1)[1].strip().strip('"\'')
+    return out
+
+
+_FM = _front_matter()
+AUTHOR_NAME = _FM.get('name', 'Jerry Bannister Zachary')
 AUTHOR_LINES = [
-    'Department of Urban and Regional Planning, '
-    'Abubakar Tafawa Balewa University, Bauchi, Nigeria',
-    'E-mail: jzbannister@atbu.edu.ng',
+    _FM.get('author-affiliation', ''),
+    f"E-mail: {_FM.get('email', '')}",
 ]
 
 
@@ -70,7 +100,7 @@ def inject_affiliation(path: pathlib.Path) -> int:
         files = {n: z.read(n) for n in z.namelist()}
     doc = files['word/document.xml'].decode('utf-8')
 
-    if 'jzbannister@atbu.edu.ng' in doc:
+    if _FM.get('email') and _FM['email'] in doc:
         return 0  # already present; do not duplicate on a second run
 
     # Find the run containing the author name and the paragraph that closes after it,

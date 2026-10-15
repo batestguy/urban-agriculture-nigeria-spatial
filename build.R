@@ -2,7 +2,7 @@
 # build.R — one entry point for the whole reproducible pipeline.
 #
 # Fixes the portability problem in render.ps1 / render.bat, which hardcoded
-# D:\YohannaPaper and therefore failed for anyone who cloned the repo.
+# D:\urban-agriculture-nigeria-spatial and therefore failed for anyone who cloned the repo.
 # Everything here is path-relative: clone anywhere, run this, get the same outputs.
 #
 # Usage:
@@ -121,8 +121,11 @@ cat('  cd manuscript && quarto render manuscript.qmd --to pdf\n')
 cat('  cd manuscript && quarto render manuscript.qmd --to docx\n')
 cat('  quarto render docs/methodology.qmd --to typst             # methods companion\n')
 cat('  quarto render docs/spatial-report.qmd --to html           # earlier report version\n\n')
-cat('Then, if Word styling needs enforcing:\n\n')
-cat('  python scripts/fix_docx_format.py\n')
+cat('Then, because pandoc and Quarto both drop the author block from PDF and Word:\n\n')
+cat('  python scripts/fix_docx_ajlpgs.py      # AJLP&GS typography + author into the docx\n')
+cat('  python scripts/verify_author_block.py  # fail if any output lost the author\n\n')
+cat('(scripts/fix_docx_format.py enforces the ABANDONED conference spec:\n')
+cat(' Times New Roman 12pt / 1.5 / 1in. It belongs to the archived study, not this one.)\n')
 
 if (any(status != 0, na.rm = TRUE)) {
   cat('\nOne or more steps failed. See output above.\n')

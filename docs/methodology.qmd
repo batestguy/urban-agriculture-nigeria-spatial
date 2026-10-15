@@ -1,7 +1,7 @@
 ---
 title: "Detailed Methodology — Urban Agriculture and Urban Food Security in Nigeria"
 subtitle: "From frozen API downloads to spatial regression: equations, layman explanations, and why each step matters"
-author: "Jerry Bannister Zachary"
+author: "Jerry Bannister Zachary — Statistician, Abubakar Tafawa Balewa University (ATBU), Bauchi, Nigeria"
 date: last-modified
 date-format: "D MMMM YYYY"
 format:
@@ -24,7 +24,7 @@ execute:
 ---
 
 ::: {.callout-note title="How to use this document" appearance="simple" icon=false}
-This is the **technical companion** to the conference paper `manuscript/manuscript.qmd` (12 pp, TNR 12pt 1.5, ≤12 pages, abstract 5 Oct / full paper 9 Oct 2026 to `fpksstconf2026@gmail.com`). It documents **every step from frozen API downloads to final maps and regressions**, with **formal equations** and **plain-English boxes** explaining *what* was done and *why*. All numbers trace to `data/raw/provenance.json` (16 entries) and `scripts/fetch_*.py` → `analysis/spatial/*.R` on `R 4.5.2` / `ds-general` Python 3.12. The conference paper is the concise 12-page narrative; this file is the reproducible audit trail.
+This is the **technical companion** to the manuscript, `manuscript/manuscript.qmd`, which is now formatted for the *African Journal on Land Policy and Geospatial Sciences* (AJLP&GS, ISSN 2657-2664) rather than for the earlier conference. It documents **every step from frozen API downloads to final maps and regressions**, with **formal equations** and **plain-English boxes** explaining *what* was done and *why*. All numbers trace to `data/raw/provenance.json` and `scripts/fetch_*.py` → `analysis/spatial/*.R` on `R 4.5.2` / `ds-general` Python 3.12. The manuscript is the concise narrative; this file is the reproducible audit trail.
 :::
 
 # Overview and reproducibility contract
@@ -45,7 +45,7 @@ flowchart TD
 APIs change daily. If we analysed live data, results would not be reproducible. We **query each API once**, save the response to `data/raw/*.csv`, and record the URL, timestamp and licence in `data/raw/provenance.json`. All later analysis reads **only the frozen CSVs**. Anyone can re-run the analysis without network access and get the same numbers.
 :::
 
-**Environments (see `ENVIRONMENTS.md`):** `R 4.5.2` with `sf 1.1.2` (GEOS 3.14.1/GDAL 3.12.1/PROJ 9.7.1, `sf_use_s2(TRUE)`), `spdep 1.4.2`, `spatialreg 1.4.3`, `terra 1.9.46`, `dplyr 1.2.1`, `ggplot2 4.0.3`; Python `ds-general` 3.12 (`pandas` 2.2.3, `requests` 2.34.2, `numpy` 1.26.4). Random seeds set (`set.seed(1)`). Git repo `D:\YohannaPaper` ↔ GitHub `batestguy/urban-agriculture-and-urban-food-security-in-nigeria` (branch `master`).
+**Environments (see `ENVIRONMENTS.md`):** `R 4.5.2` with `sf 1.1.2` (GEOS 3.14.1/GDAL 3.12.1/PROJ 9.7.1, `sf_use_s2(TRUE)`), `spdep 1.4.2`, `spatialreg 1.4.3`, `terra 1.9.46`, `dplyr 1.2.1`, `ggplot2 4.0.3`; Python `ds-general` 3.12 (`pandas` 2.2.3, `requests` 2.34.2, `numpy` 1.26.4). Random seeds set (`set.seed(1)`). Git repo `D:\urban-agriculture-nigeria-spatial` ↔ GitHub `batestguy/urban-agriculture-nigeria-spatial` (branch `master`).
 
 **Study Area:** Five cities maximising agro-ecological variation — Abuja (planned capital, Guinean savanna), Lagos (coastal megacity), Kano (Sahelian), Port Harcourt (humid Niger Delta), Gombe (savanna, host). LGAs (GADM v4.1, 775 units) are the areal unit. Hypotheses: **H1** density is clustered ($I>0$); **H2** density increases with aridity (lower PRECTOT, higher T2M) — see the caveat in §6.4, this hypothesis turns out to be **not testable** with the frozen climate data; **H3** density declines with LGA area.
 
@@ -62,7 +62,10 @@ APIs change daily. If we analysed live data, results would not be reproducible. 
 **How:** `scripts/fetch_worldbank.py` loops `https://api.worldbank.org/v2/country/NG/indicator/{code}?format=json&per_page=100&date=2000:2024`, parses JSON `value`, writes long-format `data/raw/worldbank_ng.csv` (75 rows, 25 per indicator, 2 NAs per indicator) and appends to `provenance.json` with URL, `n`, `timestamp_utc`, `license: CC BY-4.0`.
 
 ::: {.callout-note title="In plain English" appearance="simple" icon=false}
-The World Bank API is the safest starting point (no auth, stable). We began here to verify the pipeline before riskier Overpass calls. National aggregates cannot be joined to LGAs, so they are used as *context* (urbanisation 146.5M in 2024, food index 119.9 in 2022, undernourishment 19.9% in 2023) rather than outcomes; LGA-level undernourishment will come from DHS/NLSS in extensions [@worldbank2024; @fao2023].
+The World Bank API is the safest starting point (no auth, stable). We began here to verify the pipeline before riskier Overpass calls. National aggregates cannot be joined to LGAs, so they are used as *context* (urbanisation 146.5M in 2024, food index 119.9 in 2022, undernourishment 19.9% in 2023) rather than outcomes; LGA-level undernourishment will come from DHS/NLSS in extensions [@fao2023].
+The indicator values themselves are cited to the World Bank's own API rather than to a printed volume: the
+pull is recorded in `data/raw/provenance.json` with URL, timestamp, row count and CC BY-4.0 licence,
+and `data/raw/worldbank_ng.csv` is the frozen copy the analysis reads.
 :::
 
 **Why these indicators:** They directly operationalise *urban food security* (population pressure, production, undernourishment) at the only openly-available temporal resolution for Nigeria.
@@ -86,7 +89,7 @@ The World Bank API is the safest starting point (no auth, stable). We began here
 out center tags;
 ```
 
-Executed sequentially with `sleep 1` per tag, `sleep 2` per city, three fallback endpoints (`overpass-api.de`, `kumi.systems`, `openstreetmap.fr`), `User-Agent: YohannaPaper/1.0`, `Content-Type` header fixed (initial 406 error). Deduplicated by `osm_type+osm_id`, giving **484 rows** (Kano 189, Lagos 130, Port Harcourt 88, Gombe 45, Abuja 32) plus per-city CSVs and `osm_gombe_test.csv` (45 rows test). Provenance ODbL, 5 city entries + 3 zero-row retries (406→504 mitigation) in `provenance.json`.
+Executed sequentially with `sleep 1` per tag, `sleep 2` per city, three fallback endpoints (`overpass-api.de`, `kumi.systems`, `openstreetmap.fr`), `User-Agent: urban-agriculture-nigeria-spatial/1.0`, `Content-Type` header fixed (initial 406 error). Deduplicated by `osm_type+osm_id`, giving **484 rows** (Kano 189, Lagos 130, Port Harcourt 88, Gombe 45, Abuja 32) plus per-city CSVs and `osm_gombe_test.csv` (45 rows test). Provenance ODbL, 5 city entries + 3 zero-row retries (406→504 mitigation) in `provenance.json`.
 
 ::: {.callout-tip title="In plain English: why per-tag?" appearance="simple" icon=false}
 A single query asking for all four tags at once timed out (90s, `504`) and sometimes returned `406 Not Acceptable` without a proper `User-Agent`. Splitting into four small queries (30s each) and trying three servers reliably returns data. Deduplication ensures a farm tagged both `farmland` and `farmyard` is counted once.
@@ -103,7 +106,11 @@ A single query asking for all four tags at once timed out (90s, `504`) and somet
 **How:** `scripts/fetch_nasa_power.py` loops `https://power.larc.nasa.gov/api/temporal/daily/point?parameters=T2M,PRECTOTCORR,RH2M&community=AG&latitude={lat}&longitude={lon}&start=20230101&end=20231231&format=JSON`, writes `data/raw/nasa_power_{city}.csv` (365 rows each, 1,825 total). Provenance 5 entries. Annual means/totals in `data/processed/nasa_annual.csv` via `analysis/spatial/01_clean.R`: Abuja 25.9°C/1,031 mm/70.1%, Gombe 27.1/862/53.4, Kano 27.3/404/42.1, Lagos 26.8/1,726/85.4, Port Harcourt 26.2/1,891/87.7.
 
 ::: {.callout-note title="In plain English" appearance="simple" icon=false}
-NASA POWER's AG community product is designed for agricultural applications and is validated for West Africa [@stackhouse2023]. The 2023 window matches the OSM freeze year; a multi-year window is the next step. Contrasts (404 mm Kano vs 1,891 mm Port Harcourt) provide the gradient to test **H2** (aridity).
+NASA POWER's AG community product is designed for agricultural applications and is validated for West
+Africa by the POWER project's own release documentation. That documentation is not indexed in Crossref,
+so it is cited here by its canonical location rather than given a fabricated bibliographic entry:
+<https://power.larc.nasa.gov/docs/methodology/>. The 2023 window matches the OSM freeze year; a multi-year
+window is the next step. Contrasts (404 mm Kano vs 1,891 mm Port Harcourt) provide the gradient to test **H2** (aridity).
 :::
 
 ## 2.4 FAOSTAT API — food-security stub
@@ -451,7 +458,7 @@ and the top-10 table shows why counts mislead — Ikorodu has 53 points but only
 
 **Ethics and positionality:** Open data (ODbL OSM, CC BY GADM/World Bank, NASA POWER) with attribution; no PII; public allotment centroids; auditable via `provenance.json`; authors have no residential positionality in LGAs, so inference requires community validation before zoning.
 
-**Process reflection (5 phases):** Phase 0 installed missing `spatialreg`; Phase 1 staged Overpass 406→504 per-tag fixes to obtain 484 points (isolated Gombe 45 test → full 189/130/88/45/32); Phase 2 found 775 vs nominal 774 LGAs (GADM version artefact) and deleted `NGA_0/1` to keep repo 4.7 MB; Phase 3 corrected `NAME_2`→`GID_2` bug (775→39 LGAs, 5%) and showed $I$ 0.158→0.300 and queen–rook 0.300→0.306 robustness; Phase 4–5 embedded 3–6 figs and trimmed 4,459→2,307 w to meet 12 pp. Iterative $z$ 8.47→17.61 demonstrated area normalisation is decisive.
+**Process reflection (5 phases):** Phase 0 installed missing `spatialreg`; Phase 1 staged Overpass 406→504 per-tag fixes to obtain 484 points (isolated Gombe 45 test → full 189/130/88/45/32); Phase 2 found 775 vs nominal 774 LGAs (GADM version artefact) and deleted `NGA_0/1` to keep repo 4.7 MB; Phase 3 corrected `NAME_2`→`GID_2` bug (775→39 LGAs, 5%) and showed $I$ 0.158→0.300 and queen–rook 0.300→0.306 robustness; Phase 4–5 embedded 3–6 figs and trimmed 4,459→2,307 w for the earlier 12-page conference limit (the AJLP&GS manuscript is longer). Iterative $z$ 8.47→17.61 demonstrated area normalisation is decisive.
 
 # How to re-run
 
@@ -474,10 +481,11 @@ Rscript analysis/spatial/run_regression.R
 Rscript analysis/spatial/check_sensitivity.R
 
 # Render
-quarto render manuscript/manuscript.qmd --to docx   # conference paper (12 pp)
-quarto render docs/methodology.qmd --to pdf       # this file
-# Fix Word TNR 12pt 1.5 if needed
-python scripts/fix_docx_format.py
+quarto render manuscript/manuscript.qmd --to docx   # the manuscript (AJLP&GS format)
+python scripts/fix_docx_ajlpgs.py               # Cambria 12pt / 1.2 / AJLP&GS margins + author block
+python scripts/verify_author_block.py           # fail if any output lost the author block
+quarto render docs/methodology.qmd --to typst         # this file
+quarto render manuscript/manuscript.qmd --to html --to pdf
 ```
 
 **Page count check:**
@@ -486,7 +494,7 @@ python scripts/fix_docx_format.py
 # docx words → pages estimate
 python -c "import zipfile,re,pathlib; d=pathlib.Path('manuscript/manuscript.docx'); w=len(' '.join(re.findall(r'<w:t[^>]*>([^<]+)</w:t>', zipfile.ZipFile(d).read('word/document.xml').decode())).split()); print(w, round(w/250,1), round(w/300,1))"
 # Word COM actual pages
-python -c "import win32com.client; w=win32com.client.Dispatch('Word.Application'); d=w.Documents.Open(r'D:\YohannaPaper\manuscript\manuscript.docx'); print(d.ComputeStatistics(2)); d.Close(False); w.Quit()"
+python -c "import win32com.client; w=win32com.client.Dispatch('Word.Application'); d=w.Documents.Open(r'D:\urban-agriculture-nigeria-spatial\manuscript\manuscript.docx'); print(d.ComputeStatistics(2)); d.Close(False); w.Quit()"
 # PDF actual pages
 soffice --convert-to pdf manuscript/manuscript.docx; python -c "from PyPDF2 import PdfReader; print(len(PdfReader('manuscript/manuscript.pdf').pages))"
 ```

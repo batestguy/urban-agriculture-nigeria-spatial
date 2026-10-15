@@ -1,20 +1,38 @@
 # Where Does Urban Agriculture Concentrate in Nigerian Cities?
 
 > **A spatial analysis of 484 OpenStreetMap features across 775 Local Government Areas.**
+> Study design, data collection and analysis: **Jerry Bannister Zachary**, Statistician,
+> Abubakar Tafawa Balewa University (ATBU), Bauchi — <jzbannister@atbu.edu.ng>.
 > All data collected by the author through public APIs in 2026. Every number reproducible
 > from frozen data.
 
-**Read the manuscript:** [HTML](manuscript/manuscript.html) · [PDF](manuscript/manuscript.pdf) · [Word](manuscript/manuscript.docx) — 22 pages, 19 cited references.
+**Read the manuscript:** [HTML](manuscript/manuscript.html) · [PDF](manuscript/manuscript.pdf) · [Word](manuscript/manuscript.docx) — 24 pages, 19 cited references.
 
 ```pwsh
 Rscript build.R --audit    # 175 verification checks; exits non-zero on any disagreement
 Rscript build.R            # full 15-step pipeline from frozen data
 ```
 
+## Author and ownership
+
+This study is the work of **Jerry Bannister Zachary**, Statistician, Abubakar Tafawa Balewa
+University (ATBU), Bauchi — <jzbannister@atbu.edu.ng>.
+
+Every layer used in the analysis is the author's own. The OpenStreetMap cultivated-land
+features, the per-LGA building and highway counts that serve as the mapping-coverage control,
+the NASA POWER climate pull and the GADM administrative boundaries were all obtained by the
+author directly from public APIs through the scripts in `scripts/`, and each pull is frozen in
+`data/raw/` with its URL, timestamp, row count and licence in `data/raw/provenance.json`.
+No third party supplied or contributed any dataset used here.
+
+`abandoned/` holds an unrelated, retired survey paper from a different author's M.Tech thesis.
+It shares no data with this study, and it is kept only so that it remains recoverable.
+
 Three gates re-derive every number from the raw data and compare it with what the text
 claims: `audit_claims.R` (61), `verify_report_claims.R` (61), `verify_manuscript_claims.R`
 (53). All 175 pass. Every cited DOI is resolved against the Crossref registry before it can
-enter the bibliography.
+enter the bibliography, and `scripts/verify_author_block.py` fails if any rendered output has
+lost the author's name, affiliation or e-mail.
 
 **Declaration of generative AI use.** An AI coding assistant was used in preparing this work:
 implementing and debugging the analysis pipeline, writing the verification scripts, and
@@ -104,10 +122,11 @@ figure's pixel dimensions against its generator and refuses to let the report ca
 
 ```
 ├── manuscript/manuscript.qmd    the manuscript source → HTML, PDF, Word
+│                               title.tex + template.tex fix the LaTeX author block
 ├── docs/venue-options.md       where to submit, AI-policy guidance, checklist
 ├── docs/spatial-report.qmd     earlier report version of the same analysis
 ├── abandoned/                  retired Bauchi survey paper, kept recoverable
-├── build.R                     one entry point, 13 pipeline steps, path-relative
+├── build.R                     one entry point, 15 pipeline steps, path-relative
 ├── analysis/
 │   ├── spatial/                01 clean · 02 Moran/LISA · 03 maps · 04 extra figs
 │   │                           05 LGA polygons · 06 count models · 07 LISA FDR + point pattern
@@ -117,6 +136,13 @@ figure's pixel dimensions against its generator and refuses to let the report ca
 ├── data/raw/                   frozen API pulls + provenance.json
 ├── data/processed/             cleaned layers
 ├── results/                    figures/, tables/, lga_lisa.gpkg
+├── scripts/
+│   ├── fetch_*.py              the API harvests (the author's own data collection)
+│   ├── build_bib.py            regenerate references.bib from Crossref
+│   ├── verify_bib.py           re-check every DOI
+│   ├── fix_docx_ajlpgs.py      AJLP&GS typography + inject the author block
+│   ├── verify_author_block.py  fail if any output lost the author block
+│   └── rename_project.py       one-off migration of the project name
 └── renv.lock                   exact package versions
 ```
 
@@ -126,6 +152,8 @@ figure's pixel dimensions against its generator and refuses to let the report ca
 Rscript build.R --audit                            # all three verification gates (175 checks)
 Rscript build.R                                    # full pipeline, 15 steps
 cd manuscript; quarto render manuscript.qmd --to html   # also --to pdf / --to docx
+python scripts/fix_docx_ajlpgs.py  # AJLP&GS typography + author block into the Word file
+python scripts/verify_author_block.py              # author present in every rendered output
 
 python scripts/verify_bib.py     # re-check every DOI in references.bib against Crossref
 python scripts/build_bib.py      # regenerate references.bib from Crossref metadata
@@ -184,7 +212,8 @@ and typical time to publication — all from the registry rather than from a sum
 a separate M.Tech thesis, together with its analysis, figures and build scripts. It shares no
 data with this study — different cities, different unit of analysis, different method — and the
 survey microdata were never deposited. It is preserved for recoverability and documented in
-`abandoned/README.md`, but it no longer represents this project.
+`abandoned/README.md`, but it no longer represents this project. It is a different author's
+work; nothing in `abandoned/` is part of the study this repository documents.
 
 ## History
 

@@ -49,7 +49,7 @@ ENDPOINTS = [
     "https://overpass.openstreetmap.fr/api/interpreter",
     "https://overpass.kumi.systems/api/interpreter",
 ]
-HEADERS = {"User-Agent": "YohannaPaper/1.1 (reproducibility audit; contact: repo owner)"}
+HEADERS = {"User-Agent": "urban-agriculture-nigeria-spatial/1.1 (reproducibility audit; contact: repo owner)"}
 SLEEP = 1.2
 
 # tag -> output column

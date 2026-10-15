@@ -2,7 +2,7 @@
 """Fix docx to meet conference spec: TNR 12pt, 1.5 spacing, 1in margins, numbered headings already via quarto."""
 import zipfile, pathlib, re
 
-docx = pathlib.Path(r"D:\YohannaPaper\manuscript\manuscript.docx")
+docx = pathlib.Path(r"D:\urban-agriculture-nigeria-spatial\manuscript\manuscript.docx")
 out = docx  # in-place
 
 with zipfile.ZipFile(docx, 'r') as zin:

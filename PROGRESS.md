@@ -1,10 +1,10 @@
 # Progress Log — Urban Agriculture and Urban Food Security in Nigeria
 
-> Mirrored: `D:\YohannaPaper\PROGRESS.md` (Drive D) ↔ `https://github.com/batestguy/urban-agriculture-and-urban-food-security-in-nigeria/blob/master/PROGRESS.md` (GitHub). Update this file with every push.
+> Mirrored: `D:\urban-agriculture-nigeria-spatial\PROGRESS.md` (Drive D) ↔ `https://github.com/batestguy/urban-agriculture-nigeria-spatial/blob/master/PROGRESS.md` (GitHub). Update this file with every push.
 
 ## 2026-08-25 06:07 UTC — Repo created & local init
-- **GitHub:** Created `batestguy/urban-agriculture-and-urban-food-security-in-nigeria` (public) via `gh repo create`. URL: https://github.com/batestguy/urban-agriculture-and-urban-food-security-in-nigeria
-- **Local:** `git init` in `D:\YohannaPaper`; `git config --global --add safe.directory D:/YohannaPaper`; remote `origin` → GitHub.
+- **GitHub:** Created `batestguy/urban-agriculture-nigeria-spatial` (public) via `gh repo create`. URL: https://github.com/batestguy/urban-agriculture-nigeria-spatial
+- **Local:** `git init` in `D:\urban-agriculture-nigeria-spatial`; `git config --global --add safe.directory D:/urban-agriculture-nigeria-spatial`; remote `origin` → GitHub.
 - Existing assets kept: `ENVIRONMENTS.md`, `AGENTS.md`, flyer JPEG, Hull criteria PNG.
 
 ## 2026-08-25 06:08 UTC — Workspace scaffold
@@ -53,20 +53,20 @@
 - **Raw now:** `worldbank_ng.csv` (75) + `osm_urban_ag.csv` (484) + `nasa_power_*.csv` (1,825) + `fao_food_security.csv` (1 stub) = **~2,385 rows frozen**, all with `provenance.json` (14 entries, CC BY-4.0 / ODbL).
 
 ## 2026-08-25 08:41 UTC — Phase 1 push pending (auth, data safe locally)
-- **Commit `22e2948` ready** (`OSM 484 + NASA 5×365 + FAO stub`) but **`git push` 403 `Permission denied to batestguy`** — fine-grained PAT `github_pat_11BB...` has API `push:true` but git push denied (likely PAT created before repo — no access to new repo). **Data safe on Drive D** (`D:\YohannaPaper\data/raw/` 16 files, 30KB+); GitHub is **1 commit behind** (`origin/master` at `240830d`). 
+- **Commit `22e2948` ready** (`OSM 484 + NASA 5×365 + FAO stub`) but **`git push` 403 `Permission denied to batestguy`** — fine-grained PAT `github_pat_11BB...` has API `push:true` but git push denied (likely PAT created before repo — no access to new repo). **Data safe on Drive D** (`D:\urban-agriculture-nigeria-spatial\data/raw/` 16 files, 30KB+); GitHub is **1 commit behind** (`origin/master` at `240830d`). 
 - **Workaround:** Re-auth with classic PAT or new fine-grained PAT with explicit access to `urban-agriculture-and-urban-food-security-in-nigeria`. Run `gh auth login`, or `gh auth refresh` → re-select repo, or `git push` via `gh` after login. Local commit will push when auth fixed — no data loss. `git status` shows `ahead by 1`.
 - **Remote reverted to** `https://github.com/batestguy/...` (SSH host key verification also failed).
 
 ## 2026-08-25 08:50 UTC — Auth FIXED, Phase 1 pushed
 - **Classic PAT `ghp_...1o8obQ` provided** → `echo ghp_... | gh auth login --with-token` → `gh auth status` now `Token: ghp_****, scopes: admin:org, repo, workflow` (classic, not fine-grained).
-- **Push:** `git -C D:\YohannaPaper push` → **PUSH_EXIT 0** — `43affb9..7baa6d4 → master`. **Local and GitHub now in sync** (`pushedAt 2026-08-25T08:00:33Z`, `ahead 0`). Both commits now remote: `22e2948` (484+1825 rows) + `7baa6d4` docs.
+- **Push:** `git -C D:\urban-agriculture-nigeria-spatial push` → **PUSH_EXIT 0** — `43affb9..7baa6d4 → master`. **Local and GitHub now in sync** (`pushedAt 2026-08-25T08:00:33Z`, `ahead 0`). Both commits now remote: `22e2948` (484+1825 rows) + `7baa6d4` docs.
 - **Security:** Classic PAT stored in Windows Credential Manager via `gh` (keyring). Rotate/revoke after conference if desired at https://github.com/settings/tokens.
 
 ## 2026-08-25 09:00 UTC — PAUSE POINT (committed, push sync'd — continue next time)
-- **Git status:** `master` **up-to-date with `origin/master`** (`99a44ef` → `origin` `7baa6d4..99a44ef`), `working tree clean`, 40 files, 7 commits. **Drive D ↔ GitHub mirrored** — next session can resume from `D:\YohannaPaper` or fresh `git clone`.
-- **Phase 1 complete:** All raw data frozen — `worldbank_ng.csv` 75 rows, `osm_urban_ag.csv` 484 rows (5 cities), `nasa_power_*.csv` 1,825 rows, `fao stub` 1 row, `provenance.json` 14 entries. Local `D:\YohannaPaper\data/raw/` = GitHub `data/raw/` (30KB+). Auth fixed via classic PAT `ghp_...` (scopes `admin:org, repo, workflow`) — next `git push` will work.
+- **Git status:** `master` **up-to-date with `origin/master`** (`99a44ef` → `origin` `7baa6d4..99a44ef`), `working tree clean`, 40 files, 7 commits. **Drive D ↔ GitHub mirrored** — next session can resume from `D:\urban-agriculture-nigeria-spatial` or fresh `git clone`.
+- **Phase 1 complete:** All raw data frozen — `worldbank_ng.csv` 75 rows, `osm_urban_ag.csv` 484 rows (5 cities), `nasa_power_*.csv` 1,825 rows, `fao stub` 1 row, `provenance.json` 14 entries. Local `D:\urban-agriculture-nigeria-spatial\data/raw/` = GitHub `data/raw/` (30KB+). Auth fixed via classic PAT `ghp_...` (scopes `admin:org, repo, workflow`) — next `git push` will work.
 - **Resume next time:** 
-  1. `git -C "D:\YohannaPaper" pull` (if on another machine) or just open `D:\YohannaPaper`.
+  1. `git -C "D:\urban-agriculture-nigeria-spatial" pull` (if on another machine) or just open `D:\urban-agriculture-nigeria-spatial`.
   2. **Phase 2:** `data/external/gadm41_NGA_2.shp` — download LGA polygons (~100MB) per `data/external/README.md` — keep locally, **do NOT commit if >50MB** (add `data/external/*.shp` to `.gitignore` if needed).
   3. **Phase 3:** `Rscript analysis/spatial/01_clean.R` → `data/processed/osm_urban_ag.gpkg` + `worldbank_ng_wide.csv`; then `02_spatial_stats.R` (Moran/LISA) + `03_maps.R`.
   4. **Phase 4:** Fill `manuscript/manuscript.qmd` Methods → Results (see `docs/phases.md` order) → `quarto render` → `manuscript/manuscript.docx` (TNR 12pt 1.5 ≤12pp).
@@ -221,7 +221,7 @@ self-assessment, which scored everything 5.0/5.0).
 - **`renv.lock`** written from installed versions plus `docs/session-info.txt`. R is genuinely
   4.5.2 (correcting the audit's earlier note); 17 of 24 packages were *compiled* under 4.5.3.
 - **`build.R`** — one path-relative entry point for the whole pipeline; `render.ps1` no longer
-  hardcodes `D:\YohannaPaper`.
+  hardcodes `D:\urban-agriculture-nigeria-spatial`.
 - `.gitignore` now excludes `.codewhale/`, `.playwright-mcp/` and the 6.6 MB thesis docx.
 
 ### Phase 5 — portfolio framing
@@ -363,6 +363,64 @@ only reliable way to get the page count the flyer is judged against.
 
 ---
 
+## 2026-10-15 — Authorship, project identity and the author-block trap
+
+**Corrected the author's affiliation.** Jerry Bannister Zachary is a **Statistician at Abubakar
+Tafawa Balewa University (ATBU), Bauchi** — not the Department of Urban and Regional Planning.
+A wrong institution on a submitted paper is a factual error, so it was fixed everywhere it
+appeared: the manuscript front matter, the Word-file injector, the methodology companion and
+the spatial report. Verified by text-extracting the rendered PDF and Word files rather than by
+reading the source.
+
+**Stated the project's ownership explicitly.** Everything in this study — the OpenStreetMap
+cultivated-land features, the per-LGA building and highway counts used as the mapping-coverage
+control, the NASA POWER climate pull, the GADM boundaries — was collected by the author
+directly from public APIs through `scripts/fetch_*.py`, frozen in `data/raw/` with URL,
+timestamp, row count and licence in `provenance.json`. A sentence to that effect is now in the
+manuscript's Author Contributions, the README and `AGENTS.md`, so a reader or reviewer cannot
+mistake the provenance.
+
+**Found and fixed two silent rendering bugs that were dropping the author block.**
+
+1. **Quarto's author normalisation consumes `author[].affiliation`** before the LaTeX title
+   partial runs, and pandoc's docx writer renders only the name. The affiliation was therefore
+   absent from both the PDF and the Word file, while the HTML kept it in a `<meta>` tag — so
+   checking any one output would have suggested it was fine. The affiliation now appears twice
+   in the front matter (inside the author object for HTML, as a top-level `author-affiliation`
+   key for the PDF and Word paths), and `scripts/verify_author_block.py` fails the build if the
+   two copies ever disagree.
+2. **`template-partials` is ignored unless a `template` is also supplied.** Adding only the
+   partial silently dropped `scrartcl` and fell back to pandoc's article class. Both files are
+   now copied into `manuscript/` with a comment saying to re-copy them on a Quarto upgrade.
+
+`scripts/verify_author_block.py` is the gate: it opens the five rendered artefacts, extracts
+real text from each, and checks the name, affiliation and e-mail are present, then scans every
+tracked text file for a stale project name. It also caught a broken bibliography in the
+methodology companion — two citations (`@worldbank2024`, `@stackhouse2023`) pointed at keys
+that do not exist, which failed the Typst compile outright. Rather than mint bibliography
+entries for datasets not indexed in Crossref, the text now cites the API pull (recorded in
+`provenance.json`) and the POWER methodology page directly.
+
+**Renamed the project.** The folder and repository carried a former collaborator's name. They
+are now `D:\urban-agriculture-nigeria-spatial` and
+`github.com/batestguy/urban-agriculture-nigeria-spatial`. `scripts/rename_project.py` did the
+mechanical part — 90 references across 17 files, including the `User-Agent` strings sent to
+Overpass, Crossref and DOAJ, and the output paths recorded in `provenance.json`. Deliberately
+untouched: `data/raw/*.csv` (frozen observations; a rename must not edit measured data),
+`abandoned/` (another person's archived work), and `MR. YOHAN FINAL BINDING.docx`. The two
+docx post-processors were also made path-relative, so they survive the move.
+
+**Rendered and verified:**
+- `manuscript/manuscript.pdf` 24 pp, `.docx`, `.html` — author block present in all three
+- `docs/methodology.pdf` 13 pp; `docs/spatial-report.pdf` 19 pp
+- `python scripts/verify_author_block.py` → 5 artefacts OK, 0 discrepancies, 94 text files scanned
+
+**New tool: `scripts/rename_project.py`.** One-off migration with a `--dry-run` mode. Kept in
+the repo because it documents exactly which references were rewritten and which were
+deliberately skipped — the skip list is the part that matters.
+
+---
+
 ## Next actions (owner: batestguy) — Phase 6 submission
 - [x] Phase 0: verify done
 - [x] Phase 1a: worldbank — done
@@ -380,10 +438,20 @@ only reliable way to get the page count the flyer is judged against.
 - [x] Final polish 04:15: NUP, rook $I=0.306$, Kano-excluded $I=0.274$, positionality → 3599 w 12.0 pp
 - [x] Page-count trim 04:45: Word 19→12 pp, docx 3599→2307 w (2 figs 2in, 4 tables compact, refs 20, non-technical trimmed, technical untouched)
 - [x] Methodology PDF 05:21: `docs/methodology.qmd` → `docs/methodology.pdf` 10 pp, equations + layman, README §8
-- [ ] Phase 6: Submit abstract 5 Oct / full paper 9 Oct to `fpksstconf2026@gmail.com` (fee First Bank 2047116096) — final Word proof + email
+- [x] Author/ownership correction + project rename — done 2026-10-15
+- [ ] **Submit to AJLP&GS** (not the Kaltungo conference): the manuscript is now formatted for
+      the journal. Outstanding: page count against its 20-page cap, the journal's own reference
+      format (currently APA), an anonymised copy, the copyright form, and the Scopus question.
 
 ## Decisions & risks
-- Local folder stays `D:\YohannaPaper` (not renamed to spaced title); GitHub slug `urban-agriculture-and-urban-food-security-in-nigeria` is the canonical name. Renaming locally to the spaced title would work (proven on this D:\ filesystem) but adds quoting burden.
+- **Venue changed to AJLP&GS** (e-ISSN 2657-2664, no APC). The Kaltungo conference spec —
+  Times New Roman 12pt, 1.5 spacing, ≤12 pp, `fpksstconf2026@gmail.com` — is **abandoned**.
+  `scripts/fix_docx_format.py` still enforces it; that script is retained for the archived
+  study, not for this manuscript, which uses `scripts/fix_docx_ajlpgs.py`.
+- **Scopus indexing of AJLP&GS is unresolved.** The journal's own site lists DOAJ and Cairn,
+  not Scopus. Check ISSN 2657-2664 at <https://www.scopus.com/sources> before investing further.
+- Folder and repository are now `urban-agriculture-nigeria-spatial`. Anything that still says
+  otherwise is stale — `scripts/verify_author_block.py` scans for exactly that.
 - Python geo stack (`geopandas`/`shapely`/`folium`) not present in `ds-general` (verified); R `sf` stack is present and is the primary spatial engine. Add `geopandas` via `conda install -p C:\Users\TOSHIBA\ds-general geopandas` only if needed.
 - Overpass API returned 406 on bare GET — scripts now set proper `Content-Type` and POST body.
 

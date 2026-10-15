@@ -1,0 +1,22 @@
+$if(title)$
+\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
+$endif$
+$if(subtitle)$
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{$subtitle$}
+$endif$
+$-- MODIFIED from Quarto's stock title.tex (share/formats/pdf/pandoc/title.tex).
+$-- The stock partial prints only `it.name.literal`, and Quarto's author normalisation
+$-- drops `author.affiliation` before the template ever sees it, so an affiliation and
+$-- an e-mail written inside the author object reach neither the PDF nor the Word file.
+$-- The affiliation is therefore carried in the top-level `author-affiliation` key, and
+$-- typeset here beneath the name. Verified by text-extracting the rendered PDF --
+$-- scripts/verify_author_block.py -- not by reading this source.
+$-- Re-sync with Quarto's own copy when upgrading Quarto.
+\author{$for(authors)$$it.name.literal$$if(author-affiliation)$\\[0.6em]{\normalsize $author-affiliation$}$endif$$if(it.email)$\\[0.2em]{\normalsize E-mail: $it.email$}$endif$$sep$ \and $endfor$}
+\date{$date$}

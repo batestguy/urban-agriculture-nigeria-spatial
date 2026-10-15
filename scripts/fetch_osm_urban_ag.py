@@ -39,7 +39,7 @@ QUERY_TEMPLATES = [
 def fetch_city(city, bbox):
     south, west, north, east = bbox
     bbox_str = f"{south},{west},{north},{east}"
-    headers = {"User-Agent": "YohannaPaper/1.0 (batestguy/urban-agriculture-and-urban-food-security-in-nigeria)"}
+    headers = {"User-Agent": "urban-agriculture-nigeria-spatial/1.0 (batestguy/urban-agriculture-nigeria-spatial)"}
     if requests is None:
         raise RuntimeError("requests not installed — conda install requests")
     all_elements = []

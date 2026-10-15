@@ -6,7 +6,7 @@
       "AG.PRD.FOOD.XD",
       "SN.ITK.DEFC.ZS"
     ],
-    "out": "D:\\YohannaPaper\\data\\raw\\worldbank_ng.csv",
+    "out": "D:\\urban-agriculture-nigeria-spatial\\data\\raw\\worldbank_ng.csv",
     "n_rows": 75,
     "details": [
       {
@@ -34,7 +34,7 @@
     "cities": [
       "Gombe"
     ],
-    "out": "D:\\YohannaPaper\\data\\raw\\osm_gombe_test.csv",
+    "out": "D:\\urban-agriculture-nigeria-spatial\\data\\raw\\osm_gombe_test.csv",
     "n_rows": 0,
     "timestamp_utc": "2026-08-25T07:13:06.928187+00:00",
     "license": "ODbL — © OpenStreetMap contributors"
@@ -45,7 +45,7 @@
     "cities": [
       "Gombe"
     ],
-    "out": "D:\\YohannaPaper\\data\\raw\\osm_gombe_test.csv",
+    "out": "D:\\urban-agriculture-nigeria-spatial\\data\\raw\\osm_gombe_test.csv",
     "n_rows": 0,
     "timestamp_utc": "2026-08-25T07:13:36.536288+00:00",
     "license": "ODbL — © OpenStreetMap contributors"
@@ -56,7 +56,7 @@
     "cities": [
       "Gombe"
     ],
-    "out": "D:\\YohannaPaper\\data\\raw\\osm_gombe_test.csv",
+    "out": "D:\\urban-agriculture-nigeria-spatial\\data\\raw\\osm_gombe_test.csv",
     "n_rows": 0,
     "timestamp_utc": "2026-08-25T07:19:20.378688+00:00",
     "license": "ODbL — © OpenStreetMap contributors"
@@ -67,7 +67,7 @@
     "cities": [
       "Gombe"
     ],
-    "out": "D:\\YohannaPaper\\data\\raw\\osm_gombe_test.csv",
+    "out": "D:\\urban-agriculture-nigeria-spatial\\data\\raw\\osm_gombe_test.csv",
     "n_rows": 45,
     "timestamp_utc": "2026-08-25T07:21:19.145102+00:00",
     "license": "ODbL — © OpenStreetMap contributors"
@@ -78,7 +78,7 @@
     "cities": [
       "Abuja"
     ],
-    "out": "D:\\YohannaPaper\\data\\raw\\osm_abuja.csv",
+    "out": "D:\\urban-agriculture-nigeria-spatial\\data\\raw\\osm_abuja.csv",
     "n_rows": 32,
     "timestamp_utc": "2026-08-25T07:31:00.124697+00:00",
     "license": "ODbL — © OpenStreetMap contributors"
@@ -89,7 +89,7 @@
     "cities": [
       "Lagos"
     ],
-    "out": "D:\\YohannaPaper\\data\\raw\\osm_lagos.csv",
+    "out": "D:\\urban-agriculture-nigeria-spatial\\data\\raw\\osm_lagos.csv",
     "n_rows": 130,
     "timestamp_utc": "2026-08-25T07:34:20.936520+00:00",
     "license": "ODbL — © OpenStreetMap contributors"
@@ -100,7 +100,7 @@
     "cities": [
       "Kano"
     ],
-    "out": "D:\\YohannaPaper\\data\\raw\\osm_kano.csv",
+    "out": "D:\\urban-agriculture-nigeria-spatial\\data\\raw\\osm_kano.csv",
     "n_rows": 189,
     "timestamp_utc": "2026-08-25T07:36:21.309412+00:00",
     "license": "ODbL — © OpenStreetMap contributors"
@@ -111,7 +111,7 @@
     "cities": [
       "Port Harcourt"
     ],
-    "out": "D:\\YohannaPaper\\data\\raw\\osm_portharcourt.csv",
+    "out": "D:\\urban-agriculture-nigeria-spatial\\data\\raw\\osm_portharcourt.csv",
     "n_rows": 88,
     "timestamp_utc": "2026-08-25T07:38:39.546695+00:00",
     "license": "ODbL — © OpenStreetMap contributors"
@@ -175,7 +175,7 @@
     "source": "FAOSTAT API (or stub)",
     "url": "https://fenixservices.fao.org/faostat/api/v1/en/data/FS?area=159",
     "status": "http_521_stub",
-    "out": "D:\\YohannaPaper\\data\\raw\\fao_food_security.csv",
+    "out": "D:\\urban-agriculture-nigeria-spatial\\data\\raw\\fao_food_security.csv",
     "timestamp_utc": "2026-08-25T07:40:41.766963+00:00"
   },
   {
@@ -196,7 +196,7 @@
     "source": "OpenStreetMap Overpass API (aggregate counts)",
     "url": "https://overpass-api.de/api/interpreter",
     "query": "way[\"building\"] | way[\"highway\"] inside LGA polygon, `out count;`",
-    "out": "D:\\YohannaPaper\\data\\raw\\osm_exposure_by_lga.csv",
+    "out": "D:\\urban-agriculture-nigeria-spatial\\data\\raw\\osm_exposure_by_lga.csv",
     "n_rows": 78,
     "timestamp_utc": "2026-10-15T03:19:42.433846+00:00",
     "license": "ODbL - (c) OpenStreetMap contributors",

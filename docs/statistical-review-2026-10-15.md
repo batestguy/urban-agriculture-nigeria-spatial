@@ -1,4 +1,4 @@
-# Statistical Review — YohannaPaper
+# Statistical Review — urban-agriculture-nigeria-spatial
 
 **Reviewed:** 15 October 2026
 **Reviewer:** independent audit, re-deriving every headline claim from the frozen data
@@ -300,7 +300,7 @@ model: it states what passes and what is flagged.
 - **No environment lock.** No `renv.lock`, no `sessionInfo()` capture. The docs claim
   `R 4.5.2`; the installed packages report **built under R 4.5.3**. Package versions
   (`spdep 1.4.2`, `spatialreg 1.4.3`) are asserted in prose but not pinned in a file.
-- **Build is not one command.** `render.ps1` / `render.bat` hardcode `D:\YohannaPaper`, so
+- **Build is not one command.** `render.ps1` / `render.bat` hardcode `D:\urban-agriculture-nigeria-spatial`, so
   they fail on any other machine — which is precisely the audience for a public repo.
 - **`MR. YOHAN FINAL BINDING.docx` (6.6 MB)** sits untracked in the repo root and appears to
   be the only carrier of the thesis source data. Either extract the survey data into

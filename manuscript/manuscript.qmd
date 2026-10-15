@@ -2,10 +2,17 @@
 title: "Where urban agriculture concentrates in Nigerian cities"
 subtitle: "A spatial analysis with coverage correction"
 author:
-  - name: "Jerry Bannister Zachary¹"
-    affiliation: "¹Department of Urban and Regional Planning, Abubakar Tafawa Balewa University, Bauchi, Nigeria. E-mail: jzbannister@atbu.edu.ng"
+  - name: "Jerry Bannister Zachary"
+    affiliation: "Statistician, Abubakar Tafawa Balewa University (ATBU), Bauchi, Nigeria"
     email: "jzbannister@atbu.edu.ng"
     corresponding: true
+# The affiliation is stated twice on purpose, and scripts/verify_author_block.py fails the
+# build if the two copies ever disagree. Quarto's HTML path renders `author[].affiliation`;
+# Quarto's author normalisation then consumes that key before the LaTeX title partial runs,
+# and pandoc's docx writer ignores it too -- so the PDF and the Word file need this second,
+# top-level copy to render at all. Keeping only one of them silently loses the affiliation
+# from one of the three outputs.
+author-affiliation: "Statistician, Abubakar Tafawa Balewa University (ATBU), Bauchi, Nigeria"
 date: last-modified
 date-format: "D MMMM YYYY"
 abstract: |
@@ -67,6 +74,15 @@ format:
     toc: true
     number-sections: true
     colorlinks: true
+    # Quarto's stock LaTeX title partial prints only the author NAME; the affiliation
+    # lives in the top-level `author-affiliation` key (see the note beside it) and is
+    # typeset here. manuscript/template.tex is Quarto's own thin top-level template,
+    # copied verbatim because Quarto only honours `template-partials` when a `template`
+    # is also supplied (without one the render silently loses scrartcl).
+    # Re-copy both from Quarto's share/formats/pdf/pandoc/ on a Quarto upgrade.
+    template: template.tex
+    template-partials:
+      - title.tex
   docx:
     toc: false
     number-sections: true
@@ -627,6 +643,8 @@ The author is the sole contributor and is responsible for the following: concept
 research design; data acquisition from the OpenStreetMap, NASA POWER and World Bank APIs;
 spatial and statistical analysis; interpretation of results; and preparation of the manuscript.
 The author has approved the final version and takes responsibility for the integrity of the work.
+All datasets used here were obtained by the author from the public sources listed under Data and
+code availability; no third party supplied or contributed any layer used in this analysis.
 
 # Declaration of Generative AI Use
 

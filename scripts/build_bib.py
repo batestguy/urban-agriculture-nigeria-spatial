@@ -24,7 +24,7 @@ sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 OUT = ROOT / "manuscript" / "references.bib"
-UA = {"User-Agent": "YohannaPaper-bibbuild/1.0 (mailto:jzbannister@atbu.edu.ng)"}
+UA = {"User-Agent": "urban-agriculture-nigeria-spatial-bibbuild/1.0 (mailto:jzbannister@atbu.edu.ng)"}
 API = "https://api.crossref.org/works"
 
 # doi -> bibtex key. Chosen by the author; the metadata is fetched, not trusted.

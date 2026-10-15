@@ -51,7 +51,7 @@ QUERIES = [
 
 def q(query: str, page_size: int = 20):
     url = BASE + urllib.parse.quote(query, safe='') + f"?pageSize={page_size}"
-    req = urllib.request.Request(url, headers={"User-Agent": "YohannaPaper/1.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": "urban-agriculture-nigeria-spatial/1.0"})
     with urllib.request.urlopen(req, timeout=45) as r:
         return json.loads(r.read())
 

@@ -51,7 +51,7 @@ script to confirm.
 | 43 points (8.9%) outside study states, silently dropped | Quantified and documented | `analysis/spatial/audit_claims.R` §5 |
 | 45 bib entries, 21 uncited, 2 placeholder DOIs, duplicate entry | 24 entries, all cited, no placeholders, no duplicates | `manuscript/references.bib` |
 | `docs/references.bib` forked from manuscript without warning | Synced by `build.R` step 0 | `build.R` |
-| Build scripts hardcoded `D:\YohannaPaper` | Path-relative | `render.ps1`, `build.R` |
+| Build scripts hardcoded `D:\urban-agriculture-nigeria-spatial` | Path-relative | `render.ps1`, `build.R` |
 
 ## C. Blocked — needs the author
 
