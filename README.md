@@ -142,9 +142,16 @@ figure's pixel dimensions against its generator and refuses to let the report ca
 │   ├── verify_bib.py           re-check every DOI
 │   ├── fix_docx_ajlpgs.py      AJLP&GS typography + inject the author block
 │   ├── verify_author_block.py  fail if any output lost the author block
-│   └── rename_project.py       one-off migration of the project name
+│   ├── rename_project.py       one-off rewrite of the project name in-repo
+│   └── rename_folder.ps1       one-off move of the folder itself (see note below)
 └── renv.lock                   exact package versions
 ```
+
+> **The folder rename is still pending.** The GitHub repository and every in-repo reference use
+> the new name; the on-disk directory does not, because Windows will not rename a directory a
+> running process holds as its working directory. Run
+> `scripts/rename_folder.ps1` from `D:\` once no session has this project open. See
+> `PROGRESS.md` for the full account.
 
 ## Reproducing
 

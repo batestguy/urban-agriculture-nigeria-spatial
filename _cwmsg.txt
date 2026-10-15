@@ -1,0 +1,41 @@
+chore(rename): add the folder-move script and tighten the identity gate
+
+The GitHub repository is renamed to batestguy/urban-agriculture-nigeria-spatial, the
+remote follows, and every in-repo reference uses the new name. The on-disk folder
+rename is written and tested but has NOT run:
+
+    Move-Item D:\YohannaPaper D:\urban-agriculture-nigeria-spatial
+    -> The process cannot access the file because it is being used by another process
+
+Windows will not rename a directory a running process holds as its working directory,
+and that holder is this agent session. A control rename of a fresh folder on the same
+volume succeeds, so it is not permissions or the filesystem. Nothing was half-moved:
+the rename failed atomically, and the tree, git history (132 tracked files) and
+abandoned/ (18 files) are intact and in sync with origin/master.
+
+scripts/rename_folder.ps1 performs the move and verifies it: refuses if its own cwd is
+inside the source, moves, adds the new path to git's global safe.directory allow-list
+(the old entry is keyed on the absolute path and stops covering the checkout), then
+reports git status, the remote, HEAD, the tracked-file count, abandoned/ still holding
+18 files, MR. YOHAN FINAL BINDING.docx untouched, and the README/AGENTS.md path
+references. Run it from D:\ once no session has this project open.
+
+verify_author_block.py grew a declared exemption list and a line-level re-check of
+PROGRESS.md. A whole-file exemption is a blunt instrument, so PROGRESS.md is scanned
+line by line and only the two lines telling the reader how to finish the folder move
+may name the old path; anything else fails. Verified in both directions: injecting a
+stray reference produces
+
+    [FAIL] stale project name - PROGRESS.md:487 names the old path outside the
+    migration instructions
+
+and exit 1; removing it returns the gate to 0 discrepancies.
+
+README and PROGRESS.md now record the pending move, the reason it is pending, and the
+exact command to finish it, so the repository does not silently claim a rename that
+has not happened on disk.
+
+Verified: verify_author_block.py 5 artefacts OK, 93 text files scanned; 61 + 61 + 53
+claim checks, 0 discrepancies.
+
+Co-Authored-By: Claude <noreply@anthropic.com>

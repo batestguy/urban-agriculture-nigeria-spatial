@@ -410,6 +410,32 @@ untouched: `data/raw/*.csv` (frozen observations; a rename must not edit measure
 `abandoned/` (another person's archived work), and `MR. YOHAN FINAL BINDING.docx`. The two
 docx post-processors were also made path-relative, so they survive the move.
 
+**The GitHub repository is renamed and pushed. The local Drive D folder is not yet renamed,
+and here is exactly why.** `Move-Item D:\YohannaPaper D:\urban-agriculture-nigeria-spatial`
+fails with `The process cannot access the file because it is being used by another process`:
+a running process holds the directory as its working directory, and Windows will not rename a
+directory in that state. A control rename of a freshly created folder on the same volume
+succeeds, so this is specific to this project being open, not a permissions or filesystem
+problem. The holder is the agent session working in it. Nothing was half-moved — the rename
+failed atomically and the tree, the git history (132 tracked files) and `abandoned/`
+(18 files) are intact, still in sync with `origin/master`.
+
+`scripts/rename_folder.ps1` is written and tested for the move. Run it from `D:\` — **not**
+from inside the folder — once no session has this project open:
+
+```pwsh
+cd D:\
+powershell -NoProfile -File D:\YohannaPaper\scripts\rename_folder.ps1
+```
+
+It refuses rather than half-moving if its own working directory is inside the source, moves the
+folder, adds the new path to git's global `safe.directory` allow-list (the old entry is keyed on
+the absolute path and stops covering this checkout), then verifies: `git status`, the remote,
+HEAD, the tracked-file count, that `abandoned/` travelled with 18 files, that
+`MR. YOHAN FINAL BINDING.docx` is untouched, and that the README and AGENTS.md mention the new
+path. Until it is run, every in-repo reference already points at the new name and the git
+remote is correct — only the on-disk directory name is still the old one.
+
 **Rendered and verified:**
 - `manuscript/manuscript.pdf` 24 pp, `.docx`, `.html` — author block present in all three
 - `docs/methodology.pdf` 13 pp; `docs/spatial-report.pdf` 19 pp

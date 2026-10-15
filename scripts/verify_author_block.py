@@ -44,6 +44,21 @@ QMD = ROOT / 'manuscript' / 'manuscript.qmd'
 # stale self-reference would ship the wrong project identity to a reviewer.
 FORBIDDEN = ['YohannaPaper', 'YorubaPaper']
 
+# Files permitted to name the old path anyway, each for a stated reason. Declared rather
+# than inferred, so the exceptions are visible in one place and have to be argued for.
+#
+#   rename_project.py   a migration tool has to know what it migrates away from
+#   rename_folder.ps1   ditto; it moves the directory that still carries the old name
+#   PROGRESS.md         exempted from the blanket scan above, then re-checked line by
+#                       line: only the two lines that tell the reader how to finish the
+#                       pending folder move may name the old path. Any other occurrence
+#                       fails. See the PROGRESS.md block further down.
+NAME_EXEMPT = {
+    'scripts/rename_project.py',
+    'scripts/rename_folder.ps1',
+    'PROGRESS.md',
+}
+
 
 def front_matter() -> dict:
     """Read the author fields from the manuscript front matter (single source of truth)."""
@@ -140,10 +155,8 @@ def main() -> int:
     # The old project name must not survive anywhere it could be read.
     skip_dirs = {'.git', 'abandoned', '.playwright-mcp', '_site', '_freeze', '_probe',
                  '__pycache__', '.quarto', 'node_modules'}
-    # This gate names the forbidden strings, and rename_project.py exists to rewrite them;
-    # a migration tool has to know what it is migrating away from.
-    exempt = {pathlib.Path(__file__).resolve(),
-              (ROOT / 'scripts' / 'rename_project.py').resolve()}
+    # This gate names the forbidden strings, and two tools exist to rewrite them.
+    exempt = {pathlib.Path(__file__).resolve()} | {(ROOT / p).resolve() for p in NAME_EXEMPT}
     binary = {'.pdf', '.png', '.jpg', '.jpeg', '.docx', '.gpkg', '.shp', '.dbf', '.prj', '.tif'}
     stale: list[str] = []
     scanned = 0
@@ -162,6 +175,22 @@ def main() -> int:
         for bad in FORBIDDEN:
             if bad in t:
                 stale.append(f'{p.relative_to(ROOT)} contains "{bad}"')
+
+    # A whole-file exemption is a blunt instrument, so PROGRESS.md is re-checked here
+    # line by line: every remaining occurrence must be one of the two lines that tell the
+    # reader how to finish the pending folder move. Any other occurrence fails.
+    allowed_in_progress = [
+        '`Move-Item D:\\YohannaPaper D:\\urban-agriculture-nigeria-spatial`',
+        'powershell -NoProfile -File D:\\YohannaPaper\\scripts\\rename_folder.ps1',
+    ]
+    progress = ROOT / 'PROGRESS.md'
+    if progress.exists():
+        for n, line in enumerate(progress.read_text(encoding='utf-8').splitlines(), 1):
+            if not any(bad in line for bad in FORBIDDEN):
+                continue
+            if not any(allowed in line for allowed in allowed_in_progress):
+                stale.append(f'PROGRESS.md:{n} names the old path outside the migration '
+                             f'instructions: {line.strip()[:70]}')
     if stale:
         failures.extend(stale)
         for s in stale:
