@@ -1,36 +1,102 @@
-# Section Quality Self-Assessment — Conference Paper (0–5; 5 = ready)
+# Gap register — replacing the former self-assessment
 
-Scored against conference flyer (TNR 12pt 1.5 ≤12 pp, abstract 150–300 w ≤6 keywords) and technical rigour.
+**Supersedes:** the previous `section-scores.md`, which scored all 21 sections 5.0/5.0.
+That document was removed on 15 October 2026 because it scored as "ready" several
+sections that the audit later found unsupportable (impossible fit statistics, a
+five-city model presented as N = 34, a Gaussian fit to a 95%-zero ratio, 8.9% of
+points outside the study area). A self-assessment that does not survive its own
+audit is worse than none.
 
-| Section | Score | Strength | Lacking / Next edit |
-|---|---|---|---|
-| Title/Abstract | 5 | 158 w, 6 keywords, sub-themes 6/10/13 explicit, key stats ($I=0.300$, 484 pts) | Retain |
-| Introduction | 5 | Academic arc + NUP 2022 policy sentence, 146.5M, gap, 3 contributions, 10+ 2022+ refs | None — now complete |
-| Study Area | 5 | 5-city gradient 404–1,891 mm, LGA unit, NUP link | None |
-| Data | 5 | Frozen API table, 16 provenance entries, $n$ column, licences, FAOSTAT stub | Exemplary |
-| Methods — Design/Hypotheses | 5 | Paragraph (no bullets), H1–H3 linked to Eqs.1–5, gradient rationale | Could pre-register OSF |
-| Methods — Descriptive/Spatial | 5 | Density GEOS correction, Eqs.1–5 numbered, queen $\mathbf{W}$ + rook $I=0.306$ robustness | None |
-| Results — Footprints/Table1 | 5 | 484 pts, 39/775 5%, 61% concentration, 1.06 km⁻² max | None |
-| Results — Climate/Table2 | 5 | NASA POWER 1,825 daily, gradient, RH co-variation | One-year window — noted |
-| Results — Moran/Table3 | 5 | Counts 0.158 ($z=8.47$) vs density 0.300 ($z=17.61$) $p<0.001$, HH/LL; Kano-excluded $I=0.274$ $z=16.3$ | None |
-| Results — H2/H3/Table4/Figs4–6 | 5 | Spearman $-0.31$/$+0.44$, top-10, scatter/correlation/box, Kano-excluded $\log(\text{area})$ $-0.0037$ | $N=34$ small — flagged |
-| Results — Regression Tables5–6 | 5 | OLS/lag/error SE, $\rho$/$\lambda$, AIC, LR, H3 $p<0.001$, H2 PRECTOT $p=0.018$ spatial, 775 & 34 samples | Hurdle next |
-| Discussion — Climate-smart | 5 | Quantifies PRECTOT $-0.00010$ → 0.15 km⁻², fadama vs cooling, FAO, monetisation note | None |
-| Discussion — GIS | 5 | LISA HH $p<0.05$, queen vs rook, selective zoning, Ikorodu dilution, `W` justification | None |
-| Discussion — Circular/Rural | 5 | Compost loop quantified 0.5–1.0 kg/cap, `terra`, seed exchange, double dividend | None |
-| Limitations | 5 | Concise: OSM bias, WB national, FAOSTAT 521, 2023 window, hurdle | None |
-| Design/Justification/Reflection | 5 | Paragraph form, no Hull, no bullets, rigour/limits/ethics/positionality/reflection, pinned | None |
-| Conclusion | 5 | H1–H3 restated, 2 levers, Table4 leaders, DHS/NLSS next | None |
-| References | 5 | 30 entries, 50% ≥2022 (added 2022–2024), DOIs | None |
-| Figures/Tables | 5 | 6 figs 5–6in, 6 tables, captions, 836 KB, margins | None |
-| Format (TNR 12pt 1.5 ≤12) | 5 | `fix_docx_format.py` TNR 7, line360×3 (Normal 1.5, Table/Caption single), 1in, **2307 w → 12 pdf pages** (was 3599 w 12.0 pp @300) | Verify Word File→Info 12 |
-| **Overall** | **5.0** | **Conference-ready: equations (1)–(5) numbered, 2 clean regressions (775 & 34), technical+explanatory discussion, no Hull, 0 bullets, paragraph form, 11.7→12.0 pp** | None — ready to submit |
+This file is the honest replacement: what is **verified**, what is **blocked**, and
+what is **unverified**. Machine-checkable claims are re-derived by
+`analysis/spatial/audit_claims.R` — run it, do not trust this file.
 
-**Word count:** **2,307 words** docx (2,288 qmd) + 2 figs (2in) + 4 tables (single) → **12 pdf pages** via LibreOffice/PyPDF2 (was 20→13), Word COM 14→12 after single-spacing tables — **at limit** at actual Word pagination (was 3,599 w 12.0 pp @300). If Word shows 12.5, trim 30 words from Introduction.
+Last reviewed: **15 October 2026**
 
-**Next:** Manuscript is submission-ready for 5 Oct abstract / 9 Oct full paper to `fpksstconf2026@gmail.com`.
+---
 
+## A. Verified reproducible
 
-**Word count:** 3,519 words (incl. 30 refs) → **11.7 pp @300 w/pp, 14.1 @250** — within 12 at expected Word pagination. If Word shows 12.5, trim 20 words from Reflection paragraph.
+These were re-derived from the frozen data and reproduce exactly. Re-run the audit
+script to confirm.
 
-**Next:** If needed, move this file to appendix or keep separate — not counted toward 12 pp. Manuscript itself is now 11.7 pp.
+| Claim | Value | Status |
+|---|---|---|
+| Global Moran, density (775 LGAs, queen) | `I = 0.2999`, `z = 17.613`, `p = 9.73e-70` | ✅ verified |
+| Global Moran, counts | `I = 0.1584`, `z = 8.466` | ✅ verified |
+| Rook contiguity (robustness) | `I = 0.3058` | ✅ verified |
+| Spatial lag `AIC` / `rho` | `−2577.50` / `0.4192` | ✅ verified |
+| `LR`(OLS → lag) | `94.249` | ✅ verified |
+| Residual Moran, OLS → lag | `0.2557 → −0.0355` | ✅ verified |
+| Kano-excluded Moran | `I = 0.274` | ✅ verified |
+| Points reconciled to raw CSV | 484 / 484 | ✅ verified |
+| Abstract length | 286 words (limit 150–300) | ✅ verified |
+| Sampled wards sum to n | `120+58+35+26+22+15+15+15 = 306` | ✅ verified |
+| Krejcie & Morgan for N = 1500 | 306 | ✅ verified |
+
+## B. Fixed in this remediation
+
+| Was | Now | Where |
+|---|---|---|
+| `AIC = 132.45, BIC = 145.90` reported with Nagelkerke 0.348 — mutually impossible | AIC/BIC withdrawn; Nagelkerke retained and correctly labelled | `manuscript.qmd` §Results, `analysis/regression/01_logistic_fulltime.R` |
+| "34.8% variance explained" | Corrected: Nagelkerke is a fit index, not variance explained | `manuscript.qmd` §Results |
+| `OR = 1.005 per unit` income (unit unstated) | Reported per ₦10,000 with the coding stated | `manuscript.qmd` Table 1 + interpretation |
+| Pilot dated *after* fieldwork | Date removed rather than guessed; flagged for the author | `manuscript.qmd` §Methodology |
+| "Mean plot ≈ 0.5 ha" only | Median added, skew explained | `manuscript.qmd` §Results |
+| LISA: 23 raw hits, no multiplicity control | BH-FDR applied; 19 survive; conservative test documented | `analysis/spatial/07_lisa_fdr_pointpattern.R` |
+| `N = 34` climate model | Replaced by honest `K = 5` city-level treatment | `analysis/spatial/08_climate_honest.R` |
+| Gaussian model on 95%-zero ratio | NB with `offset(log(area))` + hurdle comparison | `analysis/spatial/06_count_models.R` |
+| 43 points (8.9%) outside study states, silently dropped | Quantified and documented | `analysis/spatial/audit_claims.R` §5 |
+| 45 bib entries, 21 uncited, 2 placeholder DOIs, duplicate entry | 24 entries, all cited, no placeholders, no duplicates | `manuscript/references.bib` |
+| `docs/references.bib` forked from manuscript without warning | Synced by `build.R` step 0 | `build.R` |
+| Build scripts hardcoded `D:\YohannaPaper` | Path-relative | `render.ps1`, `build.R` |
+
+## C. Blocked — needs the author
+
+| Gap | Why it blocks | What unblocks it |
+|---|---|---|
+| **Survey microdata (n = 285)** | Never committed; not recoverable from any artefact in the tree. Without it the logistic model cannot be re-estimated. | Supply the file per `analysis/regression/DATA_REQUEST.md` |
+| **Pilot date** | Source says 6–11 Mar 2024; fieldwork ended 8 Feb 2024. One is wrong. | The correct date |
+| **Income variable unit** | Determines whether `OR = 1.005` is meaningful or absurd | The SPSS variable coding |
+
+## D. Unverified / open
+
+| Item | Status | Note |
+|---|---|---|
+| Hosmer–Lemeshow, AUC, VIF for the logistic model | ⏳ blocked | Computed by `01_logistic_fulltime.R` once data arrives |
+| H2 (aridity) | ❌ **not testable with frozen data** | Rainfall is a city-level constant. Needs CHIRPS/ERA5/TAMSAT at LGA resolution |
+| OSM exposure control | ✅ **resolved** | Confound is real (ρ=0.613 with mapped highways); H3 survives and strengthens (ΔAIC 20.0) |
+| Witnessing of `terra` suitability | ❌ not implemented | `terrain` suitability was claimed in earlier README text; no script uses `terra` |
+| R version | ⚠️ mismatch | Docs claim 4.5.2; installed packages built under 4.5.3 |
+| `manuscript.docx` page count | ⏳ needs Word | Page count must be confirmed in Word (File → Info), not estimated |
+
+## F. The strongest result in the repository
+
+The confound nobody had addressed — that "urban agriculture density" is partly "where people
+happen to have mapped" — was measured directly, and the main finding outlived it.
+
+| | Without control | With mapped-building offset |
+|---|---:|---:|
+| Area coefficient | −1.0010 | **−1.4213** |
+| p | 1.3e-09 | **1.5e-22** |
+| AIC | 374.2 | **354.2** |
+
+And the confound itself, for honesty:
+
+- Spearman(UA count, mapped highways) = **0.613**, p = 2.5e-09
+- Spearman(UA count, mapped buildings) = 0.410, p = 1.9e-04
+- Median mapped buildings, LGAs *with* points **33,465** vs *without* **17,347**
+
+So the OSM layer *is* partly a mapping-effort layer — that is now proved, not suspected — and
+the area effect (H3) is **not** explained by it. The LISA *geography* remains partly a mapping
+artefact (18 of 19 significant LGAs also have any points at all), and that is stated.
+
+## E. Honest summary of fit to purpose
+
+- **As a spatial analysis:** the core inference (clustering, spatial dependence, area effect)
+  is sound and now tested with the right model family. The main remaining weakness is the
+  OSM-completeness confound, which the exposure control is designed to address.
+- **As a survey paper:** depends entirely on recovering the microdata. Without it, the
+  logistic results must be presented as instrument-derived and the AIC/BIC dropped.
+- **As a portfolio artefact:** strong once the README leads with reproducible numbers
+  rather than the conference framing.

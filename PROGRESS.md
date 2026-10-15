@@ -143,6 +143,123 @@
 - **Fix:** Copied `manuscript/references.bib` → `docs/references.bib` for typst project-root access (typst cannot read outside root), removed `csl: https://.../apa` (unknown style, set to default `apa`), switched `pdf-engine: lualatex` → `format: typst` (A4, 25mm margins, 11pt, 1.15). Rendered 10 pp via `typst` (was `lualatex` 120s+ timeout).
 - **README:** Updated `README.md:8` to add **§8 Detailed Methodology** (PDF link, 10 pp, equations + layman, build command) and refreshed `§4 Repository Structure` (added `docs/methodology.qmd/.pdf/.typ`, `docs/references.bib`, `docs/section-scores.md`, `results/*`, `analysis/spatial/04_extra_figs.R`, `run_regression.R`, `check_sensitivity.R`) and `§5 Progress Log` snapshot (2026-08-26) and `*Last updated: 2026-08-26*`.
 
+## 2026-10-15 — Full audit and remediation (Phases 0-6)
+
+**Trigger:** an independent statistical audit found that several headline claims did not
+reproduce. Full review: `docs/statistical-review-2026-10-15.md`. Plan and outcomes:
+`docs/remediation-phases.md`. Gap register: `docs/section-scores.md` (replaces the former
+self-assessment, which scored everything 5.0/5.0).
+
+### Phase 0 — ground truth
+- **Survey microdata does not exist anywhere in the repo.** No `.sav`/`.dta`/`.xlsx`/`.rds`;
+  the thesis `.docx` has 46 parts and **zero embedded objects**; zero respondent-level rows in
+  the text. The logistic model therefore **cannot be re-estimated** — this is a hard blocker
+  requiring the author.
+- Network verified (Overpass 200, World Bank 200); Overpass `out count;` supported.
+- Packages verified present: `pscl`, `glmmTMB`, `car`, `sandwich`, `performance`, `renv`,
+  `patchwork`, `texstat`.
+
+### Phase 1 — paper correctness
+- **Withdrew `AIC = 132.45` / `BIC = 145.90`.** Proven impossible alongside Nagelkerke 0.348 for
+  n=285 with 8 free parameters (reported BIC−AIC gap 13.45; required 29.22). Nagelkerke retained.
+  Arithmetic in `analysis/regression/01_logistic_fulltime.R` Audit A2.
+- **"34.8% variance explained" removed** — Nagelkerke is a fit index, not a variance proportion.
+- **Income rescaled to per-₦10,000.** `OR = 1.005 per unit` becomes ~1.05 once the unit is
+  stated; the coefficient was fine, the reporting was not.
+- **Pilot date removed.** Source dated the pilot 6–11 Mar 2024, *after* fieldwork ended 8 Feb
+  2024. Removed rather than guessed.
+- **Mean plot size contextualised** — median added; the distribution is right-skewed.
+- **Data Availability section added** to the manuscript.
+- New `analysis/regression/` with `01_logistic_fulltime.R` (runs the full correct analysis the
+  moment data arrives: real −2LL, AIC, BIC, McFadden, Cox-Snell, Nagelkerke, OR + 95% profile
+  CIs, VIF, Hosmer–Lemeshow, classification, AUC) and `DATA_REQUEST.md`.
+- `data/raw/README-survey-data.md` documents the gap and how to close it.
+
+### Phase 2 — statistical rigour
+- **`06_count_models.R`** — the outcome is 95% zeros with skewness 15.5; the Gaussian spatial lag
+  produced **265 of 775 negative fitted densities**. Replaced with negative binomial using area
+  as an **offset**, removing the ratio fallacy.
+  **H3 survives:** $\log(	ext{area})$ $b=-1.551$, IRR 0.212, $p=8.5	imes10^{-11}$;
+  LR vs offset-only model $\chi^2=32.05$, $p=1.5	imes10^{-8}$.
+  Hurdle model flagged honestly: lowest AIC but its count component is **unidentified** (only 39
+  non-zero LGAs), so its coefficients are not quoted.
+- **`07_lisa_fdr_pointpattern.R`** — LISA had no multiplicity control: 23 raw hits against 38.8
+  expected false positives. BH-FDR leaves **19**. The raw count being *below* chance expectation
+  is itself evidence the normal approximation is conservative on a 95%-zero variable.
+  Added join-count ($z=30.3$, $p<2	imes10^{-16}$) and within-city Ripley's $L$ (outside the
+  simulation envelope in all 5 cities).
+- **`08_climate_honest.R`** — the "N = 34 LGA" climate model is pseudoreplication: rainfall was
+  sampled at 5 city centroids, so **rainfall R² on city dummies = 1.000**. At the honest level
+  (K = 5 cities) the effect is $p=0.576$, not $p=0.018$. **H2 is now reported as untestable**
+  with the frozen data; CHIRPS/ERA5/TAMSAT named as the fix.
+
+### Phase 3 — data integrity
+- **`05_export_lga_polys.R` + `scripts/fetch_osm_exposure.py`** — new per-LGA OSM mapping-effort
+  control (building + highway counts inside LGA polygons via Overpass `out count;`), covering the
+  39 LGAs with points plus 39 stratified zero-point controls. **Run completed: 78/78 LGAs**,
+  writing `data/raw/osm_exposure_by_lga.csv` with a provenance entry (17 total).
+- **`12_exposure_control.R`** — the confound is real and now quantified:
+  Spearman(UA count, mapped highways) = **0.613** (p = 2.5e-09);
+  Spearman(UA count, mapped buildings) = 0.410 (p = 1.9e-04); median mapped buildings
+  **33,465** in LGAs with points vs **17,347** without.
+  **H3 survives it and strengthens:** area coefficient −1.0010 → **−1.4213**,
+  **ΔAIC = 20.0**, p 1.3e-09 → 1.5e-22. The confound is proved and the finding outlives it.
+  What does *not* survive is the LISA geography: 18 of 19 significant LGAs also have any points
+  at all, so "where the clusters are" remains partly "where the mappers went".
+- **`10_study_extent.R`** — quantified the bounding-box leak: **43 of 484 points (8.9%) fall
+  outside the five study states.** The "Abuja" box returns more points in Niger State (17) than
+  in the FCT (15). Recovered the true box extents (3–98 km) to show these are city-scale
+  rectangles leaking across state lines.
+
+### Phase 4 — repo hygiene
+- **Bibliography: 45 entries → 24.** Removed 21 uncited; killed both placeholder DOIs
+  (`10.xxxx/njae2024`, `10.1007/s11524-026-xxxxx`); merged the duplicate Bashir entries; retyped
+  15 journal-less `@article`s as `@techreport`/`@misc`. `build.R` step 0 now syncs
+  `docs/references.bib` from the manuscript copy so they cannot fork.
+- **`docs/section-scores.md` replaced** with an honest gap register (verified / fixed / blocked /
+  unverified) — the old file scored 21 of 21 sections 5.0/5.0.
+- **`renv.lock`** written from installed versions plus `docs/session-info.txt`. R is genuinely
+  4.5.2 (correcting the audit's earlier note); 17 of 24 packages were *compiled* under 4.5.3.
+- **`build.R`** — one path-relative entry point for the whole pipeline; `render.ps1` no longer
+  hardcodes `D:\YohannaPaper`.
+- `.gitignore` now excludes `.codewhale/`, `.playwright-mcp/` and the 6.6 MB thesis docx.
+
+### Phase 5 — portfolio framing
+- **README rewritten.** It now opens with the two outputs stated as **two separate studies**
+  (the survey is Bauchi; the spatial analysis is five cities) because presenting them as one was
+  the largest credibility risk. Leads with a reproducible-results table, states plainly what the
+  audit changed and why, and carries an honest limitations section.
+- **`11_summary_figure.R`** — one small-multiples panel (raw points → density → LISA after FDR →
+  why the model family changed) replacing six fragmented screenshots.
+
+### Phase 6 — verification
+- `analysis/spatial/audit_claims.R` extended and re-run: **12 checks pass**, 8 items remain
+  flagged and each is now either an open limitation with a named fix or a documented property of
+  the data.
+- `docs/methodology.qmd` revised end to end (§6.3.1 superseded tables, §6.3.2 corrected count
+  model, §6.3.3 LISA with FDR, §6.4 H2 withdrawn, §6.5 confound open) → `docs/methodology.pdf`
+  13 pp.
+
+### Still blocked on the author
+1. **Survey microdata** (285 records) — without it the logistic results stay instrument-derived.
+2. **Pilot date** — 6–11 Mar 2024 contradicts the 8 Jan–8 Feb fieldwork window.
+3. **Income variable unit** — determines whether the OR is per ₦1, ₦1,000 or ₦10,000.
+
+### Still open technically
+- **The LISA geography remains partly a mapping artefact** (18 of 19 significant LGAs are
+  also "has any point"). The *statistical* confound check passes; the *map* is still not a
+  pure agriculture map.
+- H2 needs within-city rainfall (CHIRPS/ERA5/TAMSAT).
+- `manuscript.docx` page count must be confirmed in Word, not estimated.
+- The 43 out-of-scope points are documented but the OSM layer has not been re-pulled with
+  GADM polygons / an urban-extent mask (`fetch_osm_urban_ag.py` would need a `poly:` filter).
+
+### Note on timing
+The conference (13–15 Oct 2026) has run and the 5/9 Oct deadlines have passed. This remediation
+is therefore aimed at a **journal version and a public portfolio**, not the conference.
+
+---
+
 ## Next actions (owner: batestguy) — Phase 6 submission
 - [x] Phase 0: verify done
 - [x] Phase 1a: worldbank — done
