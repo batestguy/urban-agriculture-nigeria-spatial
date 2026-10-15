@@ -11,7 +11,9 @@ This file is the honest replacement: what is **verified**, what is **blocked**, 
 what is **unverified**. Machine-checkable claims are re-derived by
 `analysis/spatial/audit_claims.R` — run it, do not trust this file.
 
-Last reviewed: **15 October 2026**
+Last reviewed: **15 October 2026**  
+Report: **`docs/spatial-report.html`** — rendered account of the spatial study (HTML + 19 pp PDF)  
+Gate: **`analysis/spatial/verify_report_claims.R`** — 61 checks, 0 discrepancies
 
 ---
 
