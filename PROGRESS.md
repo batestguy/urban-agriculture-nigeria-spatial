@@ -473,17 +473,36 @@ deliberately skipped — the skip list is the part that matters.
 - [x] Methodology PDF 05:21: `docs/methodology.qmd` → `docs/methodology.pdf` 10 pp, equations + layman, README §8
 - [x] Author/ownership correction + project rename — done 2026-10-15
 - [x] Submission `.docx` page count read from Word: **19 pp** ≤ 20; margins verified
-- [ ] **Submit to AJLP&GS** (not the Kaltungo conference): the manuscript is now formatted for
-      the journal. Outstanding, in the order that matters:
-      1. **Scopus** — confirm ISSN 2657-2664 at <https://www.scopus.com/sources> first. If the
-         journal is not indexed there, that decision comes before any more formatting work.
-      2. **Anonymised copy** for review — the journal requires it; not created yet.
-      3. **References in the journal's own format** — currently APA.
-      4. **Copyright form** from the journal site.
-      5. **ORCID iD** for the author block.
+- [x] **Scopus gate applied to AJLP&GS — FAILED.** Four sources agree it is not indexed. Venue
+      decision reopened. Evidence and the fabricated-ID warning recorded in
+      `docs/venue-options.md` and the README.
+- [ ] **Pick a venue, then submit.** Blocked on one thing only: verifying Scopus status for the
+      no-APC candidates. Paste these into <https://www.scopus.com/sources> or
+      <https://www.journalindicators.com>:
+      `1012-280X` · `1970-9889` · `2731-6661` · `2694-1589`
+      Then the remaining work is: reformat to the chosen venue's house style, create the
+      anonymised review copy, supply an ORCID iD.
 
 ## Decisions & risks
-- **Venue changed to AJLP&GS** (e-ISSN 2657-2664, no APC). The Kaltungo conference spec —
+- **AJLP&GS is dropped: it failed the Scopus gate.** Four sources agree it is not
+  Scopus-indexed (SCImago has no record; Google's AI Overview says so outright; the journal's
+  own site lists DOAJ and Cairn only; the DOAJ API record carries no Scopus identifier) and
+  none disagrees. The venue decision is reopened — `docs/venue-options.md` now lists four
+  no-APC candidates whose Scopus status is **unverified**, with the ISSNs to check. The
+  formatting work done for AJLP&GS is not wasted; it is reusable.
+- **Do not trust a search summary for Scopus status, and here is the receipt.** Two summaries
+  returned two different Scopus/SCImago IDs for AJLP&GS (`21101056111` and `21101034553`); at
+  most one can exist. One also asserted DOAJ's record carries a Scopus ID — it does not. The
+  Scopus source list is the only authority, and this environment cannot reach it: scopus.com
+  and scimagojr.com return Cloudflare 403, and CWTS Journal Indicators is a JavaScript form.
+  Checking Scopus status therefore requires the author's browser. This is the fourth time a
+  search summary has produced a confident, fabricated identifier in this project.
+- **What was achieved for AJLP&GS is venue-independent and survives.** Word reports the
+  submission `.docx` at 19 pp; the author block is present in all three rendered outputs and
+  gated by `scripts/verify_author_block.py`; 175 claim checks pass; all 19 DOIs resolve.
+
+## Decisions & risks (earlier)
+- **Venue was AJLP&GS** (e-ISSN 2657-2664, no APC). The Kaltungo conference spec —
   Times New Roman 12pt, 1.5 spacing, ≤12 pp, `fpksstconf2026@gmail.com` — is **abandoned**.
   `scripts/fix_docx_format.py` still enforces it; that script is retained for the archived
   study, not for this manuscript, which uses `scripts/fix_docx_ajlpgs.py`.

@@ -4,31 +4,55 @@
 
 ---
 
-## Read this first: what I could and could not verify
+## Read this first: what is verified, and what is not
 
-**I could not verify Scopus indexing.** The Scopus source list and SCImago are both behind
-JavaScript/login walls that this environment cannot pass. Any claim below about Scopus status
-comes from a search summary, and search summaries have already been wrong three times in this
-project — once supplying a DOI that resolved to a different paper entirely.
+**Verified (checked in a browser by the author, 15 October 2026):**
 
-**You can check a journal's Scopus status in about thirty seconds**, and you should, before
-submitting anywhere:
+- **SCImago has no record of AJLP&GS.** A title search returns *"Sorry, no results were found."*
+  SCImago indexes only journals that are in Scopus, so this is a positive signal of absence,
+  not a neutral null.
+- **Google's AI Overview states AJLP&GS "is not currently indexed in Scopus"** and that it
+  "has been undergoing evaluations and recognized in other databases like DOAJ, but is not
+  listed in Scopus."
+- **The journal's own website** lists DOAJ and Cairn under "Indexed In" — not Scopus.
+- **DOAJ's API carries no Scopus identifier** for the journal. Fetched live on 15 October 2026
+  from `https://doaj.org/api/search/journals/issn%3A2657-2664`.
 
-1. Go to **https://www.scopus.com/sources**
-2. Search the journal title or ISSN
-3. If it appears with **active coverage to the present**, it is indexed
+Four sources agree. None disagrees. **Working conclusion: AJLP&GS is not Scopus-indexed.**
 
-Alternatively, download the monthly **Scopus source list** from
-https://www.elsevier.com/products/scopus/content and filter by title or ISSN. That file is the
-authority; nothing else is.
+**Not verified, and I could not verify it from this environment:** the Scopus source list
+itself. `scopus.com` and `scimagojr.com` both return Cloudflare 403 blocks to this tool, and
+CWTS Journal Indicators at <https://www.journalindicators.com> is a JavaScript form with no
+queryable endpoint. I will not route around an access block with a scraping proxy, and I will
+not treat a search summary as an authority.
 
-**What I did verify**, from the DOAJ API (a live registry, not a summary): publisher, country,
-ISSN, article processing charge, licence, peer-review model, and typical time to publication.
-Every field below comes from that run and is reproducible with
-`python scripts/find_journals.py`.
+**The authority is one file:** download the Scopus source list (Browse sources → export) from
+<https://www.scopus.com/sources> and filter by ISSN. Alternatively check the same ISSN at
+<https://www.journalindicators.com>, which is a second independent Scopus-derived source.
 
-One caveat on DOAJ's APC field: it records what journals declare, and can be stale or unset.
-Confirm fees on the journal's own page before submitting.
+### A warning about search summaries, with evidence
+
+Search summaries have now been wrong repeatedly on this project, and this journal is the
+sharpest example. Asked about AJLP&GS's Scopus status, two summaries returned **two different
+Scopus/SCImago IDs for the same journal**:
+
+```
+summary A: SCImago SID 21101056111
+summary B: SCImago SID 21101034553
+```
+
+Both cannot be correct, and neither could be loaded to check. One summary also asserted that
+"DOAJ's record includes its Scopus ID (21101034553)" — that is **false**. The DOAJ API record
+contains no Scopus identifier of any kind.
+
+So: a summary may state, confidently, that a journal is indexed, and supply an identifier that
+does not exist. Treat every Scopus claim from a summary as unverified until you have seen the
+record yourself.
+
+**What I did verify from a live registry** — the DOAJ API — is publisher, country, ISSN, APC,
+licence, peer-review model and time to publication. Every such field below comes from that run
+and is reproducible with `python scripts/find_journals.py`. One caveat on DOAJ's APC field: it
+records what journals declare and can be stale; confirm fees on the journal's own page.
 
 ---
 
@@ -78,32 +102,36 @@ seen hundreds of these. Undisclosed use is the actual risk; disclosed use is rou
 
 Ordered by how well they fit, not by prestige.
 
-### 1. African Journal on Land Policy and Geospatial Sciences
+### 0. African Journal on Land Policy and Geospatial Sciences — REJECTED on the Scopus gate
 
-- **Publisher:** EL-AYACHI (Morocco) · **e-ISSN:** 2657-2664
-- **APC:** none (DOAJ) · **Licence:** CC BY-NC-SA · **Peer review:** single-anonymous
-- **Typical time:** ~12 weeks · **Open access since:** 2018
-- **Why it fits:** explicitly African, explicitly geospatial, explicitly land policy. The
-  manuscript's subject matter — where cultivation concentrates, and what that means for land
-  allocation — sits exactly in its scope. Its readership includes the planning practitioners
-  the paper addresses.
+Superseded as first choice. Kept here because the *why* matters, and because the formatting
+work done against it is reusable for whichever venue is chosen next.
 
-> **⚠ SCOPUS STATUS: LIKELY NOT INDEXED — treat this as a blocker if Scopus matters.**
->
-> I checked the journal's **own website** (revues.imist.ma), and its "Indexed In" block lists
-> **DOAJ and Cairn only. It does not list Scopus.** A Scopus-indexed journal almost always
-> displays the badge; this one does not.
->
-> A search summary claimed Scopus indexing and pointed at a SCImago record
-> (SID 21101056111). I could not confirm that: SCImago is behind a Cloudflare challenge this
-> environment cannot pass, and the alternate journal domain (ajlp-gs.org) does not resolve.
->
-> **Two sources disagree, and the primary one says no.** Before submitting here, check
-> <https://www.scopus.com/sources> for ISSN 2657-2664. If Scopus indexing is a requirement for
-> you — for promotion, funding, or institutional recognition — do not assume this journal
-> qualifies. Verify, and if it fails, move to the next candidate.
+- **Publisher:** EL-AYACHI · **e-ISSN:** 2657-2664 · **Host institution:** Institut agronomique
+  et Vétérinaire Hassan II, Rabat
+- **APC:** none · **Licence:** CC BY-NC-SA · **Peer review:** single anonymous · **~12 weeks**
+- **Open access since:** 2018 · **Languages:** English, French, Arabic
+- **DOAJ record:** last full review 2021-02-18
 
-### 2. Town and Regional Planning
+**Why it was first choice:** explicitly African, explicitly geospatial, explicitly land policy.
+The manuscript's subject matter — where cultivation concentrates and what that means for land
+allocation — sits exactly in its scope, and its readership is the audience the paper addresses.
+On fit, nothing else on this list comes close.
+
+**Why it is rejected:** it is not Scopus-indexed (evidence above). Everything else about the
+journal is genuinely good — no APC, institutional backing, honest licensing, a real
+single-anonymous review. If Scopus recognition did not matter, this would still be the right
+venue.
+
+**Two quality flags from the DOAJ record — minor, but real:**
+
+- `preservation.has_preservation: false` — no digital preservation arrangement recorded.
+  Nothing guarantees the archive outlives the publisher.
+- `deposit_policy.has_policy: false` — no stated repository-deposit policy.
+
+Neither is disqualifying. Both are worth knowing before committing a paper to it.
+
+### 1. Town and Regional Planning
 
 - **Publisher:** University of the Free State (South Africa) · **ISSN:** 1012-280X / 2415-0495
 - **APC:** none (DOAJ) · **Licence:** CC BY · **Typical time:** ~18 weeks
@@ -113,26 +141,34 @@ Ordered by how well they fit, not by prestige.
   metadata is unreliable — author records are missing and one DOI resolved to an unrelated
   paper. That says nothing about its editorial quality, but check the current author
   guidelines carefully.
-- **Scopus:** reported as indexed; **verify yourself**.
+- **Scopus:** **unverified.** I could not check it. Verify ISSN 1012-280X at
+  <https://www.scopus.com/sources> or <https://www.journalindicators.com> before relying on it.
 
-### 3. TeMA: Journal of Land Use, Mobility and Environment
+### 2. TeMA: Journal of Land Use, Mobility and Environment
 
 - **Publisher:** Università di Napoli Federico II (Italy) · **ISSN:** 1970-9889 / 1970-9870
-- **APC:** none (DOAJ) · **Licence:** CC BY · **Typical time:** ~10 weeks
+- **APC:** none · **Licence:** CC BY and CC BY-NC (both offered) · **Typical time:** ~10 weeks
+- **Review:** double anonymous · **Open access since:** 2008
+- **DOAJ record:** last full review 2025-10-31 — recently re-reviewed, which is a good sign
+- **Journal home:** <https://serena.sharepress.it/index.php/tema>
+  (note: the older `tema.unina.it` address now returns 404 on its policy pages)
 - **Why it fits:** land use and urban environment, with a quantitative/spatial orientation.
-  Less Africa-specific than 1 and 2, which is a weakness for this paper's framing.
-- **Scopus:** reported as indexed; **verify yourself**.
+  Less Africa-specific than candidate 1, which is a weakness for this paper's framing.
+- **Scopus:** **unverified — do not rely on the claim below without checking.** A search
+  summary asserted Scopus indexing and cited SCImago SID 21100830974. Given that the same kind
+  of summary invented two different IDs for AJLP&GS in the same session, that ID is worth
+  exactly nothing until you load it. Check ISSN 1970-9889 yourself.
 
-### 4. Frontiers of Urban and Rural Planning
+### 3. Frontiers of Urban and Rural Planning
 
 - **Publisher:** Springer · **ISSN:** 2731-6661
 - **APC:** none (DOAJ) · **Licence:** CC BY · **Typical time:** ~25 weeks · **Since 2023**
 - **Why it fits:** directly on the urban–rural continuum, which is the manuscript's frame.
   Springer infrastructure, and a newer journal still building its reputation.
-- **Scopus:** a 2023 launch is unlikely to have Scopus coverage yet, or to have it fully.
-  **Check carefully** — this is the one most likely to fail that test.
+- **Scopus:** a 2023 launch is unlikely to have full Scopus coverage yet. **Check carefully** —
+  this is the one most likely to fail that test.
 
-### 5. Journal of Remote Sensing (AAAS)
+### 4. Journal of Remote Sensing (AAAS)
 
 - **Publisher:** American Association for the Advancement of Science · **ISSN:** 2694-1589
 - **APC:** none (DOAJ) · **Licence:** CC BY · **Typical time:** ~16 weeks
@@ -168,15 +204,42 @@ withdrawn — is precisely the material a good reviewer probes, and it holds up.
 
 ## What remains before submission
 
-**Manuscript-level**
+**Blocked on the venue decision.** AJLP&GS was chosen and has now failed the Scopus gate, so
+items 1–4 below are on hold until a replacement is picked. Nothing else in the manuscript is
+waiting on anything.
 
-1. **Reformat to the venue's house style.** The AJLP&GS guidelines have now been downloaded and
-   extracted to `docs/ajlpgs-author-guidelines.md`. They differ substantially from what this
-   manuscript currently uses — see `docs/submission-ajlpgs.md` for the gap analysis.
-2. **Add the AI declaration** from the template above.
-3. **Confirm the author list** and corresponding-author details.
-4. **Check the figure count** against the venue's limit. The manuscript has five; some journals
+**Decide the venue first — it gates everything else.** Paste these ISSNs into
+<https://www.scopus.com/sources> or <https://www.journalindicators.com> and note which return a
+record with active coverage:
+
+```
+1012-280X   Town and Regional Planning
+1970-9889   TeMA: Journal of Land Use, Mobility and Environment
+2731-6661   Frontiers of Urban and Rural Planning
+2694-1589   Journal of Remote Sensing
+```
+
+Whichever pass, rank them on fit and on time to publication. I can then reformat to that
+venue's house style, which is the one substantial piece of work still outstanding.
+
+**Manuscript-level, once the venue is fixed**
+
+1. **Reformat to the venue's house style.** The AJLP&GS guidelines are already extracted to
+   `docs/ajlpgs-author-guidelines.md` if that venue is reconsidered. A different journal will
+   need its own guidelines pulled and its own gap analysis.
+2. **Add the AI declaration** from the template above — the wording is venue-independent and
+   already used in the manuscript.
+3. **Confirm the author list** and corresponding-author details. Done.
+4. **Create the anonymised review copy** if the venue requires one. AJLP&GS did.
+5. **Check the figure count** against the venue's limit. The manuscript has five; some journals
    cap at four for a research article.
+
+**Already done and venue-independent** — these survive a venue change:
+
+- Word reports the submission `.docx` at **19 pages**, and the author block is present and
+  gated in all three rendered outputs (`scripts/verify_author_block.py`).
+- 175 claim checks pass with zero discrepancies; all 19 DOIs resolve against Crossref.
+- The AI-use declaration is written and accurate.
 
 **Content-level, disclosed in the manuscript already**
 

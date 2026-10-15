@@ -187,8 +187,46 @@ run correctly and the discrepancy is recorded rather than hidden.
 
 ## Submitting
 
-Target venue: **African Journal on Land Policy and Geospatial Sciences** (ISSN 2657-2664,
-no APC). The manuscript has been reformatted to that journal's template.
+Target venue: **not yet settled.** The first choice, the *African Journal on Land Policy and
+Geospatial Sciences* (ISSN 2657-2664, no APC), **failed the Scopus gate** and was dropped. The
+manuscript is formatted to that journal's template and that formatting is reusable, but the
+venue is not.
+
+**Why AJLP&GS was dropped.** Four sources agree it is not Scopus-indexed and none disagrees:
+
+- **SCImago** has no record — a title search returns *"Sorry, no results were found."* SCImago
+  indexes only Scopus journals, so this is positive evidence of absence.
+- **Google's AI Overview** states it "is not currently indexed in Scopus."
+- The **journal's own site** lists DOAJ and Cairn under "Indexed In", not Scopus.
+- The **DOAJ API record** carries no Scopus identifier.
+
+I could not check the Scopus source list itself — `scopus.com` and `scimagojr.com` both return
+Cloudflare 403 to this environment, and CWTS Journal Indicators is a JavaScript form. The
+authority is that source list (Browse sources → export), or <https://www.journalindicators.com>
+as a second Scopus-derived source.
+
+> **A warning that came out of this check.** Two web-search summaries returned **two different
+> Scopus/SCImago IDs for the same journal** (`21101056111` and `21101034553`). Both cannot be
+> right and neither could be loaded. One also claimed DOAJ's record contains a Scopus ID — it
+> does not; I pulled the record. Treat any Scopus claim from a summary as unverified.
+
+### Check these ISSNs before formatting for anyone
+
+```
+1012-280X   Town and Regional Planning
+1970-9889   TeMA: Journal of Land Use, Mobility and Environment
+2731-6661   Frontiers of Urban and Rural Planning
+2694-1589   Journal of Remote Sensing
+```
+
+All four are no-APC. **Their Scopus status is unverified** — that is exactly the point. Rank
+whichever pass on fit and on time to publication.
+
+- [docs/venue-options.md](docs/venue-options.md) - the full evidence, the shortlist, AI-policy guidance
+- [docs/submission-ajlpgs.md](docs/submission-ajlpgs.md) - AJLP&GS gap analysis (kept: the formatting is reusable)
+- [docs/ajlpgs-author-guidelines.md](docs/ajlpgs-author-guidelines.md) - that journal's guidelines, verbatim
+
+### Status of the submission package
 
 | Requirement | Status |
 |---|---|
@@ -197,27 +235,17 @@ no APC). The manuscript has been reformatted to that journal's template.
 | Body 12 pt justified, 1.2 spacing | done |
 | Margins top 2 cm, others 1.5 cm | done — read back from Word |
 | Abstract ≤ 500 words, structured | done |
-| Author block present | done, and gated by `scripts/verify_author_block.py` |
-| References in the journal's format | **not done** — currently APA |
+| Author block present | done, gated by `scripts/verify_author_block.py` |
+| AI-use declaration | done |
 | Anonymised copy for review | **not created** |
-| Copyright form from the journal site | **not obtained** |
+| References in the venue's format | **not done** — currently APA |
+| Venue decided, guidelines obtained | **blocked on the Scopus check above** |
 | ORCID iD in the author block | **not supplied** |
-| Scopus recognition confirmed | **unresolved** — see below |
-
-- [docs/submission-ajlpgs.md](docs/submission-ajlpgs.md) - gap analysis and submission package
-- [docs/ajlpgs-author-guidelines.md](docs/ajlpgs-author-guidelines.md) - the journal's own
-  guidelines, extracted verbatim from its template file
-- [docs/venue-options.md](docs/venue-options.md) - shortlist and AI-policy guidance
-
-> **Open question: Scopus indexing.** The journal's own site lists DOAJ and Cairn under
-> "Indexed In" and does **not** list Scopus. Verify ISSN 2657-2664 at
-> <https://www.scopus.com/sources> before submitting if Scopus recognition matters to you.
 
 Two points worth stating plainly, because they are easy to get wrong:
 
-- **Scopus indexing is not verifiable from this repository.** Check any candidate at
-  <https://www.scopus.com/sources> or against the monthly source-list download. Search
-  results and journal homepages are not the authority.
+- **Scopus indexing is not verifiable from this repository.** Check any candidate against the
+  Scopus source list. Search results and journal homepages are not the authority.
 - **Almost every reputable journal permits AI-assisted writing**, provided it is disclosed
   and no AI is listed as an author (the COPE position, followed by most publishers). The
   constraint is disclosure, not permission. Identify the minority that ban AI-generated text
