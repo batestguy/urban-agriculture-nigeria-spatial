@@ -36,7 +36,7 @@ format:
 
 # Introduction
 
-Urban agriculture (UA) — the production, processing and marketing of food and non-food products within and around cities, intensively reusing urban resources and wastes — is recognised by the Food and Agriculture Organization as a lever for urban food security and circular economy goals [@fao2023; @senthamizh2025; @fao2024]. In Nigeria, the urban population reached 146.5 million in 2024 (>55% of national total) while food inflation exceeded 35% in early 2024, placing an estimated 25 million Nigerians in food insecurity [@worldbank2024; @nesg2024; @feewsnet2024; @urban_food_insecurity2026].
+Urban agriculture (UA) — the production, processing and marketing of food and non-food products within and around cities, intensively reusing urban resources and wastes — is recognised by the Food and Agriculture Organization as a lever for urban food security and circular economy goals [@fao2023; @senthamizh2025; @fao2024]. In Nigeria, the urban population reached 146.5 million in 2024 (>55% of national total) while food inflation exceeded 35% in early 2024, placing an estimated 25 million Nigerians in food insecurity [@worldbank2024; @nesg2024; @feewsnet2024; @nbs2024].
 
 Bauchi Metropolis (10°16'30"–10°21'00"N, 90°48'00"–90°52'30"E; 2023 projection 670,280; tropical, 1,097 mm rainfall, laterite soils, Dutsen Tanshi uplands) exemplifies the resulting pressure. Preliminary observation (§1.2, p.5) documents organic, uncoordinated UA on vacant plots, riverbanks, highway/high-tension setbacks and within >12 public institutions, competing directly with residential and infrastructure demand, without any statutory recognition as a land-use class [@adedeji2009; @issifu2025].
 
