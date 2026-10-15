@@ -1,238 +1,183 @@
 ---
-title: "Urban Agriculture and Urban Food Security in Nigeria: A Spatial Statistics Perspective"
-subtitle: "Federal Polytechnic Kaltungo — 2nd Annual National Multidisciplinary Conference 2026 (Sub-theme 6: Climate-Smart Agriculture, Food Security and Rural Transformation; Secondary: 10 GIS & Urban Planning, 13 Circular Economy & Environmental Sustainability)"
-author: "Yohanna — batestguy (presenting author)"
-date: last-modified
-date-format: "D MMMM YYYY"
+title: "Framework for the Integration of Urban Agriculture in Bauchi Metropolis: Practices and Determinants of Full-Time Participation"
+subtitle: "Federal Polytechnic Kaltungo — 2nd Annual National Multidisciplinary Conference (13–15 October 2026) | Sub-theme 6: Climate-Smart Agriculture, Food Security and Rural Transformation (Secondary: 10 & 13; Fallback 17)"
+author:
+  - name: "Ibrahim Yohanna¹*"
+    affiliation: "Department of Urban and Regional Planning, Abubakar Tafawa Balewa University (ATBU), Bauchi, Nigeria"
+    email: "yohanna@atbu.edu.ng"
+    corresponding: true
+  - name: "Z.A. Ghani²"
+    affiliation: "Department of Urban and Regional Planning, ATBU, Bauchi"
+  - name: "R.O. Oladosu²"
+    affiliation: "Department of Urban and Regional Planning, ATBU, Bauchi"
+date: "30 September 2026"
 abstract: |
-  Urban agriculture is promoted as a climate-smart lever for food security, yet its spatial pattern and local food-security linkage remain under-quantified in Nigeria. This paper freezes verifiable open data — 484 OpenStreetMap allotment/farmland/garden footprints (Abuja 32, Lagos 130, Kano 189, Port Harcourt 88, Gombe 45), World Bank urban population and food-production indices (2000–2024; 75 rows) and NASA POWER daily climate (5 cities × 365 d, 2023) — and applies spatial statistics at LGA level (GADM 4.1, 775 LGAs). Global Moran's I on urban-agriculture counts is 0.158 (z=8.47, p<0.001) and on density (points km⁻²) is 0.300 (z=17.6, p<0.001), indicating strong spatial clustering. LISA identifies high-high clusters in Kano metropolis (Ungogo 90 pts, Tarauni 25, Kumbotso 17) and Obio/Akpor (Rivers, 64 pts) and low-low surrounds in savanna LGAs. Climate contrasts are sharp (annual rainfall 404 mm Kano vs 1,891 mm Port Harcourt). Results support spatially-targeted allotment zoning and compost-loop circularity as two policy levers bridging urban and rural food systems.
-keywords: [urban agriculture, urban food security, Moran's I, LISA, climate-smart agriculture, Nigeria]
+  **Background:** Rapid urbanisation and post-subsidy food-price shocks have entrenched urban agriculture as a de facto livelihood in Bauchi Metropolis, yet it remains statutorily invisible as a land-use category.
+
+  **Purpose:** This empirical conference paper condenses the M.Tech thesis *Framework for the Integration of Urban Agriculture in Bauchi Metropolis* (ATBU, July 2025) to two objectives — (i) the existing practices of urban agriculture and (ii) the socio-economic and institutional determinants of full-time participation — framed by a sustainability-based conceptual model for integration.
+
+  **Methods:** Mixed-methods survey in eight wards (Jan–Feb 2024): structured questionnaire administered in Hausa to 306 sampled farmers (285 analysed, 93% response); two purposive key-informant interviews (BSPPDCB, BSADP); GPS mapping (ArcGIS 10.6). Analysis: descriptive frequencies/percentages and binary logistic regression (full-time = 1).
+
+  **Results:** Farming is predominantly part-time (62.5%), subsistence (87.4%), on <1,800 m² (62.4%), financed by personal income (76.8%), using household labour (48.1%), for home food (65%) and income supplement (18%). Irrigation is rare (16.1%; rivers 47.8% among users), extension access 10.5%, farmer-association membership 19.6% (50.1% rate association ineffective). Logistic regression (Nagelkerke pseudo-R² = 0.348) shows male gender (OR = 1.41, p = .001), age (OR = 1.02 per year, p = .002), married status (OR = 1.96, p = .010) and monthly income (OR = 1.05 per ₦10,000, p = .020) increase odds of full-time farming, while education reduces odds (OR = 0.95 per year, p = .008). The strongest predictors are institutional: access to extension (OR = 3.34, p < .001) and to farmers' association (OR = 2.19, p = .002).
+
+  **Conclusion:** Climate-smart integration requires (i) statutory policy recognition and land identification/demarcation, (ii) agricultural overlay zoning via master/local/site plans, and (iii) post-integration support — notably extension and association strengthening, which alone triple/double the odds of professionalisation.
+
+  *Keywords:* urban agriculture; Bauchi Metropolis; climate-smart agriculture; food security; logistic regression
 bibliography: references.bib
+csl: apa.csl
 format:
   docx:
     toc: false
     number-sections: true
+    reference-doc: reference.docx
+    reference-links: true
 ---
 
-::: {style="font-family: 'Times New Roman'; font-size: 12pt; line-height: 1.5;"}
-:::
 
 # Introduction
 
-Urban agriculture — dry-season fadama, peri-urban farmland and intra-urban allotments — is positioned as a climate-smart lever for food security amid rapid urbanisation [@orhevba2024; @abubakar2023]. Nigeria's urban pop. 146.5M in 2024 (>55% [@worldbank2024]) outpaces infrastructure [@udoh2022].
+Urban agriculture (UA) — the production, processing and marketing of food and non-food products within and around cities, intensively reusing urban resources and wastes — is recognised by the Food and Agriculture Organization as a lever for urban food security and circular economy goals [@fao2023; @senthamizh2025; @fao2024]. In Nigeria, the urban population reached 146.5 million in 2024 (>55% of national total) while food inflation exceeded 35% in early 2024, placing an estimated 25 million Nigerians in food insecurity [@worldbank2024; @nesg2024; @feewsnet2024; @urban_food_insecurity2026].
 
-Evidence remains aspatial: surveys rarely georeference sites and food-security metrics mask intra-urban heterogeneity [@adeleye2024], limiting translation into zoning, fadama protection and compost loops (sub-themes 6/10/13). The National Urban Policy (2022) prioritises compact cities but lacks LGA evidence — a gap addressed here.
+Bauchi Metropolis (10°16'30"–10°21'00"N, 90°48'00"–90°52'30"E; 2023 projection 670,280; tropical, 1,097 mm rainfall, laterite soils, Dutsen Tanshi uplands) exemplifies the resulting pressure. Preliminary observation (§1.2, p.5) documents organic, uncoordinated UA on vacant plots, riverbanks, highway/high-tension setbacks and within >12 public institutions, competing directly with residential and infrastructure demand, without any statutory recognition as a land-use class [@adedeji2009; @issifu2025].
 
-We address this by (i) freezing OSM footprints with provenance (16 entries) [@openstreetmap2024], (ii) applying Moran/LISA and lag/error regression (Eqs. @eq-moran–@eq-error) [@pebesma2023; @bivand2023; @anselin1995], and (iii) translating clusters ($I=0.300$, $p<0.001$) into zoning insights.
+This paper is a disciplined empirical extract of the M.Tech thesis *Framework for the Integration of Urban Agriculture in Bauchi Metropolis* (ATBU, July 2025). Of four thesis objectives, the conference length limit (≤12 pages) mandates a focused submission on **Objectives 2 and 4 only**:
 
-# Study Area and Data
+- **Objective 1 — excluded here:** geospatial inventory of existing UA sites (12,518.36 ha, ≈25,031 farmers; Table 12).
+- **Objective 2 — included:** examine the existing practices of UA in the study area (Thesis §4.3).
+- **Objective 3 — excluded here:** rank constraints to UA via Respondent Agreement Index (RAI; Thesis §4.4).
+- **Objective 4 — included:** model full-time participation in UA with farmers' socio-economic and access variables (binary logistic regression; Thesis §4.5) [@ariff2019].
 
-Five cities (Abuja, Lagos, Kano, Port Harcourt, Gombe) span 404–1,891 mm rainfall and 25.9–27.3°C (Table 2), providing a gradient for H2; LGAs (GADM v4.1, 775) are the areal unit [@gadm2022]. Data were frozen via one-time queries (`ds-general` Python 3.12) to `data/raw/*.csv` with `provenance.json` (16 entries) ensuring reproducibility.
+The contribution is twofold: (i) a practice profile immediately usable for climate-smart land-use planning, and (ii) quantified determinants of the transition from part-time coping to sustained full-time farming — directly aligned with **Sub-theme 6** and, secondarily, **Sub-themes 10 (GIS & Urban Planning)** and **13 (Environmental Sustainability & Circular Economy)** [@nup2022; @sekabira2022; @oshinusi2024].
 
-| Layer | Source | Endpoint | Retained | $n$ |
-|---|---|---|---|---:|
-| Urban-ag footprints | OSM Overpass | `https://overpass-api.de/api/interpreter` | `landuse` allotments/farmland/farmyard, `leisure` garden (dedup. `type+id`) | 484 |
-| Population/food | World Bank WDI | `.../NG/indicator/{SP.URB.TOTL,AG.PRD.FOOD.XD,SN.ITK.DEFC.ZS}` | Pop., food index, undernourishment % | 75 |
-| Climate | NASA POWER AG | `.../power.larc.nasa.gov/api/temporal/daily/point?community=AG` | T2M, PRECTOTCORR, RH2M (daily 2023) | 1,825 |
-| Boundaries | GADM v4.1 | `.../gadm41_NGA_shp.zip` | LGA polygons | 775 |
-| Food stub | FAOSTAT | `.../faostat/api/v1/en/data/FS` → 521 → stub | `fao_food_security.csv` | 1 |
+# Conceptual Framework: Integration for Sustainable Urban Food Security
 
-FAOSTAT 521 → 1-row stub retained (see `data/external/README.md`). World Bank series are national aggregates → used as contextual covariates; DHS/NLSS subnational undernourishment is the extension [@adeleye2024].
+Figure 1 summarises the thesis conceptual framework (adapted from @ariff2019, p.61; Thesis Fig.7, p.63). The model is anchored in the three sustainability pillars — **social** (food security & nutrition, poverty alleviation, improved health, social cohesion and community building), **economic** (income & employment generation, local economic development, enterprise), and **environmental** (urban greening, open green space, reduced ecological footprint, urban habitat biodiversity) — through which UA can flourish when planning, policy and participation cohere.
 
-# Methods
+![](fig1-conceptual-framework.png){width=94%}
 
-## Design and hypotheses
+**Figure 1.** Conceptual framework for the integration of urban agriculture (adapted from @ariff2019; Thesis Fig.7, p.63). Driving forces, planning tools and land-use recognition mediate between constraints/factors and the three-pillared outcomes of integration.
 
-We adopt a spatial-observational design [@bivand2023]. H1: density is clustered ($I>0$, Eq. @eq-moran); H2: density increases with aridity (lower PRECTOT, higher T2M); H3: density declines with LGA area ($\log(\text{area})$ negative in Eqs. @eq-lag–@eq-error) [@muhammed2022].
+**Logic.** Rapid urbanisation, poverty, high food prices and uncontrolled expansion push the urban poor into UA as a livelihood strategy. Whether this remains precarious squatting/borrowing or becomes resilient food-system infrastructure depends on **mediating conditions**: (a) driving forces — community demand, policy framework, participatory planning, urban land market and governance; and (b) planning tools — master plan, local plans, subject/structural plans, site/layout plans, neighbourhood improvement and detailed schemes that formally zone agriculture as a land-use class. Integration then yields the economic, social and ecological dividends above. Its feasibility, however, is conditioned by **factors affecting integration** (political will, policy/programme completeness, planner perception, legal/regulatory framework, supporting tools) and **constraints to UA** (tenure insecurity, limited/non-available land, poor finance, seasonal rainfall fluctuation, knowledge of modern techniques, theft, farm inputs, regulatory policies) — see Thesis pp.61–63. The empirical focus that follows on *practices* (how UA is currently done) and *determinants of full-time participation* (who can sustain it) directly interrogates these conditioning blocks.
 
-## Spatial descriptive
+# Methodology
 
-Density $=n/\text{area}_{km^2}$ with $\text{area}_{km^2}=\text{st\_area}/10^6$ (`sf` GEOS) corrects ten-fold LGA variation (11.6–10,358 km², median 697 km²); $I$ rises 0.158→0.300 upon normalisation (§Results). Kernel/G(r) omitted for page limit.
+## Study Area and Research Design
 
-## Spatial dependence — formal tests
+Bauchi Metropolis, capital of Bauchi State, has a tropical climate (distinct rainy season, 1,097 mm yr⁻¹, peak August), laterite-dominated soils with clay/loam along floodplains, and two relief zones including crystalline uplands favourable for settlement and farming [@bashir2022]. The thesis adopted a **survey research design** combining quantitative (farmer questionnaire) and qualitative (key-informant interviews + GPS mapping) strands, as illustrated in the Research Design Flow Chart (Thesis Fig.11, p.68).
 
-Let $\mathbf{x} = (x_1,\dots,x_N)^\top$ be density (or counts) on $N=775$ LGAs, $\bar{x}$ its mean, $m_2 = N^{-1}\sum_i (x_i-\bar{x})^2$, and $\mathbf{W}=[w_{ij}]$ the queen contiguity matrix row-standardised.
+## Population, Sampling Frame and Sample Size
 
-**Weight matrix** (Eq. @eq-w):
+Two strata coexist: **registered** farmers (427 across eight wards per BSADP records, 2023; Thesis Table 5, p.69) and **unregistered** farmers (1,073 enumerated via snowball with 24 ward-based field assistants; Thesis Table 6, p.70). The combined sampling frame is **N = 1,500** (Thesis Table 7, p.70: Birshi/Miri 590 (39.3%), Kangere/Turwun 287 (19%), Dandango 171 (11.4%), Dan'iya Hardo 125 (8.3%), Dawaki 105 (7%), Makama/Sarki Baki 79 (5%), Maji Dadi B 73 (5%), Maji Dadi A 70 (5%)). Sample size **n = 306** was determined from @krejcie1970 for N = 1,500 (Thesis Appendix IV, p.128), allocated proportionately by ward (Birshi/Miri 120, Kangere/Turwun 58, Dandango 35, Dan'iya Hardo 26, Dawaki 22, and 15 each for Maji Dadi A, Maji Dadi B and Makama/Sarki Baki; Thesis Table 8, p.72).
 
-$$
-w_{ij} = \begin{cases}1 &\text{if LGAs } i,j \text{ share edge or vertex}\\0 &\text{otherwise}\end{cases}, \qquad w^*_{ij}=w_{ij}/\sum_j w_{ij} \tag{1}
-$$ {#eq-w}
+## Sampling Technique, Instruments and Data Collection
 
-Queen versus rook $\mathbf{W}$ yields $I_{density}=0.300$ versus $0.306$ (both $z>17.5$, $p<0.001$), confirming robustness to diagonal neighbours.
+*Sampling.* **Simple random sampling** (questionnaire: each farmer equal chance; @saidu2010) and **purposive sampling** (interviews: heads of BSPPDCB Physical Planning and BSADP Programme/Director, selected for expertise; @palinkas2013).
 
-**Global Moran's I** [@moran1950] (Eq. @eq-moran):
+*Instruments.* (i) Geospatial technologies (Google Earth imagery + handheld GPS → ArcGIS 10.6) for Objective 1; (ii) four-part structured questionnaire (I socio-economic, II practices, III influencing factors, IV constraints) — tick-box/closed, administered in Hausa; (iii) two semi-structured interview guides (Thesis Appendices I–III, pp.122–127).
 
-$$
-I = \frac{N}{W}\frac{\sum_i\sum_j w^*_{ij}(x_i-\bar{x})(x_j-\bar{x})}{\sum_i (x_i-\bar{x})^2},\quad E[I]=-\tfrac{1}{N-1},\quad z=\tfrac{I-E[I]}{\sqrt{\text{Var}[I]}} \tag{2}
-$$ {#eq-moran}
+*Fieldwork.* Enumeration 8 Jan–8 Feb 2024 (≈1 month); questionnaire administration 21 days, Mon–Sat 09:00–17:00, Hausa-medium, at homes and fields; interviews 13:00–14:00 on workdays after ATBU introductory letter via BSADP programme manager and BSPPDCB control board (Thesis §3.10, pp.73–75). Ethics: verbal informed consent, voluntary participation, anonymity, no personal identifiers retained; research confined to crop/vegetable UA (scope §1.6, p.6) for food-security focus. **Response rate: 285/306 (93%)**; 21 non-returns due to farm-field non-contact.
 
-Tested with `spdep::moran.test` (randomisation, `zero.policy=TRUE`) and variance under randomisation. Rejection ($p<0.001$) implies clustering beyond complete spatial randomness (CSR) and motivates spatial regression [@anselin1995] (see Eq. @eq-lag and Eq. @eq-error).
+## Data Analysis and Reliability
 
-**LISA** (Local Moran, Eq. @eq-lisa):
-
-$$
-I_i = \frac{x_i-\bar{x}}{m_2}\sum_j w^*_{ij}(x_j-\bar{x}) \tag{3}
-$$ {#eq-lisa}
-
-`spdep::localmoran` yields $I_i$ and $p_i$; quadrants HH/LL/HL/LH are classified by $(x_i>\bar{x}, \text{lag}_i>\bar{\text{lag}})$ etc. only when $p_i<0.05$, mapping Eq. @eq-lisa to HH/LL clusters in Fig. @fig-lisa.
-
-## Spatial regression
-
-Conditional on H1, OLS is biased (residuals remain spatially autocorrelated, violating Gauss–Markov). We therefore specify lag and error models (`spatialreg` 1.4.3 [@bivand2023]) for comparison:
-
-$$
-y = \rho \mathbf{W} y + X\beta + \varepsilon \tag{4}
-$$ {#eq-lag}
-
-Eq. @eq-lag is the spatial lag (spillover: neighbours' $y$ directly affects $y$).
-
-$$
-y = X\beta + u,\; u = \lambda \mathbf{W} u + \varepsilon,\; \varepsilon\sim N(0,\sigma^2 I) \tag{5}
-$$ {#eq-error}
-
-Eq. @eq-error is the spatial error (captures omitted spatially-structured covariates). Proposed specification, conditional on data availability, is `density ~ log(area_km2) + PRECTOT_sum + T2M_mean` (city-level climate as LGA proxy until DHS/NLSS subnational undernourishment is joined [@adeleye2024]). Selection follows AIC, likelihood-ratio $LR=2(\ell_{lag}-\ell_{OLS})$, and Lagrange Multiplier diagnostics $LM_{lag}$ vs $LM_{error}$ and robust $RLM_{lag/error}$; residual Moran's I is reported for each fitted model.
-
-## Suitability overlay
-
-Suitability overlay (`terra` 1.7 [@hijmans2023]) on market/water proximity and unbuilt land will prioritise HH LGAs (Eq. @eq-lisa) — staged as future work to remain within 12 pp.
-
-*Environment:* R 4.5.2 (`sf` 1.1.2 GEOS 3.14.1/GDAL 3.12.1/PROJ 9.7.1, `terra` 1.9.46, `spdep` 1.4.2, `spatialreg` 1.4.3); Python `ds-general` 3.12; Quarto 1.9.38 / Pandoc 3.8.3. Seeds set; `provenance.json` 16 entries.
+Data were processed in SPSS: descriptive frequencies/percentages for Objective 2, and **binary logistic regression** for Objective 4 (dependent: full-time = 1 vs part-time = 0) on seven predictors — gender, age, marital status (married), education (years), monthly income, access to extension (yes/no), access to farmers' association (yes/no). Fit indices: AIC, BIC, Nagelkerke pseudo-R². Instrument reliability (§3.13, p.77; Table 11): Cronbach's α — constraints 0.753 (high), practices 0.812 (very high), institutional support 0.890 (very high), face-validated by two senior ATBU URP lecturers, with a pre-enumeration pilot (Thesis §3.13) confirming instrument efficiency.<!--
+  AUDIT 2026-10-15: the source read "pilot 6-11 Mar 2024", but enumeration ran 8 Jan - 8 Feb
+  2024. A pilot cannot post-date the survey it validates, so the date contradicts either the
+  fieldwork window or itself. Removed rather than guessed: the author must supply the true
+  pilot date (and correct whichever of the two is wrong). See docs/statistical-review-2026-10-15.md.
+-->
 
 # Results
 
-## Urban agriculture footprints (OSM Overpass, frozen 25 Aug 2026)
+## Objective 2: Existing Practices of Urban Agriculture
 
-484 footprints via Overpass (3 endpoints, dedup `type+id`) — Kano 189 (39%), Lagos 130, Port Harcourt 88, Gombe 45, Abuja 32. At LGA scale (775), only 39 (5.0%) contain ≥1 point (Ungogo 90, Obio/Akpor 64, 61%), max 1.06 km⁻² (Tarauni), median 0 [@ogundele2023].
+### Farmer Profile
 
-**Table 1. OSM urban-agriculture points by city (frozen).**
+UA is male-dominated (75.4%, n = 215; female 24.6%), concentrated at 51–60 y (34.4%) and 41–50 y (27.0%), overwhelmingly married (69.8%; widowed 12.3%, single 8.4%), and low-income (<₦29,000 mo⁻¹ 29.5%; ₦30–50k 24.5%; ₦51–70k 20.7%; Table 13, p.86). Primary occupation is farming for only 37.5%; civil servant and artisan each 18.6%, trading 11.2%, others 14.0% — confirming UA predominantly as *supplementary* rather than primary livelihood.
 
-| City | n | % | Top LGA (n) |
-|---|---:|---:|---|
-| Kano | 189 | 39.0 | Ungogo 90 |
-| Lagos | 130 | 26.9 | Ikorodu 53 |
-| Port Harcourt | 88 | 18.2 | Obio/Akpor 64 |
-| Gombe | 45 | 9.3 | Akko 45 |
-| Abuja | 32 | 6.6 | Abuja Municipal 14 |
-| **Total** | **484** | **100** | **39 LGAs with ≥1 point (5.0%)** |
+### Mode, Duration, Land and Location
 
-*Source: OSM Overpass `data/raw/osm_urban_ag.csv` (484 rows), GADM 4.1 LGA join (`results/lga_lisa.gpkg`).*
+62.5% part-time vs 37.5% full-time; practice duration bimodal — 5–9 y most common (23.9%), <5 y 22.1%, 10–14 y 21.1%, >21 y 19.3% — an old but stagnant practice (Table 14, p.88). Farm size is micro: <540 m² (31.9%), 540–1,800 m² (30.5%), 1,800–10,000 m² (23.9%), ≥10,000 m² only 13.7% — intensive intra-urban micro-plots, not peri-urban extensification.
 
-## Climate context (NASA POWER, 2023 daily)
+Tenure is structurally precarious: owned 13.0%, freehold 29.5%, squatting 23.5%, leasehold 17.9%, renting 8.4%, borrowing 7.7%. Location: vacant plots 40.7%, public institutions 33.3% (ATBU Yelwa, Federal Polytechnic, ATBU Teaching Hospital, Shadawanka/School of Armour, FGGC, College of Agriculture, etc.), urban fringe 18.6%, within-house 7.4% — *no official designation; spatially uncoordinated* (Tables 13–14). Plot size is strongly right-skewed: the median falls in the 540–1,800 m² band (62.4% of farms are below 1,800 m²) while a long tail of holdings above 10,000 m² pulls the arithmetic mean to ≈0.5 ha — so the median, not the mean, describes the typical farmer. Gubi Dam, Birshi, Gudum, Yelwa-Bayara and river-valley corridors dominate fringe production (Figs.12–17). Distance to farm is polarised: >10 km (21.4%), 7.1–10 km (20.0%), <1 km (22.5%), reflecting fringe dependence as the city expands. Transport: motorcycle 32.6%, commercial 29.1%, trek 20.7%, bicycle 10.2%.
 
-NASA POWER AG daily T2M, PRECTOTCORR, RH2M for five centroids (Table 2) span 25.9–27.3°C and 404–1,891 mm (RH 42.1–87.7%), retained as LGA covariates via state for H2–H3 (Eqs.4–5) [@stackhouse2023].
+### Production System
 
-**Table 2. NASA POWER 2023 annual climate by city (`data/processed/nasa_annual.csv`).**
+Labour is overwhelmingly household-based (48.1%), personal effort 29.1%, hired labour only 22.8% — low capitalisation (Table 15, p.91). Farming type: crop 51.2%, mixed 24.9%, vegetable 16.8%, fruit 4.6%, ornamental 2.5%. Among crops, rice 24.9%, maize 17.5%, sweet potatoes 14.0%, groundnut 8.8%, guinea corn/millet 7.4%. On self-declared **scale**, 87.4% describe their operation as subsistence against 12.6% as commercial (n = 36). Annual yield is 100–200 kg (31.6%), <100 kg (24.6%), >300 kg (17.2%); among the 36 income-reporting commercial farms, modal annual income is ₦251–350k (36.1%), with 22.2% at ≥₦351k — a modest supplement, not livelihood replacement.
 
-| City | T2M mean (°C) | PRECTOT sum (mm) | RH2M mean (%) |
-|---|---:|---:|---:|
-| Abuja | 25.9 | 1,031 | 70.1 |
-| Gombe | 27.1 | 862 | 53.4 |
-| Kano | 27.3 | 404 | 42.1 |
-| Lagos | 26.8 | 1,726 | 85.4 |
-| Port Harcourt | 26.2 | 1,891 | 87.7 |
+### Water, Finance, Market and Motivation
 
-## World Bank national backdrop (frozen 25 Aug 2026)
+Irrigation is practised by only 16.1% (n = 46); among users, rivers 47.8%, dams 15.2%, boreholes 15.2%, wells 13.0%, pipe-borne 8.7% — high rainfall dependence and chronic under-use of dry-season potential around Gubi Dam and river valleys. Financing comes from personal funds 76.8% and family borrowing 23.2%; **no formal credit** was accessed by any respondent. **Market orientation** is subsistence-first: only 13% of farmers sold any produce at all, while the other 87% retained their entire output for household consumption. **Motivation** for farming is likewise food-security driven: extra food 65%, complementing income 18%, securing a location 5.2%, proximity to market 4.5% — consistent with @zeeuw2014's social perspective and @leesmith2019.
 
-National WDI: urban pop 146,531,222 in 2024 [@worldbank2024], food index 119.9 in 2022, undernourishment 19.9% in 2023 (75 rows, CC BY 4.0) [@fao2023]. National aggregates cannot be LGA-joined, so Moran is on density (Table 3); DHS/NLSS next [@adeleye2024].
+### Institutional Support and Stakeholder View
 
-## Spatial dependence
+Institutional embeddedness is minimal: access to training 5.6%, to agricultural extension 10.5%, to government support 10.9%, to farmer association 19.6%; 50.1% rate their association as *not effective* (Table 17, p.94). Key-informant interviews (BSPPDCB/BSADP, p.95) are unambiguous: *by law, no crop farming is officially allowed* in the metropolis (only “green zones” for economic trees); no legal framework guides UA; land allocation is not a Board mandate — though advisory services are offered. Both agencies nonetheless endorse a decisive shift: *government-controlled land allocation specifically for UA* and a willingness to review zoning and planning regulations to incorporate UA — a policy window the framework exploits.
 
-Global Moran's I was computed on queen-contiguity weights (`spdep::poly2nb` → `nb2listw` style W, zero.policy=TRUE) for 775 LGAs.
+These practices align with @fao2007's intra-urban model (vacant/idle/public land, tiny plots, subsistence/recreational or highly specialised systems) rather than intensive market-oriented peri-urban agriculture, and underscore *informality as the binding constraint*.
 
-**Table 3. Global Moran's I (775 LGAs, queen contiguity).**
+## Objective 4: Determinants of Full-Time Participation
 
-| Indicator | Moran I | Expectation | z | p |
-|---|---:|---:|---:|---|
-| Counts (n) | 0.158 | -0.00129 | 8.47 | <0.001 |
-| Density (n km⁻²) | **0.300** | -0.00129 | 17.61 | <0.001 |
+Table 1 reports the binary logistic model (n = 285). Nagelkerke pseudo-R² = 0.348. Nagelkerke's statistic is a likelihood-ratio-based analogue normalised to a 0–1 range; unlike the OLS coefficient of determination it is **not** a proportion of variance explained, and it should be read only as a relative fit index.<!--
+  AUDIT 2026-10-15: the source reported "AIC = 132.45, BIC = 145.90" alongside this
+  Nagelkerke value. Those three numbers cannot coexist for n=285 with 7 predictors:
+    - null deviance at 37.5% prevalence = 377.09
+    - an 8-parameter model needs a BIC-AIC gap of 8*(ln 285 - 2) = 29.22; the reported
+      gap is 13.45, which implies ~3.7 parameters, not 8
+    - AIC 132.45 implies deviance 116.45 -> McFadden 0.691 -> Nagelkerke ~0.82, not 0.348
+    - Nagelkerke 0.348 implies -2LL ~293 -> AIC ~309
+  Nagelkerke 0.348 is the only plausible value of the three and is retained; the AIC/BIC
+  pair is withdrawn pending re-derivation from the analytic dataset
+  (analysis/regression/01_logistic_fulltime.R). See docs/statistical-review-2026-10-15.md s2.1.
+-->
 
-Density clustering exceeds counts (median 0, mean 0.62), validating area normalisation. LISA HH centres on Kano metropolis and Obio/Akpor; LL spans sparsely-mapped savanna; HL/LH rare (<10). Excluding Kano ($N=731$) retains $I=0.274$ ($z=16.3$) and $\log(\text{area})$ $-0.0037$ ($p<0.001$), confirming H1/H3 are not Kano-driven. This justifies spatial regression.
+| Variable | b | SE | OR | p |
+|---|---|---|---|---|
+| Gender (Male) | 0.345 | 0.105 | 1.41 | 0.001** |
+| Age (years) | 0.023 | 0.007 | 1.02 | 0.002** |
+| Marital status (Married) | 0.672 | 0.212 | 1.96 | 0.010** |
+| Education (years) | -0.056 | 0.020 | 0.95 | 0.008** |
+| Monthly income (₦'000) | 0.005 | 0.002 | 1.05 per ₦10,000 | 0.020* |
+| Access to extension (yes) | 1.205 | 0.321 | 3.34 | 0.001*** |
+| Access to farmers assoc. (yes) | 0.785 | 0.251 | 2.19 | 0.002** |
 
-## New: density vs climate and scale (H2–H3)
+**Table 1.** Logistic regression predicting full-time participation in UA (dependent: full-time = 1). Source: Thesis Table 19, p.97; N = 285. Monthly income is coded in thousands of naira in the source model, so the odds ratio is reported per ₦10,000 (exponentiating 0.005 × 10). *p < 0.05, **p < 0.01, ***p < 0.001.
 
-For 39 LGAs with points we assigned city-level climate (34 mapped) and computed Spearman correlations. Rainfall $\rho=-0.31$ ($p=0.076$) and temperature $\rho=+0.44$ ($p=0.009$) indicate drier/hotter LGAs host higher density (H2); area contrast Tarauni 23.6 km² 1.06 vs Ungogo 187 km² 0.48 supports H3 (Figure 2).
+*Interpretation.* Being male raises the odds of full-time UA by 41.2% (OR = 1.41) — reflecting gendered labour/resource access in northern Nigeria. Each additional year of age raises odds by 2.3% (OR = 1.02): older farmers view UA as a stable livelihood amid fewer alternatives. Married farmers are ≈2× more likely (OR = 1.96), consistent with household-responsibility pressure. Each year of formal education reduces odds by 5.5% (OR = 0.95) — better-educated respondents have non-farm options. Income has a small positive effect — an odds ratio of 1.05 per ₦10,000 of monthly income, enabling inputs but not decisive. The scale matters: reported as "1.005 per unit" the effect looks negligible, but that is an artefact of an unstated unit; the interpretable statement is the per-₦10,000 figure given here.
 
-![Figure 1. LISA density (points km⁻²) per LGA, queen contiguity, p<0.05.](../results/figures/lisa_map.png){#fig-lisa width=2in}
+The **strongest levers are institutional**: access to extension more than triples the odds (OR = 3.34, p < .001) and association membership more than doubles them (OR = 2.19, p = .002). These provide precisely the knowledge, technical support, inputs and social capital that the practice data show are absent for 89.5% (no extension) and 80.4% (no association) of farmers. The pattern is climate-smart salient: extension is the delivery channel for composting, rainwater harvesting, heat-tolerant varieties and dry-season irrigation — the very innovations Bauchi farmers lack.
 
-Figure 1: HH centres on Kano metropolis and Obio/Akpor; LL savanna; HL/LH rare (<10).
 
-![Figure 2. Density vs rainfall (34 LGAs, $\rho=-0.31$, $p=0.076$).](../results/figures/density_vs_rainfall.png){#fig-scatter width=2in}
+# Discussion: Toward Climate-Smart Integration
 
-**Table 4. Top-10 LGAs by density (km⁻²) — the high-intensity core (`results/top10_density.csv`).**
+Three planning-relevant insights emerge when Objectives 2 and 4 are read through Figure 1.
 
-| GID_2 | LGA | State | n | area km² | density | LISA |
-|---|---|---|---|---:|---:|---:|---|
-| NGA.20.38_1 | Tarauni | Kano | 25 | 23.6 | 1.06 | HH |
-| NGA.25.19_1 | Shomolu | Lagos | 10 | 18.3 | 0.55 | HH |
-| NGA.20.42_1 | Ungogo | Kano | 90 | 187.4 | 0.48 | HH |
-| NGA.33.15_1 | Obio/Akpor | Rivers | 64 | 275.5 | 0.23 | n.s. |
-| NGA.25.16_1 | Mushin | Lagos | 4 | 17.4 | 0.23 | HH |
-| NGA.20.18_1 | Gwale | Kano | 4 | 23.8 | 0.17 | HH |
-| NGA.20.31_1 | Nasarawa | Kano | 3 | 19.0 | 0.16 | HH |
-| NGA.20.21_1 | Kano Municipal | Kano | 4 | 26.5 | 0.15 | HH |
-| NGA.20.12_1 | Fagge | Kano | 4 | 27.7 | 0.14 | HH |
-| NGA.25.12_1 | Ikorodu | Lagos | 53 | 369.5 | 0.14 | n.s. |
+**1. Informality is structural, not residual.** The practice profile shows UA thriving on institutional interstices — undeveloped public land, fallow fringe, setbacks and riverbanks — with squatting/borrowing/leasehold (≥48%) outweighing ownership. In FAO typology [@fao2007], this is *personal/community-scale* subsistence on *intra-urban* remnants. Without agricultural overlay zoning, the 12,518 ha / ≈25,031-farmer system (Thesis Table 12) faces displacement by real estate and infrastructure — a direct threat to SDG 2 and the National Urban Policy (2022) compact-city commitment to *safeguard agricultural land* that currently lacks UA-specific instruments [@nup2022; @issifu2025; @adedeji2009; @worldbank2024].
 
-Tarauni/Shomolu >0.5 km⁻² vs Ikorodu 0.14 (53 pts, 369 km²) — density matters.
+**2. Time poverty locks climate-smart intensification out.** Part-time, rain-fed, household-labour farming on <1,800 m² cannot support composting loops, Gubi Dam dry-season irrigation, or container/rooftop/vertical systems documented in Thesis Chapter 2 (NUBIA Boston, Sunqiao Shanghai, Spark Singapore, Nature Urbain Paris). Full-time status is the gateway to investment — and the model shows it is institutionally, not merely economically, determined. Extension and association access dwarf income as predictors, implying *knowledge and collective tenure* matter more than micro-credit alone. This parallels Sahelian evidence that climate-smart adoption rises 20–40% with extension but is blocked by information/service absence [@tambol2025; @chitakira2021; @khumalo2024].
 
-## Spatial regression: estimates and model selection
-
-Coefficients via ML (`spatialreg` 1.4.3, queen $\mathbf{W}$ 775×775 and 34×34). Table 5: density–scale (775); Table 6: +climate (34).
-
-**Table 5. Density $y$ (points km⁻²) regressed on log area, $N=775$ LGAs.**
-
-| Model | log(area) | $\rho$ / $\lambda$ | AIC |
-|---|---|---|---:|
-| OLS | -0.0086 (0.0014)*** | — | -2485.2 |
-| Lag (Eq. @eq-lag) | -0.0052 (0.0013)*** | $\rho=0.419$*** | **-2577.5** |
-| Error (Eq. @eq-error) | -0.0058 (0.0017)*** | $\lambda=0.419$*** | -2572.9 |
-
-*SE in parentheses; *** $p<0.001$. $LR=2(\ell_{spatial}-\ell_{OLS})$. Lag preferred ($\Delta$AIC -4.6); residual $LM=48.2$ $p<0.001$ remains due to zero-inflation, but AIC halves versus OLS.*
-
-Negative $\log(\text{area})$ confirms H3 ($-0.005$ to $-0.009$); $\rho$/$\lambda$ 0.42 ($z\approx$9) quantifies spillover, validating OLS rejection. Small Tarauni (23.6 km² 1.06) vs large Ikorodu (369 km² 0.14) illustrates (Table 4).
-
-**Table 6. Density with climate, $N=34$ LGAs.**
-
-| Model | log(area) | PRECTOT | $\rho$ / $\lambda$ | AIC |
-|---|---|---|---|---:|
-| OLS | -0.0635* | -0.000085 | — | -10.51 |
-| Lag | -0.0797*** | -0.000135* | $\rho=-0.438$* | **-12.39** |
-| Error | -0.0656*** | -0.000100* | $\lambda=-0.476$** | **-12.75** |
-
-*`* $p<0.05$, ** $p<0.01$, *** $p<0.001$; intercept omitted for brevity; one isolate among 34 (queen). Error is preferred ($\Delta$AIC -0.36).*
-
-Bivariate PRECTOT was marginal ($p=0.076$); after conditioning on $\log(\text{area})$ and spatial error, it becomes significant (lag $p=0.035$, error $p=0.018$), supporting H2: drier LGAs (Kano 404 mm vs PH 1,891 mm) host higher density [@muhammed2022]. T2M is non-significant. Negative $\rho$/$\lambda$ reflects the fragmented 34-sample (5 sub-graphs, one isolate) — interpret cautiously — but spatial AIC improves ~2 points and sharpens PRECTOT. Kano-excluded sensitivity ($N=21$) attenuates but does not reverse the sign.
-
-# Discussion
-
-### Climate-smart agriculture (sub-theme 6)
-
-HH clusters in hot/dry Kano reflect fadama [@muhammed2022]; rainfall becomes $ -0.00010$ ($p=0.018$) after correction (Table 6), implying 1,487 mm →0.15 km⁻² (15% Tarauni) [@fao2023].
-
-### GIS and urban planning (#10)
-
-LISA HH requires $p_i<0.05$ (Eq. @eq-lisa); queen $\mathbf{W}$ (Eq. @eq-w) suits irregular LGAs. Map (Figure 1) is a targeting tool via OSM+GADM [@openstreetmap2024]. HH rings merit protection; LL savanna are greenfield. With 5% LGAs containing points, selective zoning avoids dilution (Table 4) [@adeleye2024].
-
-### Environmental sustainability & circular economy (#13)
-
-Composting waste into soil closes a circular loop. `terra` suitability (market/water/unbuilt land) will prioritise HH Table 4 LGAs (Tarauni 1.06, Shomolu 0.55) where compost marginal product is highest. Nigerian precedent 0.5–1.0 kg capita⁻¹ day⁻¹ [@olanrewaju2022]; 20% diversion could offset the PRECTOT gap (Table 6) — a double dividend for sub-theme 13 [@abubakar2023].
-
-### Rural transformation bridge
-
-Urban agriculture buffers rural price shocks (food index 119.9) [@worldbank2024]; policy should link rural–urban seed/compost and fadama corridors [@udoh2022].
-
-### Limitations
-
-OSM bias (6.6–39.0%) mitigated by density + Kano-excluded sensitivity; WB national series not LGA-joinable (Moran on density); FAOSTAT 521 stub awaits manual CSV; 2023 climate window only; zero-inflation (median 0) warrants hurdle models beyond Eqs. 4–5.
-
+**3. Integration must be sequenced.** The Thesis Proposed Framework (Fig.18, p.110 — see synthesis in §6) operationalises Figure 1: (1) State policy + enabling legislation recognising UA as a land-use class; (2) identification/demarcation of public, peri-urban and idle private land (BSPPDCB + Ministry of Lands + BSADP; temporary lease/ground rent; free allocation for women/vulnerable); (3) statutory plans — master → local → subject → layout/site → neighbourhood improvement — legally zoning land for UA (including rooftop/container in the core, protected greenbelt at the fringe); (4) allocation via farmer-association/NGO application; (5) Urban Agriculture Complaints & Dispute Resolution Committee; (6) post-integration sustainability — monitoring/approval/standards (BSPPDCB), innovation training (BSADP extension, including hydroponics/vertical), Bauchi State Urban Agriculture Support Fund (public-private), and periodic evaluation/review. The present evidence argues for *parallel* investment in steps 5–6 alongside 1–3, because extension/association have the largest marginal effect on full-time commitment and climate resilience — and can be mobilised faster than statute.
 
 
 # Conclusion and Policy Implications
 
-Urban agriculture is clustered: 5% LGAs hold 484 points, density $I=0.300$ ($z=17.6$, H1) concentrated in hot/dry LGAs ($\rho_{T2M}=+0.44$, $\rho_{rain}=-0.31$, H2) with Tarauni 1.06 and Shomolu 0.55 leading (Table 4). Levers: (i) allotment zoning for HH LGAs (Kano metropolis, Mushin/Shomolu, Ikorodu) and fadama buffers; (ii) compost circularity via `terra` suitability [@olanrewaju2022]. This bridges urban–rural resilience; DHS/NLSS linkage and multi-year climate are next steps.
+UA in Bauchi Metropolis is widespread, subsistence-oriented, male-dominated and institutionally unsupported — yet it already feeds households, recycles fringe land and greens the city. Practices data confirm that without tenure security, water, training and market linkage, UA will remain coping, not transformation. The logistic evidence isolates two actionable levers whose effect sizes warrant immediate public investment: **universalise agricultural extension to urban farmers and strengthen farmer associations as land-access and knowledge platforms**.
+
+For Kaltungo's theme *Smart Innovations for Security, Sustainable Economic Development and Community Resilience*, we propose:
+
+1. **Zoning innovation (Sub-theme 10):** Local Government Areas to adopt an **agricultural overlay zone** protecting GIS-mapped public-institution and fringe farmland, with a temporary-lease register and ground-rent schedule — translating NUP 2022 into enforceable LGA bylaws and safeguarding the existing 12,518 ha.
+2. **Circular-economy linkage (Sub-theme 13):** Municipal **composting of the ≈60% organic waste stream** linked to UA input supply, coupled with promotion of Gubi Dam and river-valley **dry-season irrigation** — reducing methane, closing nutrient loops and cutting import dependence [@oshinusi2024; @sekabira2022; @noburn2026].
+3. **Climate-smart extension (Sub-theme 6):** Redirect a dedicated share of ADP extension to **urban content** — composting, rainwater harvesting, heat-tolerant varieties, and container/rooftop/hydroponic systems — the only variable that *triples* the odds of professionalisation, and the prerequisite for any innovation to scale.
+
+These steps close the loop in Figure 1 — driving forces → planning → integration → three-pillared benefits — with political will and planner perception as the binding constraints to unlock. Their postponement risks irreversible conversion of fringe farmland, locking Bauchi into long-distance supply dependence precisely as food inflation and climate variability intensify.
+
+# Limitations and Future Research
+
+This is a thesis extract: cross-sectional (Feb 2024), eight wards only, snowball enumeration risk for unregistered farmers, self-reported yields/incomes, 21 non-returns, and absence of direct food-security scores (FIES/HDDS). Objective 3 (RAI-ranked constraints: tenure insecurity 4.16, limited land 4.10, finance 4.05) and the full 12,518-ha GIS inventory are omitted for page limits and merit companion papers (see Thesis §5.5: waste management framework; UA–food security contribution assessment). Future work should longitudinally evaluate the proposed integration framework and its food-security and income impacts.
+
+# Data Availability
+
+The **OSM, NASA POWER, World Bank and GADM layers** analysed in the companion spatial study are frozen in `data/raw/` with full provenance (`data/raw/provenance.json`: URL, timestamp, row count and licence for every pull), and every derived figure is regenerable from the committed scripts.
+
+The **farmer survey dataset** underlying Table 1 (n = 285) is **not** distributed with this paper. The instrument and the enumeration protocol are documented here and in the thesis (Appendices I–IV); respondent-level records are available from the corresponding author on reasonable request, subject to the consent terms under which they were collected (verbal informed consent; no personal identifiers retained). Fit statistics for the logistic model requiring the analytic dataset — notably exact AIC/BIC — will be reported in the journal version once the dataset is deposited.
 
 # References
 
-::: {#refs}
-:::

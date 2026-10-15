@@ -47,7 +47,7 @@ APIs change daily. If we analysed live data, results would not be reproducible. 
 
 **Environments (see `ENVIRONMENTS.md`):** `R 4.5.2` with `sf 1.1.2` (GEOS 3.14.1/GDAL 3.12.1/PROJ 9.7.1, `sf_use_s2(TRUE)`), `spdep 1.4.2`, `spatialreg 1.4.3`, `terra 1.9.46`, `dplyr 1.2.1`, `ggplot2 4.0.3`; Python `ds-general` 3.12 (`pandas` 2.2.3, `requests` 2.34.2, `numpy` 1.26.4). Random seeds set (`set.seed(1)`). Git repo `D:\YohannaPaper` ↔ GitHub `batestguy/urban-agriculture-and-urban-food-security-in-nigeria` (branch `master`).
 
-**Study Area:** Five cities maximising agro-ecological variation — Abuja (planned capital, Guinean savanna), Lagos (coastal megacity), Kano (Sahelian), Port Harcourt (humid Niger Delta), Gombe (savanna, host). LGAs (GADM v4.1, 775 units) are the areal unit. Hypotheses: **H1** density is clustered ($I>0$); **H2** density increases with aridity (lower PRECTOT, higher T2M); **H3** density declines with LGA area.
+**Study Area:** Five cities maximising agro-ecological variation — Abuja (planned capital, Guinean savanna), Lagos (coastal megacity), Kano (Sahelian), Port Harcourt (humid Niger Delta), Gombe (savanna, host). LGAs (GADM v4.1, 775 units) are the areal unit. Hypotheses: **H1** density is clustered ($I>0$); **H2** density increases with aridity (lower PRECTOT, higher T2M) — see the caveat in §6.4, this hypothesis turns out to be **not testable** with the frozen climate data; **H3** density declines with LGA area.
 
 # Data acquisition: what, how, why
 
@@ -158,10 +158,10 @@ nasa_annual <- nasa_all %>% group_by(city) %>%
 write_csv(nasa_annual, "data/processed/nasa_annual.csv")
 ```
 
-Annual means/totals for Table 2; retained as LGA covariates via state mapping (FCT→Abuja, Kano→Kano, Lagos→Lagos, Rivers→Port Harcourt, Gombe→Gombe) for 34 LGAs with ≥1 point.
+Annual means/totals for Table 2. They were also mapped to LGA covariates via state (FCT→Abuja, Kano→Kano, Lagos→Lagos, Rivers→Port Harcourt, Gombe→Gombe) for the 34 LGAs with ≥1 point — **but this mapping is the defect described in §6.4 and the resulting models are no longer reported as evidence.** Rainfall sampled at a city centroid cannot vary within that city, so it cannot be an LGA-level covariate.
 
 ::: {.callout-note title="In plain English: why these aggregates?" appearance="simple" icon=false}
-Daily climate is too noisy for an annual allotment study. Summarising to *mean temperature* and *total rainfall* gives one number per city that can be compared to allotment density. The 34 LGAs with points are assigned their state's city climate — a proxy until LGA-level rasters are integrated.
+Daily climate is too noisy for an annual study, so summarising to *mean temperature* and *total rainfall* is reasonable — **at the city level**. The error was then treating that city constant as if it varied across the LGAs of a city. Assigning 34 LGAs the rainfall of their city gives 5 unique predictor values, not 34, and inflates the apparent sample size by a factor of about 7. See §6.4.
 :::
 
 # Spatial framework and descriptive
@@ -253,7 +253,25 @@ Estimated by ML (`spatialreg` 1.4.3). Model choice via AIC, likelihood-ratio $LR
 
 ## 6.3 Estimates and model selection
 
-**Table 5. Density $y$ regressed on $\log(\text{area})$, $N=775$ LGAs.**
+::: {.callout-warning title="Revised 15 October 2026 — read this before the tables" appearance="simple" icon=false}
+This section previously reported a `density ~ log(area)` Gaussian fit as the primary density
+model and a 34-LGA climate model as evidence for **H2**. An audit found two defects in that
+approach, both documented in `docs/statistical-review-2026-10-15.md`:
+
+1. **Wrong family.** Density is exactly zero for 95% of the 775 LGAs (skewness 15.5). A
+   Gaussian fit produced **265 of 775 negative fitted densities** — impossible quantities.
+2. **Pseudoreplication.** The "34 LGA" model used rainfall sampled at **five city centroids**,
+   so the predictor had **5 unique values** (rainfall R² on city dummies = 1.000). At the level
+   the data actually replicate — 5 cities — the rainfall effect is $p = 0.58$, not $p = 0.018$.
+
+The Gaussian tables below are retained **for transparency** and are labelled as superseded.
+The corrected analysis is in §6.3.2 and §6.4, produced by `06_count_models.R` and
+`08_climate_honest.R`. Every number still reproduces; what changed is which model is believed.
+:::
+
+### 6.3.1 Superseded: Gaussian spatial models on a zero-inflated ratio
+
+**Table 5 (superseded). Density $y = n/\text{area}$ regressed on $\log(\text{area})$, $N=775$.**
 
 | Model | log(area) | $\rho$ / $\lambda$ | AIC |
 |---|---|---|---:|
@@ -261,33 +279,167 @@ Estimated by ML (`spatialreg` 1.4.3). Model choice via AIC, likelihood-ratio $LR
 | Lag (Eq.4) | -0.0052 (0.0013)*** | $\rho=0.419$*** | **-2577.5** |
 | Error (Eq.5) | -0.0058 (0.0017)*** | $\lambda=0.419$*** | -2572.9 |
 
-*SE in parentheses; *** $p<0.001$; $LR=94.25$***. Lag preferred ($\Delta$AIC -4.6); residual $LM=48.2$ remains due to zero-inflation.*
+*SE in parentheses; *** $p<0.001$; $LR=94.25$***. All three figures reproduce exactly from the
+frozen data. Two things they do establish and one they do not:*
 
-Negative $\log(\text{area})$ confirms **H3**: larger LGAs dilute density ($-0.005$ to $-0.009$). Positive $\rho$/$\lambda$ (0.42, $z\approx$9) quantifies spillover, validating OLS rejection.
+- **They establish spatial dependence.** Residual Moran falls from **0.256 (OLS) to −0.036
+  (lag)** — the spatial term removed the dependence OLS left behind. This is a clean result.
+- **They establish H3's direction.** Larger LGAs dilute density, negative and highly significant.
+- **They do not establish a trustworthy magnitude**, because regressing a ratio on its own
+  denominator partly recovers a mechanical relationship (the Kronmal ratio fallacy), and
+  **34.2% of fitted values are negative**.
 
-**Table 6. Density with climate, $N=34$ LGAs with ≥1 point and mapped state.**
+### 6.3.2 The corrected model: counts with an area exposure
 
-| Model | log(area) | PRECTOT | $\rho$ / $\lambda$ | AIC |
-|---|---|---|---|---:|
-| OLS | -0.0635* | -0.000085 | — | -10.51 |
-| Lag | -0.0797*** | -0.000135* | $\rho=-0.438$* | -12.39 |
-| Error | -0.0656*** | -0.000100* | $\lambda=-0.476$** | **-12.75** |
+The outcome is a **count** ($n_i$, features in LGA $i$) with unequal exposure (area). The right
+specification puts area in as an offset, not a regressor:
 
-*One isolate among 34 (queen). Error preferred ($\Delta$AIC -0.36).*
+$$
+n_i \sim \text{NegBin}(\mu_i, \theta), \qquad
+\log \mu_i = \log(\text{area}_i) + X_i\beta
+$$
 
-Bivariate PRECTOT was marginal ($p=0.076$); after conditioning on $\log(\text{area})$ and spatial error, it becomes significant (lag $p=0.035$, error $p=0.018$), supporting **H2**: drier LGAs (Kano 404 mm vs Port Harcourt 1,891 mm) host higher density; the 1,487 mm contrast predicts 0.15 km⁻² (≈15% of Tarauni's 1.06). T2M remains n.s. Negative $\rho$/$\lambda$ reflects fragmented 34-sample (5 sub-graphs) — interpret cautiously — but AIC improves ~2 points and sharpens PRECTOT. Kano-excluded $N=21$ attenuates but does not reverse the sign, so H2 is not solely Kano-driven.
+Then $\exp(\beta)$ is an **incidence rate ratio** — the density effect, on the correct scale.
 
-::: {.callout-tip title="In plain English: what the tables say" appearance="simple" icon=false}
-*Table 5:* Small urban LGAs (Tarauni 23.6 km², 1.06 km⁻²) concentrate points; large Ikorodu (369 km², 0.14) dilutes — larger area → lower density, highly significant. The 0.42 $\rho$ means a LGA's density is strongly predicted by its neighbours' density.
+**Table 5c. Model comparison, $N = 775$.**
 
-*Table 6:* After accounting for area and neighbours, *drier* LGAs have *higher* density — the 1,487 mm rainfall gap predicts a meaningful 0.15 km⁻² difference. Temperature doesn't matter once rainfall and area are controlled. The negative $\rho$ here is an artefact of the small, fragmented 34-sample; the key is that spatial models make rainfall significant whereas OLS did not.
+| Model | AIC | Note |
+|---|---:|---|
+| Poisson | 3569.3 | dispersion 39.1 — unusable |
+| NegBin, area as covariate | 571.6 | counts scale with area |
+| NegBin, pure rate (offset only) | 601.7 | no area slope |
+| **NegBin, rate + area slope (offset)** | **571.6** | the defensible model |
+| Hurdle NegBin | 534.4 | *count component unidentified — see below* |
+| Zero-inflated NegBin | 575.6 | |
+
+**Table 5d. The area effect under the correct family.**
+
+| Term | $b$ | SE | $p$ | IRR |
+|---|---:|---:|---:|---:|
+| Intercept | 2.835 | 1.555 | 0.068 | 17.03 |
+| $\log(\text{area})$ | -1.551 | 0.239 | 8.5e-11 | **0.212** |
+
+LR test, offset-only → offset+slope: $\chi^2 = 32.05$ on 1 df, $p = 1.5\times10^{-8}$.
+
+**H3 therefore survives.** A doubling of LGA area multiplies density by
+$2^{-1.551} = 0.342$ — i.e. density falls by about 66% per doubling of area. The direction,
+the significance, and the existence of the effect are all confirmed under a specification that
+cannot produce negative densities and does not divide by the denominator.
+
+::: {.callout-note title="Honest caveat on the hurdle model" appearance="simple" icon=false}
+The hurdle has the lowest AIC but **its count component is not identified**. Only 39 of 775
+LGAs are non-zero, and a zero-truncated negative binomial must estimate $\theta$ from those 39
+alone; $\theta$ collapses to the boundary and the standard errors return `NaN`. Its AIC is
+therefore not comparable in the usual way, and its count coefficients must not be quoted. Only
+the **zero component** is stable: $\log(\text{area})$ coefficient $-0.813$ ($p = 2\times10^{-10}$),
+meaning larger LGAs are more likely to sit outside the mapped set entirely — which is a statement
+about **mapping coverage**, not about agriculture.
 :::
+
+### 6.3.3 LISA with multiple-comparison control
+
+The earlier analysis flagged every LGA with raw $p < 0.05$ as a cluster: **23 of 775**. But with
+775 simultaneous tests the expected false-positive count is **38.8**, so reporting 23 without
+adjustment was not defensible. Observing *fewer* than chance expectation is itself the signature
+that the normal approximation behind the LISA p-values is **conservative** on a variable that is
+95% zeros — the p-values are discrete and understated, not the clustering absent.
+
+| Criterion | LGAs significant |
+|---|---:|
+| Raw $p < 0.05$ (uncorrected) | 23 |
+| Benjamini–Hochberg FDR 5% | **19** |
+| Bonferroni | 18 |
+| Expected false positives at $\alpha=0.05$ | 38.8 |
+
+The reportable figure is the **BH-adjusted 19**. A join-count test on the binary "has any
+mapped feature" indicator (`07_lisa_fdr_pointpattern.R`) gives $z = 30.3$, $p < 2\times10^{-16}$,
+and within-city Ripley's $L$ lies outside its simulation envelope in all five cities.
+
+**But note what the adjusted LISA set actually contains**: 18 of the 19 significant LGAs also
+have $n > 0$, and 18 of the 39 LGAs with any points are significant. The LISA result and "this
+LGA is in the mapped set" largely coincide — which is the OSM-completeness confound reappearing
+inside the spatial test, and the reason the exposure control in §6.5 matters.
+
+### 6.4 The climate hypothesis (H2) cannot be tested with these data
+
+The earlier text reported PRECTOT significant at $p=0.018$ (spatial error) and concluded H2 was
+supported. That conclusion is withdrawn. The audit's arithmetic:
+
+- The 34 LGAs carry **5 distinct rainfall values** — one per city.
+- Regressing rainfall on city dummies gives **$R^2 = 1.000$**: rainfall *is* city identity.
+- The subset's spatial weights form **5 connected components with one isolate**, so the "spatial"
+  term absorbs city effects rather than modelling inter-LGA spillover. The fitted $\rho=-0.438$
+  and $\lambda=-0.476$ are negative, which is meaningless here.
+- Between-city variance is only **ICC = 0.102** — 90% of the outcome variation is *within*
+  cities, while the covariate varies only *between* them.
+
+Refitting at the level the data actually replicate:
+
+| Specification | rainfall $b$ | $p$ |
+|---|---:|---:|
+| Naive OLS, 34 rows | -0.000085 | 0.250 |
+| Spatial lag, 34 rows | -0.000135 | 0.035 |
+| Spatial error, 34 rows | -0.000100 | **0.018** ← previously reported |
+| **Collapsed to 5 city means** | **-0.0000438** | **0.576** |
+
+Spearman at the city level: $\rho = -0.20$, $p = 0.78$.
+
+**Conclusion: H2 is untestable with the frozen climate data.** The honest statement is that the
+data are *consistent with* the aridity hypothesis — Kano (404 mm) has the highest mean density
+(0.204 km⁻²) and Port Harcourt (1,891 mm) among the lowest (0.069) — but with $K=5$ and 3 residual
+degrees of freedom no effect can be established, and the two-city contrast is not evidence.
+
+**To test H2 properly** requires rainfall with *within*-city variation, which rasterises to LGA
+polygons: **CHIRPS** (~5 km), **ERA5-Land** (~9 km) or **TAMSAT** (4 km). Any of these gives each
+LGA its own value, turning 5 distinct predictor values into 34. Until then this remains an open
+question, not a finding.
+
+::: {.callout-tip title="In plain English" appearance="simple" icon=false}
+The mistake was subtle and common: rainfall was measured once per city, then handed to every LGA
+in that city. The model then behaved as if it had 34 independent observations of rainfall when
+it really had 5. More rows do not create more information. When the analysis is run at the level
+the data actually support — five cities — the rainfall effect vanishes.
+
+*What survives:* the area effect (H3), now confirmed under a count model, and the spatial
+dependence (H1), which is strong and robust.
+:::
+
+### 6.5 The OSM-completeness confound (open)
+
+`landuse=farmland` inside a city bounding box measures how much of a place OpenStreetMap
+contributors have mapped, at least as much as it measures urban agriculture. The two are
+entangled: Kano is the best-mapped state in Nigerian OSM *and* has the most "urban agriculture"
+points (189 of 484).
+
+`scripts/fetch_osm_exposure.py` measures the confound directly by querying per-LGA
+`way["building"]` and `way["highway"]` counts inside each LGA polygon via Overpass
+`out count;` (aggregate counts, so responses are tiny and the run is resumable). Treating the
+building count as an **exposure offset** asks: given how much of this LGA is mapped at all, is
+urban agriculture unusually present or absent?
+
+Results land in `results/tables/`. This is **not resolved**; it is measured and reported.
 
 # Additional analyses
 
-## 7.1 Density vs climate and scale (Spearman)
+## 7.1 Density vs climate (descriptive only) and scale
 
-For 39 LGAs with ≥1 point (34 mapped), Spearman $\rho$ (ties, exact $p$ approximate): rainfall $\rho=-0.31$ ($p=0.076$) marginal, temperature $\rho=+0.44$ ($p=0.009$) significant — drier/hotter → denser (H2); Tarauni 23.6 km² 1.06 vs Ungogo 187 km² 0.48 supports H3. Figs. `density_vs_rainfall.png` (scatter, dashed OLS) and `climate_correlation.png` (matrix) illustrate; Table 4 top-10 LGAs (Tarauni 1.06, Shomolu 0.55, Ungogo 0.48…) shows density vs counts distinction (Ikorodu 53 points but 0.14 km⁻²).
+**Revised 15 Oct 2026 — the correlation figures below inherit the same defect as §6.4 and are
+now descriptive only.** The earlier text read temperature $\rho=+0.44$ ($p=0.009$) as support for
+H2. That is not supportable: the 39 (mapped: 34) LGAs carry only **5 distinct rainfall and
+temperature values**, because both were sampled at city centroids and assigned to every LGA in
+that city. Spearman on such a variable measures the ordering of five cities, not of 34 LGAs, and
+any $p$-value from it is meaningless.
+
+At the honest city level ($K=5$): rainfall $\rho=-0.20$, $p=0.78$.
+
+So these figures are retained as **descriptive city contrasts** and labelled as such:
+`density_vs_rainfall.png` (scatter with the five city values visible) and
+`climate_correlation.png` (matrix). Their captions state $K=5$ and that no inference is drawn.
+
+What *does* survive in this section is the **scale** comparison, which uses LGA-level quantities
+and is unaffected: Tarauni 23.6 km² at 1.06 km⁻² versus Ungogo 187 km² at 0.48 km⁻² supports H3,
+and the top-10 table shows why counts mislead — Ikorodu has 53 points but only 0.14 km⁻² over
+369 km². The corrected H3 model is in §6.3.2.
 
 ## 7.2 Maps
 
