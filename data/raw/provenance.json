@@ -37,7 +37,7 @@
     "out": "D:\\YohannaPaper\\data\\raw\\osm_gombe_test.csv",
     "n_rows": 0,
     "timestamp_utc": "2026-08-25T07:13:06.928187+00:00",
-    "license": "ODbL \u2014 \u00a9 OpenStreetMap contributors"
+    "license": "ODbL — © OpenStreetMap contributors"
   },
   {
     "source": "OpenStreetMap Overpass API",
@@ -48,7 +48,7 @@
     "out": "D:\\YohannaPaper\\data\\raw\\osm_gombe_test.csv",
     "n_rows": 0,
     "timestamp_utc": "2026-08-25T07:13:36.536288+00:00",
-    "license": "ODbL \u2014 \u00a9 OpenStreetMap contributors"
+    "license": "ODbL — © OpenStreetMap contributors"
   },
   {
     "source": "OpenStreetMap Overpass API",
@@ -59,7 +59,7 @@
     "out": "D:\\YohannaPaper\\data\\raw\\osm_gombe_test.csv",
     "n_rows": 0,
     "timestamp_utc": "2026-08-25T07:19:20.378688+00:00",
-    "license": "ODbL \u2014 \u00a9 OpenStreetMap contributors"
+    "license": "ODbL — © OpenStreetMap contributors"
   },
   {
     "source": "OpenStreetMap Overpass API",
@@ -70,7 +70,7 @@
     "out": "D:\\YohannaPaper\\data\\raw\\osm_gombe_test.csv",
     "n_rows": 45,
     "timestamp_utc": "2026-08-25T07:21:19.145102+00:00",
-    "license": "ODbL \u2014 \u00a9 OpenStreetMap contributors"
+    "license": "ODbL — © OpenStreetMap contributors"
   },
   {
     "source": "OpenStreetMap Overpass API",
@@ -81,7 +81,7 @@
     "out": "D:\\YohannaPaper\\data\\raw\\osm_abuja.csv",
     "n_rows": 32,
     "timestamp_utc": "2026-08-25T07:31:00.124697+00:00",
-    "license": "ODbL \u2014 \u00a9 OpenStreetMap contributors"
+    "license": "ODbL — © OpenStreetMap contributors"
   },
   {
     "source": "OpenStreetMap Overpass API",
@@ -92,7 +92,7 @@
     "out": "D:\\YohannaPaper\\data\\raw\\osm_lagos.csv",
     "n_rows": 130,
     "timestamp_utc": "2026-08-25T07:34:20.936520+00:00",
-    "license": "ODbL \u2014 \u00a9 OpenStreetMap contributors"
+    "license": "ODbL — © OpenStreetMap contributors"
   },
   {
     "source": "OpenStreetMap Overpass API",
@@ -103,7 +103,7 @@
     "out": "D:\\YohannaPaper\\data\\raw\\osm_kano.csv",
     "n_rows": 189,
     "timestamp_utc": "2026-08-25T07:36:21.309412+00:00",
-    "license": "ODbL \u2014 \u00a9 OpenStreetMap contributors"
+    "license": "ODbL — © OpenStreetMap contributors"
   },
   {
     "source": "OpenStreetMap Overpass API",
@@ -114,7 +114,7 @@
     "out": "D:\\YohannaPaper\\data\\raw\\osm_portharcourt.csv",
     "n_rows": 88,
     "timestamp_utc": "2026-08-25T07:38:39.546695+00:00",
-    "license": "ODbL \u2014 \u00a9 OpenStreetMap contributors"
+    "license": "ODbL — © OpenStreetMap contributors"
   },
   {
     "source": "NASA POWER API",
@@ -191,5 +191,15 @@
     "out": "data/external/gadm41_NGA_2.shp",
     "license": "CC BY 4.0 (GADM)",
     "timestamp_utc": "2026-08-26T02:18:59.427240+00:00"
+  },
+  {
+    "source": "OpenStreetMap Overpass API (aggregate counts)",
+    "url": "https://overpass-api.de/api/interpreter",
+    "query": "way[\"building\"] | way[\"highway\"] inside LGA polygon, `out count;`",
+    "out": "D:\\YohannaPaper\\data\\raw\\osm_exposure_by_lga.csv",
+    "n_rows": 78,
+    "timestamp_utc": "2026-10-15T03:19:42.433846+00:00",
+    "license": "ODbL - (c) OpenStreetMap contributors",
+    "note": "Per-LGA OSM mapping-effort control. Used as an exposure covariate so that urban-agriculture density is not confused with OSM completeness. Polygons simplified to 0.002 deg from GADM v4.1 via 05_export_lga_polys.R."
   }
 ]

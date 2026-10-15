@@ -1,0 +1,79 @@
+gid2,state,lga,n,kind,n_vertices,n_buildings,n_highways
+NGA.15.2_1,Federal Capital Territory,Abuja,14,has_points,247,330083,46110
+NGA.15.3_1,Federal Capital Territory,Bwari,1,has_points,174,100031,14534
+NGA.15.5_1,Federal Capital Territory,Kuje,0,control,143,17347,690
+NGA.15.6_1,Federal Capital Territory,Kwali,0,control,106,19737,1124
+NGA.15.4_1,Federal Capital Territory,Gwagwalada,0,control,140,34298,3171
+NGA.15.1_1,Federal Capital Territory,Abaji,0,control,212,20502,587
+NGA.16.1_1,Gombe,Akko,45,has_points,95,212595,13435
+NGA.16.6_1,Gombe,Gombe,0,control,15,435,121
+NGA.16.2_1,Gombe,Balanga,0,control,84,9344,1842
+NGA.16.11_1,Gombe,Yamaltu/Deba,0,control,81,13309,4119
+NGA.16.5_1,Gombe,Funakaye,0,control,51,13772,2273
+NGA.16.7_1,Gombe,Kaltungo,0,control,75,21874,1170
+NGA.16.9_1,Gombe,Nafada,0,control,59,9334,2191
+NGA.20.42_1,Kano,Ungogo,90,has_points,95,46160,14498
+NGA.20.38_1,Kano,Tarauni,25,has_points,31,19256,4309
+NGA.20.17_1,Kano,Gezawa,20,has_points,81,19735,8909
+NGA.20.25_1,Kano,Kumbotso,17,has_points,91,18440,7042
+NGA.20.43_1,Kano,Warawa,12,has_points,79,13323,3627
+NGA.20.30_1,Kano,Minjibir,5,has_points,90,6570,1445
+NGA.20.12_1,Kano,Fagge,4,has_points,26,19895,2733
+NGA.20.18_1,Kano,Gwale,4,has_points,25,7735,4222
+NGA.20.21_1,Kano,Kano,4,has_points,21,11755,5420
+NGA.20.10_1,Kano,Dawakin Tofa,3,has_points,116,16718,1813
+NGA.20.31_1,Kano,Nasarawa,3,has_points,27,13969,2512
+NGA.20.7_1,Kano,Dala,2,has_points,28,3685,3528
+NGA.20.34_1,Kano,Rogo,0,control,119,5758,1481
+NGA.20.36_1,Kano,Sumaila,0,control,171,50298,4178
+NGA.20.13_1,Kano,Gabasawa,0,control,100,5700,1611
+NGA.20.9_1,Kano,Dawakin Kudu,0,control,111,9526,3641
+NGA.20.4_1,Kano,Bebeji,0,control,185,7815,904
+NGA.20.23_1,Kano,Kibiya,0,control,120,11326,706
+NGA.25.12_1,Lagos,Ikorodu,53,has_points,118,241704,17011
+NGA.25.19_1,Lagos,Shomolu,10,has_points,40,22279,2047
+NGA.25.4_1,Lagos,Amuwo Odofin,8,has_points,413,128722,6837
+NGA.25.17_1,Lagos,Ojo,5,has_points,253,115825,4886
+NGA.25.7_1,Lagos,Epe,4,has_points,510,9104,2204
+NGA.25.13_1,Lagos,Kosofe,4,has_points,84,29068,4869
+NGA.25.16_1,Lagos,Mushin,4,has_points,46,25872,1927
+NGA.25.9_1,Lagos,Ibeju-Lekki,3,has_points,1094,90456,4183
+NGA.25.10_1,Lagos,Ifako/Ijaye,3,has_points,57,68072,3152
+NGA.25.15_1,Lagos,Mainland,3,has_points,47,33465,2572
+NGA.25.3_1,Lagos,Alimosho,2,has_points,125,288083,11359
+NGA.25.14_1,Lagos,Lagos Island,2,has_points,196,33298,2908
+NGA.25.8_1,Lagos,Eti-Osa,1,has_points,426,67404,11624
+NGA.25.18_1,Lagos,Oshodi/Isolo,1,has_points,77,54743,2559
+NGA.25.20_1,Lagos,Surulere,1,has_points,56,68469,2784
+NGA.25.1_1,Lagos,Agege,0,control,44,32752,1757
+NGA.25.5_1,Lagos,Apapa,0,control,175,43450,1996
+NGA.25.2_1,Lagos,Ajeromi/Ifelodun,0,control,40,18374,961
+NGA.25.6_1,Lagos,Badagry,0,control,584,34610,7855
+NGA.25.11_1,Lagos,Ikeja,0,control,97,42991,4613
+NGA.27.23_1,Niger,Suleja,9,has_points,51,21912,1678
+NGA.27.24_1,Niger,Tafa,8,has_points,63,33291,3463
+NGA.27.9_1,Niger,Gurara,0,control,248,35698,1630
+NGA.27.7_1,Niger,Edati,0,control,287,22194,1133
+NGA.27.1_1,Niger,Agaie,0,control,365,41481,2233
+NGA.27.2_1,Niger,Agwara,0,control,94,22518,9185
+NGA.27.13_1,Niger,Lavun,0,control,384,61535,1460
+NGA.27.11_1,Niger,Kontagora,0,control,90,42203,14326
+NGA.28.7_1,Ogun,Ifo,13,has_points,166,360291,14431
+NGA.28.3_1,Ogun,Ado Odo/Ota,8,has_points,224,475182,24046
+NGA.28.20_1,Ogun,Shagamu,5,has_points,154,205936,11413
+NGA.28.1_1,Ogun,Abeokuta South,0,control,54,96649,4010
+NGA.28.8_1,Ogun,Ijebu North-East,0,control,60,1306,359
+NGA.28.16_1,Ogun,Odeda,0,control,145,48626,2489
+NGA.28.10_1,Ogun,Ijebu North,0,control,108,42352,4234
+NGA.28.18_1,Ogun,Ogun Waterside,0,control,639,7875,523
+NGA.28.14_1,Ogun,Ipokia,0,control,158,5803,530
+NGA.33.15_1,Rivers,Obio/Akpor,64,has_points,671,100298,17804
+NGA.33.13_1,Rivers,Ikwerre,22,has_points,101,43509,5276
+NGA.33.21_1,Rivers,Oyigbo,1,has_points,101,66536,3571
+NGA.33.22_1,Rivers,Port Harcourt,1,has_points,1428,24190,3830
+NGA.33.19_1,Rivers,Omumma,0,control,77,5710,212
+NGA.33.6_1,Rivers,Asari-Toru,0,control,888,183,17
+NGA.33.4_1,Rivers,Akuku-Toru,0,control,3697,443,36
+NGA.33.9_1,Rivers,Eleme,0,control,502,3513,1887
+NGA.33.10_1,Rivers,Emuoha,0,control,1137,8676,799
+NGA.33.17_1,Rivers,Ogu/Bolo,0,control,524,4,30
