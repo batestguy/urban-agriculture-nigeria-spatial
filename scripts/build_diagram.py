@@ -114,10 +114,13 @@ def main():
     out_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
                            'results', 'figures')
     os.makedirs(out_dir, exist_ok=True)
-    out_path = os.path.join(out_dir, 'conceptual_framework.png')
+    out_path = os.path.join(out_dir, 'conceptual_framework_nexus.png')
     fig.savefig(out_path, dpi=200, bbox_inches='tight', facecolor='white')
     plt.close()
     print(f"Saved: {out_path}")
+    print("This is the REVIEW diagram (UA-food security-climate nexus). The conference\n"
+          "paper uses manuscript/fig1-conceptual-framework.png, which is the integration\n"
+          "framework. They are different figures; do not interchange them.")
 
 if __name__ == '__main__':
     main()

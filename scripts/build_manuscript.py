@@ -1,5 +1,48 @@
 #!/usr/bin/env python3
 """
+build_manuscript.py - DEPRECATED. DO NOT RUN.  (disabled 2026-10-15)
+
+What this script was
+--------------------
+It generated the abandoned literature-review version of the conference paper - the one
+proposing a "complete clean break" that removed all spatial statistics, equations, data
+sources, tables and figures. That spec was never implemented. See
+urban-ag-literature-review-spec.md.
+
+Why it is disabled
+------------------
+It wrote its output to **manuscript/manuscript.docx** - the exact path of the live
+submission artefact. Running it would have silently REPLACED the current manuscript with
+the abandoned draft, and because it is a plausible-looking build script, it might have been
+run by anyone following the README. The two documents have entirely different titles,
+structures and reference lists, so the loss would not have been obvious immediately.
+
+It also consumed results/figures/conceptual_framework.png, a filename written by BOTH this
+script and scripts/build_diagram.py - two generators competing for one path.
+
+What to use instead
+-------------------
+    quarto render manuscript/manuscript.qmd --to docx
+    python scripts/fix_docx_format.py      # enforces TNR 12pt / 1.5 / 1in margins
+
+The body of the original script is retained below for reference, but execution stops here.
+Its docx-writing code is unreachable by design.
+"""
+import sys
+
+sys.exit(
+    "build_manuscript.py is disabled.\n"
+    "It would overwrite manuscript/manuscript.docx with an abandoned draft.\n"
+    "Use instead:\n"
+    "  quarto render manuscript/manuscript.qmd --to docx\n"
+    "  python scripts/fix_docx_format.py"
+)
+
+# ---------------------------------------------------------------------------
+# Original body retained below, unreachable.
+# ---------------------------------------------------------------------------
+#!/usr/bin/env python3
+"""
 build_manuscript.py — v3
 Run:  python scripts/build_manuscript.py
 Out:  manuscript/manuscript.docx  (TNR 12pt, 1.5 spacing, 1in margins)
