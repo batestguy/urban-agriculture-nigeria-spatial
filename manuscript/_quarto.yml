@@ -1,10 +1,12 @@
 project:
   type: default
 
+# Manuscript renders from manuscript/, so figures and data are referenced one level up.
+# Paths in manuscript.qmd are relative to THIS file (../results/..., ../data/...).
+
 format:
   docx:
     toc: false
     number-sections: true
     reference-links: true
-    # Use default reference-doc, but enforce styles via metadata:
-    # Word compliance checked post-render: TNR 12pt 1.5 ≤12pp (see README.md:7)
+    reference-doc: reference.docx

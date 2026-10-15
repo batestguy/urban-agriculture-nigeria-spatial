@@ -26,6 +26,7 @@
 #  12  sensitivity (queen/rook, Kano excluded)   -> console
 #  13  claim audit (the gate)                    -> console, exits non-zero on FLAG
 #  14  report verification (61 checks)           -> console, exits non-zero on DIFF
+#  15  manuscript verification (53 checks)       -> console, exits non-zero on DIFF
 #
 # The OSM exposure fetch is Python (scripts/fetch_osm_exposure.py) and needs the
 # network; it is NOT part of the default run because the analysis must work offline
@@ -54,7 +55,8 @@ SCRIPTS <- c(
   'analysis/spatial/11_summary_figure.R',
   'analysis/spatial/check_sensitivity.R',
   'analysis/spatial/audit_claims.R',
-  'analysis/spatial/verify_report_claims.R'
+  'analysis/spatial/verify_report_claims.R',
+  'analysis/spatial/verify_manuscript_claims.R'
 )
 
 # --- step 0: one bibliography -----------------------------------------------
@@ -90,12 +92,13 @@ run_one <- function(s) {
 # The chain is expressed as independent scripts on purpose: each opens the frozen
 # data, does one job, and writes one artefact. Nothing is held in memory between
 # steps, so a single failure does not poison the rest.
-plan <- c(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L)
+plan <- c(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L, 9L, 10L, 11L, 12L, 13L, 14L, 15L)
 names(plan) <- SCRIPTS
 
 if (only_audit) {
   plan <- plan[c('analysis/spatial/audit_claims.R',
-                 'analysis/spatial/verify_report_claims.R')]
+                 'analysis/spatial/verify_report_claims.R',
+                 'analysis/spatial/verify_manuscript_claims.R')]
   from_step <- 13
 }
 
@@ -113,10 +116,11 @@ for (nm in names(status)) {
 
 hr('Rendering documents')
 cat('The manuscript and methodology render via Quarto (path-relative):\n\n')
-cat('  quarto render docs/spatial-report.qmd --to html    # the results report\n')
-cat('  quarto render docs/spatial-report.qmd --to pdf\n')
-cat('  quarto render manuscript/manuscript.qmd --to docx  # the separate Bauchi survey paper\n')
-cat('  quarto render docs/methodology.qmd --to typst\n\n')
+cat('  cd manuscript && quarto render manuscript.qmd --to html   # the manuscript\n')
+cat('  cd manuscript && quarto render manuscript.qmd --to pdf\n')
+cat('  cd manuscript && quarto render manuscript.qmd --to docx\n')
+cat('  quarto render docs/methodology.qmd --to typst             # methods companion\n')
+cat('  quarto render docs/spatial-report.qmd --to html           # earlier report version\n\n')
 cat('Then, if Word styling needs enforcing:\n\n')
 cat('  python scripts/fix_docx_format.py\n')
 

@@ -1,14 +1,15 @@
-# Urban Agriculture in Nigerian Cities
+# Where Does Urban Agriculture Concentrate in Nigerian Cities?
 
 > **A spatial analysis of 484 OpenStreetMap features across 775 Local Government Areas.**
 > All data collected by the author through public APIs in 2026. Every number reproducible
 > from frozen data.
 
-**[Read the report →](docs/spatial-report.html)** — 19 pages, all figures, methods, findings and the corrections that produced them.
+**Read the manuscript:** [HTML](manuscript/manuscript.html) · [PDF](manuscript/manuscript.pdf) · [Word](manuscript/manuscript.docx) — 22 pages, 19 cited references, every number verified.
 
 ```pwsh
-Rscript analysis/spatial/verify_report_claims.R   # 61 checks, re-derives every quoted number
-Rscript build.R                                   # or run the whole pipeline from frozen data
+Rscript analysis/spatial/verify_manuscript_claims.R   # 53 checks against the manuscript
+Rscript analysis/spatial/audit_claims.R               # claim-by-claim audit of the analysis
+Rscript build.R                                        # whole pipeline from frozen data
 ```
 
 ---
@@ -91,7 +92,8 @@ figure's pixel dimensions against its generator and refuses to let the report ca
 ## Repository layout
 
 ```
-├── docs/spatial-report.qmd     the report source → self-contained HTML + PDF
+├── manuscript/manuscript.qmd    the manuscript source → HTML, PDF, Word
+├── docs/spatial-report.qmd     earlier report version of the same analysis
 ├── build.R                     one entry point, 13 pipeline steps, path-relative
 ├── analysis/
 │   ├── spatial/                01 clean · 02 Moran/LISA · 03 maps · 04 extra figs
@@ -111,7 +113,7 @@ figure's pixel dimensions against its generator and refuses to let the report ca
 Rscript analysis/spatial/verify_report_claims.R   # 61 checks against the report
 Rscript analysis/spatial/audit_claims.R           # claim-by-claim audit
 Rscript build.R                                   # full pipeline
-quarto render docs/spatial-report.qmd --to html   # this report
+quarto render manuscript/manuscript.qmd --to html # the manuscript
 ```
 
 Environment: R 4.5.2 (`sf`, `spdep`, `spatialreg`, `spatstat`, `MASS`) with Python 3.12
@@ -132,13 +134,13 @@ run correctly and the discrepancy is recorded rather than hidden.
   have any feature at all. The statistical confound check passes; the *map* is still not a pure
   agriculture map.
 
-## A separate study in the same repository
+## Archived work
 
-`manuscript/` holds an unrelated piece of work: a conference paper on a **field survey of 285
-urban farmers in Bauchi Metropolis**, drawn from the author's M.Tech thesis. It shares no data
-with the spatial study — different cities, different unit of analysis, different method — and
-its stakeholder survey microdata is not included in the repository. It is documented in
-`data/raw/README-survey-data.md` and kept here only because the two projects share tooling.
+`abandoned/` holds an earlier conference paper on a Bauchi Metropolis farmer survey, drawn from
+a separate M.Tech thesis, together with its analysis, figures and build scripts. It shares no
+data with this study — different cities, different unit of analysis, different method — and the
+survey microdata were never deposited. It is preserved for recoverability and documented in
+`abandoned/README.md`, but it no longer represents this project.
 
 ## History
 
