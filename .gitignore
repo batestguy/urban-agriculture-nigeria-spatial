@@ -74,3 +74,12 @@ docs/.quarto/
 #  .typ is produced by --to typst, .tex by --to latex (the earlier attempt)
 docs/methodology.typ
 docs/methodology.tex
+
+# Scratch files (commit messages, scratch scripts, logs).
+# A commit-message file was once captured by `git add -A`, which then also made the
+# next commit's message into that filename. Cheap to prevent.
+commitmsg.txt
+cm.txt
+_*.py
+_*.R
+buildlog.txt

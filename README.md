@@ -4,13 +4,24 @@
 > All data collected by the author through public APIs in 2026. Every number reproducible
 > from frozen data.
 
-**Read the manuscript:** [HTML](manuscript/manuscript.html) · [PDF](manuscript/manuscript.pdf) · [Word](manuscript/manuscript.docx) — 22 pages, 19 cited references, every number verified.
+**Read the manuscript:** [HTML](manuscript/manuscript.html) · [PDF](manuscript/manuscript.pdf) · [Word](manuscript/manuscript.docx) — 22 pages, 19 cited references.
 
 ```pwsh
-Rscript analysis/spatial/verify_manuscript_claims.R   # 53 checks against the manuscript
-Rscript analysis/spatial/audit_claims.R               # claim-by-claim audit of the analysis
-Rscript build.R                                        # whole pipeline from frozen data
+Rscript build.R --audit    # 175 verification checks; exits non-zero on any disagreement
+Rscript build.R            # full 15-step pipeline from frozen data
 ```
+
+Three gates re-derive every number from the raw data and compare it with what the text
+claims: `audit_claims.R` (61), `verify_report_claims.R` (61), `verify_manuscript_claims.R`
+(53). All 175 pass. Every cited DOI is resolved against the Crossref registry before it can
+enter the bibliography.
+
+**Declaration of generative AI use.** An AI coding assistant was used in preparing this work:
+implementing and debugging the analysis pipeline, writing the verification scripts, and
+drafting and editing prose. Research design, data collection, analytical decisions and
+interpretation are the author's. Every numerical result is independently re-derived from the
+frozen data by committed scripts, and every reference was resolved against Crossref. The
+author takes full responsibility for the content.
 
 ---
 
@@ -93,7 +104,9 @@ figure's pixel dimensions against its generator and refuses to let the report ca
 
 ```
 ├── manuscript/manuscript.qmd    the manuscript source → HTML, PDF, Word
+├── docs/venue-options.md       where to submit, AI-policy guidance, checklist
 ├── docs/spatial-report.qmd     earlier report version of the same analysis
+├── abandoned/                  retired Bauchi survey paper, kept recoverable
 ├── build.R                     one entry point, 13 pipeline steps, path-relative
 ├── analysis/
 │   ├── spatial/                01 clean · 02 Moran/LISA · 03 maps · 04 extra figs
@@ -110,10 +123,13 @@ figure's pixel dimensions against its generator and refuses to let the report ca
 ## Reproducing
 
 ```pwsh
-Rscript analysis/spatial/verify_report_claims.R   # 61 checks against the report
-Rscript analysis/spatial/audit_claims.R           # claim-by-claim audit
-Rscript build.R                                   # full pipeline
-quarto render manuscript/manuscript.qmd --to html # the manuscript
+Rscript build.R --audit                            # all three verification gates (175 checks)
+Rscript build.R                                    # full pipeline, 15 steps
+cd manuscript; quarto render manuscript.qmd --to html   # also --to pdf / --to docx
+
+python scripts/verify_bib.py     # re-check every DOI in references.bib against Crossref
+python scripts/build_bib.py      # regenerate references.bib from Crossref metadata
+python scripts/find_journals.py  # candidate venues from the DOAJ API
 ```
 
 Environment: R 4.5.2 (`sf`, `spdep`, `spatialreg`, `spatstat`, `MASS`) with Python 3.12
@@ -133,6 +149,25 @@ run correctly and the discrepancy is recorded rather than hidden.
 - **The LISA geography remains partly a coverage map.** 18 of the 19 significant LGAs also
   have any feature at all. The statistical confound check passes; the *map* is still not a pure
   agriculture map.
+
+## Submitting
+
+Venue shortlist, AI-policy guidance and a pre-submission checklist:
+**[docs/venue-options.md](docs/venue-options.md)**.
+
+Two points worth stating plainly, because they are easy to get wrong:
+
+- **Scopus indexing is not verifiable from this repository.** Check any candidate at
+  <https://www.scopus.com/sources> or against the monthly source-list download. Search
+  results and journal homepages are not the authority.
+- **Almost every reputable journal permits AI-assisted writing**, provided it is disclosed
+  and no AI is listed as an author (the COPE position, followed by most publishers). The
+  constraint is disclosure, not permission. Identify the minority that ban AI-generated text
+  outright and avoid them.
+
+`scripts/find_journals.py` queries the DOAJ API for journals in the paper's subject areas
+that charge no article processing fee, and prints their publisher, licence, peer-review model
+and typical time to publication — all from the registry rather than from a summary.
 
 ## Archived work
 
