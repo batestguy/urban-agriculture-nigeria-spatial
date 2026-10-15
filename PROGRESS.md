@@ -438,8 +438,15 @@ remote is correct — only the on-disk directory name is still the old one.
 
 **Rendered and verified:**
 - `manuscript/manuscript.pdf` 24 pp, `.docx`, `.html` — author block present in all three
+- **Word reports the submission `.docx` at 19 pages** (`ComputeStatistics`), inside the
+  journal's 20-page cap, with margins read back at top 2 cm, bottom/left/right 1.5 cm. This is
+  the only reliable page count: LibreOffice conversions and word-count estimates both disagreed
+  with it, and the Quarto PDF is 24 pages on letter paper with a table of contents, so it is not
+  the number the journal will see.
 - `docs/methodology.pdf` 13 pp; `docs/spatial-report.pdf` 19 pp
-- `python scripts/verify_author_block.py` → 5 artefacts OK, 0 discrepancies, 94 text files scanned
+- `python scripts/verify_author_block.py` → 5 artefacts OK, 0 discrepancies
+- `Rscript build.R --audit` → 61 + 61 + 53 = 175 checks, 0 discrepancies
+- `python scripts/verify_bib.py` → 19 DOIs verified, 0 wrong, 0 unresolvable
 
 **New tool: `scripts/rename_project.py`.** One-off migration with a `--dry-run` mode. Kept in
 the repo because it documents exactly which references were rewritten and which were
@@ -465,9 +472,15 @@ deliberately skipped — the skip list is the part that matters.
 - [x] Page-count trim 04:45: Word 19→12 pp, docx 3599→2307 w (2 figs 2in, 4 tables compact, refs 20, non-technical trimmed, technical untouched)
 - [x] Methodology PDF 05:21: `docs/methodology.qmd` → `docs/methodology.pdf` 10 pp, equations + layman, README §8
 - [x] Author/ownership correction + project rename — done 2026-10-15
+- [x] Submission `.docx` page count read from Word: **19 pp** ≤ 20; margins verified
 - [ ] **Submit to AJLP&GS** (not the Kaltungo conference): the manuscript is now formatted for
-      the journal. Outstanding: page count against its 20-page cap, the journal's own reference
-      format (currently APA), an anonymised copy, the copyright form, and the Scopus question.
+      the journal. Outstanding, in the order that matters:
+      1. **Scopus** — confirm ISSN 2657-2664 at <https://www.scopus.com/sources> first. If the
+         journal is not indexed there, that decision comes before any more formatting work.
+      2. **Anonymised copy** for review — the journal requires it; not created yet.
+      3. **References in the journal's own format** — currently APA.
+      4. **Copyright form** from the journal site.
+      5. **ORCID iD** for the author block.
 
 ## Decisions & risks
 - **Venue changed to AJLP&GS** (e-ISSN 2657-2664, no APC). The Kaltungo conference spec —

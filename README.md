@@ -6,7 +6,7 @@
 > All data collected by the author through public APIs in 2026. Every number reproducible
 > from frozen data.
 
-**Read the manuscript:** [HTML](manuscript/manuscript.html) · [PDF](manuscript/manuscript.pdf) · [Word](manuscript/manuscript.docx) — 24 pages, 19 cited references.
+**Read the manuscript:** [HTML](manuscript/manuscript.html) · [PDF](manuscript/manuscript.pdf) · [Word](manuscript/manuscript.docx) — the Word file is the submission artefact: **19 pages against the journal's 20-page limit**, verified by Word itself (`ComputeStatistics`, not estimated). 19 cited references.
 
 ```pwsh
 Rscript build.R --audit    # 175 verification checks; exits non-zero on any disagreement
@@ -189,6 +189,20 @@ run correctly and the discrepancy is recorded rather than hidden.
 
 Target venue: **African Journal on Land Policy and Geospatial Sciences** (ISSN 2657-2664,
 no APC). The manuscript has been reformatted to that journal's template.
+
+| Requirement | Status |
+|---|---|
+| ≤ 20 pages | **19** — read from Word, not estimated |
+| Cambria throughout | done (`scripts/fix_docx_ajlpgs.py`) |
+| Body 12 pt justified, 1.2 spacing | done |
+| Margins top 2 cm, others 1.5 cm | done — read back from Word |
+| Abstract ≤ 500 words, structured | done |
+| Author block present | done, and gated by `scripts/verify_author_block.py` |
+| References in the journal's format | **not done** — currently APA |
+| Anonymised copy for review | **not created** |
+| Copyright form from the journal site | **not obtained** |
+| ORCID iD in the author block | **not supplied** |
+| Scopus recognition confirmed | **unresolved** — see below |
 
 - [docs/submission-ajlpgs.md](docs/submission-ajlpgs.md) - gap analysis and submission package
 - [docs/ajlpgs-author-guidelines.md](docs/ajlpgs-author-guidelines.md) - the journal's own
