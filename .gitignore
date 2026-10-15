@@ -80,6 +80,7 @@ docs/methodology.tex
 # next commit's message into that filename. Cheap to prevent.
 commitmsg.txt
 cm.txt
+_cwmsg.txt
 _*.py
 _*.R
 buildlog.txt
