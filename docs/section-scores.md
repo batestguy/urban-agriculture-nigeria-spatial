@@ -70,7 +70,7 @@ script to confirm.
 | OSM exposure control | ✅ **resolved** | Confound is real (ρ=0.613 with mapped highways); H3 survives and strengthens (ΔAIC 20.0) |
 | Witnessing of `terra` suitability | ❌ not implemented | `terrain` suitability was claimed in earlier README text; no script uses `terra` |
 | R version | ⚠️ mismatch | Docs claim 4.5.2; installed packages built under 4.5.3 |
-| `manuscript.docx` page count | ⏳ needs Word | Page count must be confirmed in Word (File → Info), not estimated |
+| `manuscript.docx` page count | ✅ **verified 11 pp** | Confirmed in Word on 15 Oct 2026 via `scripts/read_docx_stats.py` (attaches to the open document). 11 pages against the flyer's 12-page limit — **1 page of headroom.** Normal style is Times New Roman 12 pt, 1.5 line spacing, 1 in margins, as the flyer requires. |
 
 ## F. The strongest result in the repository
 

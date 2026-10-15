@@ -335,6 +335,34 @@ need a polygon-based re-pull; the LISA geography remains partly a coverage map.
 
 ---
 
+## 2026-10-15 — Conference paper page count verified in Word: 11 pp
+
+The gap register carried "manuscript.docx page count must be confirmed in Word, not
+estimated" as an open item, because every prior figure in this log was an estimate (word
+count / 250 or / 300) or a LibreOffice conversion. Neither is Word.
+
+Opened `manuscript/manuscript.docx` in Word and read the live document, without saving or
+closing it:
+
+- **Pages: 11** (Word's own pagination) against the flyer limit of 12 -> **1 page headroom**
+- Words: 3,829 (Word count, including tables and references)
+- Normal style: Times New Roman, 12.0 pt, 1.5 line spacing - as required
+- Margins: top/bottom 54 pt (0.75 in), left/right 72 pt (1 in)
+- Structure: 147 paragraphs, 1 table, 1 inline figure, 9 numbered sections
+
+**Correction to this log:** entries between 2026-08-26 04:15 and 04:45 report the paper at
+"12.0 pp - at limit" and describe trimming to reach it. The actual figure is 11 pp, so the
+paper has a page of headroom rather than sitting on the limit. Those entries are left as
+written - they record what was believed at the time from a LibreOffice PDF conversion - but
+the current number is 11.
+
+**New tool: `scripts/read_docx_stats.py`.** Attaches to an already-running Word instance via
+COM and reports page count, word count, style, margins and heading structure. Read-only: it
+never saves or closes the document, so it is safe to run against an open file. This is the
+only reliable way to get the page count the flyer is judged against.
+
+---
+
 ## Next actions (owner: batestguy) — Phase 6 submission
 - [x] Phase 0: verify done
 - [x] Phase 1a: worldbank — done
