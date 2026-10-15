@@ -2,9 +2,9 @@
 title: "Where urban agriculture concentrates in Nigerian cities"
 subtitle: "A spatial analysis with coverage correction"
 author:
-  - name: "Ibrahim Yohanna"
-    affiliation: "Department of Urban and Regional Planning, Abubakar Tafawa Balewa University, Bauchi, Nigeria"
-    email: "yohanna@atbu.edu.ng"
+  - name: "Jerry Bannister Zachary¹"
+    affiliation: "¹Department of Urban and Regional Planning, Abubakar Tafawa Balewa University, Bauchi, Nigeria. E-mail: jzbannister@atbu.edu.ng"
+    email: "jzbannister@atbu.edu.ng"
     corresponding: true
 date: last-modified
 date-format: "D MMMM YYYY"

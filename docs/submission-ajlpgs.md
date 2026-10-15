@@ -92,3 +92,16 @@ citation base all stay as they are. This is presentation work only.
 
 `Rscript build.R --audit` still has to pass (175 checks) after any reformatting, and it will —
 the checks run against the frozen data, not against the layout.
+
+## Known docx limitation
+
+Pandoc's Word template renders **only the author name**. It silently drops the `affiliation`
+and `email` fields, so `manuscript.docx` opens with the author's name alone. The HTML and PDF
+outputs carry all three.
+
+Two consequences:
+
+1. `scripts/fix_docx_ajlpgs.py` **injects** the affiliation and e-mail into the Word file after
+   rendering, because the source alone cannot get them there.
+2. Verify the author block manually in Word before submitting. This is one of the few things
+   that cannot be checked from the repository.

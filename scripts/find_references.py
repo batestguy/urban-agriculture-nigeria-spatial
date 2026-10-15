@@ -29,7 +29,7 @@ import urllib.request
 
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
-UA = {"User-Agent": "YohannaPaper-refbuild/1.0 (mailto:yohanna@atbu.edu.ng)"}
+UA = {"User-Agent": "YohannaPaper-refbuild/1.0 (mailto:jzbannister@atbu.edu.ng)"}
 API = "https://api.crossref.org/works"
 
 # ---------------------------------------------------------------------------

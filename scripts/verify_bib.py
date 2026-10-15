@@ -33,7 +33,7 @@ import urllib.request
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 BIB = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "manuscript" / "references.bib"
 API = "https://api.crossref.org/works/"
-UA = {"User-Agent": "YohannaPaper-bibcheck/1.0 (mailto:yohanna@atbu.edu.ng)"}
+UA = {"User-Agent": "YohannaPaper-bibcheck/1.0 (mailto:jzbannister@atbu.edu.ng)"}
 
 
 def entries(text: str) -> list[dict]:

@@ -48,6 +48,56 @@ def patch_rfonts(xml: str, font: str = FONT) -> str:
     return xml
 
 
+# ---------------------------------------------------------------------------
+# Inject the author's affiliation and e-mail into the Word file.
+#
+# Pandoc's docx template renders ONLY the author name and silently drops the
+# `affiliation` and `email` YAML fields. The journal's author block requires all
+# three, so the source alone cannot produce a compliant Word file. The missing
+# lines are appended to the paragraph that holds the author's name.
+# ---------------------------------------------------------------------------
+AUTHOR_NAME = 'Jerry Bannister Zachary'
+AUTHOR_LINES = [
+    'Department of Urban and Regional Planning, '
+    'Abubakar Tafawa Balewa University, Bauchi, Nigeria',
+    'E-mail: jzbannister@atbu.edu.ng',
+]
+
+
+def inject_affiliation(path: pathlib.Path) -> int:
+    """Append the affiliation and e-mail after the author name in document.xml."""
+    with zipfile.ZipFile(path) as z:
+        files = {n: z.read(n) for n in z.namelist()}
+    doc = files['word/document.xml'].decode('utf-8')
+
+    if 'jzbannister@atbu.edu.ng' in doc:
+        return 0  # already present; do not duplicate on a second run
+
+    # Find the run containing the author name and the paragraph that closes after it,
+    # then append new paragraphs immediately following.
+    idx = doc.find(AUTHOR_NAME)
+    if idx == -1:
+        return -1
+    close = doc.find('</w:p>', idx)
+    if close == -1:
+        return -1
+    close += len('</w:p>')
+
+    def para(text: str) -> str:
+        return ('<w:p><w:pPr><w:jc w:val="center"/></w:pPr>'
+                f'<w:r><w:rPr><w:rFonts w:ascii="{FONT}" w:hAnsi="{FONT}" w:cs="{FONT}"/>'
+                f'<w:sz w:val="20"/></w:rPr><w:t xml:space="preserve">{text}</w:t></w:r></w:p>')
+
+    extra = ''.join(para(t) for t in AUTHOR_LINES)
+    doc = doc[:close] + extra + doc[close:]
+    files['word/document.xml'] = doc.encode('utf-8')
+
+    with zipfile.ZipFile(path, 'w', zipfile.ZIP_DEFLATED) as z:
+        for name, data in files.items():
+            z.writestr(name, data)
+    return 1
+
+
 def main() -> int:
     if not DOCX.exists():
         print('no docx at', DOCX)
@@ -110,6 +160,16 @@ def main() -> int:
     print(f'  margins               : top {m["top"]}, bottom {m["bottom"]}, '
           f'left {m["left"]}, right {m["right"]} twips')
     print(f'  justified paragraphs  : {st.count("w:jc w:val=\"both\"") + dx.count("w:jc w:val=\"both\"")}')
+    n = inject_affiliation(DOCX)
+    print()
+    if n == 1:
+        print('  author affiliation + e-mail injected into the Word file')
+        print('  (pandoc drops those YAML fields in docx output)')
+    elif n == 0:
+        print('  author affiliation already present, not duplicated')
+    else:
+        print('  WARNING: could not locate the author paragraph to inject into')
+
     print()
     print('REMINDER: the journal requires an ANONYMISED file for submission.')
     print('          This is the named version. Strip names/affiliations before uploading.')
