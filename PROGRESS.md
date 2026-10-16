@@ -454,6 +454,64 @@ deliberately skipped — the skip list is the part that matters.
 
 ---
 
+## 2026-10-16 — Venue decided: Town and Regional Planning (and it passes the gate)
+
+**The author chose Town and Regional Planning** (University of the Free State; ISSN 1012-280X /
+2415-0495; Diamond OA, no APC) as the target venue for the manuscript.
+
+**The Scopus gate that dropped AJLP&GS is passed, on better evidence than AJLP&GS ever had.**
+Fetched from the journal's own site on 2026-10-16: its accreditation page,
+<https://journals.ufs.ac.za/index.php/trp/accred>, states the journal is "accredited by the
+Department of Higher Education and Training of South Africa as it is indexed by" Scopus, Web of
+Science ESCI, SciELO SA, the Norwegian list, ERIH PLUS, DOAJ, AJOL and others. Corroborated on the
+same site: the page footer carries a Scopus badge that links to a Scopus source search for
+`ISSN(1012-280X)`. Two independent places on the publisher's own site — one of them a link into
+Scopus. This is a publisher's specific claim plus a live link, not a search summary; the standard
+AJLP&GS failed.
+
+The `scopus.com` Cloudflare block that stopped the earlier check was never the authority anyway —
+the journal's own indexing statement is. That is worth remembering: the block was a reason to
+*look harder*, not a dead end.
+
+**Recorded:**
+- `docs/trp-author-guidelines.md` — the journal's guidelines, submission checklist and full AI
+  policy, extracted verbatim, with URLs and fetch date. This is the authority for formatting.
+- `docs/submission-trp.md` — the gap analysis.
+- `docs/venue-options.md` — §1 rewritten as SELECTED with the Scopus receipt; the decision banner
+  added at the top.
+
+**Three findings that shape the work:**
+
+1. **Word count is comfortable, not tight.** The rendered `.docx` holds **5,312 words excluding
+   references**, against TRP's 4,000–8,000 window. There is room to *add* the literature-review
+   section the journal requires and still sit mid-range. This removes the single biggest
+   formatting worry.
+
+2. **It is a restructure, not just a reformat.** TRP prescribes a section architecture
+   (Introduction / Literature review / Study area / Methods / Results / Discussion / Conclusion)
+   that differs from the manuscript's in three ways: there is no literature-review section; the
+   study area is buried inside "Data"; and the methods subsections do not match TRP's five named
+   ones. Plus a system change — APA → the journal's inhouse Harvard — and third-person prose.
+   All of it is presentation: no number, figure or citation changes, and the 175 checks are
+   unaffected.
+
+3. **A policy conflict that is the author's to decide — flagged, not resolved.** TRP permits
+   generative AI for "language editing and grammar support only" and its submission checklist
+   asks the author to attest that AI "has not been used to generate substantive content,
+   analysis, or data". The manuscript's own declaration says an AI assistant helped implement and
+   debug the analysis pipeline and wrote the verification scripts. **Those two statements
+   conflict, and the declaration is the honest document.** The declaration was *not* softened to
+   fit. Options (declare and let the editor judge / ask the editor first / reconsider the venue)
+   are set out in `docs/submission-trp.md`; the recommendation is to ask the editor first and to
+   say so in the Comments to the Editor.
+
+**Verified this session, not assumed:**
+- `Rscript build.R --audit` → 61 + 61 + 53 = **175 checks, 0 discrepancies**.
+- `python scripts/verify_author_block.py` → **5 artefacts OK**, no stale project name in 93 files.
+- `HEAD` = `origin/master` = `1d6390f`; 133 tracked files; tree clean before this change.
+
+---
+
 ## Next actions (owner: batestguy) — Phase 6 submission
 - [x] Phase 0: verify done
 - [x] Phase 1a: worldbank — done
@@ -476,12 +534,16 @@ deliberately skipped — the skip list is the part that matters.
 - [x] **Scopus gate applied to AJLP&GS — FAILED.** Four sources agree it is not indexed. Venue
       decision reopened. Evidence and the fabricated-ID warning recorded in
       `docs/venue-options.md` and the README.
-- [ ] **Pick a venue, then submit.** Blocked on one thing only: verifying Scopus status for the
-      no-APC candidates. Paste these into <https://www.scopus.com/sources> or
-      <https://www.journalindicators.com>:
-      `1012-280X` · `1970-9889` · `2731-6661` · `2694-1589`
-      Then the remaining work is: reformat to the chosen venue's house style, create the
-      anonymised review copy, supply an ORCID iD.
+- [x] **Venue decided: Town and Regional Planning.** Scopus **verified** on the publisher's own
+      accreditation page + footer badge (2026-10-16). Guidelines extracted to
+      `docs/trp-author-guidelines.md`; gap analysis in `docs/submission-trp.md`.
+- [ ] **Resolve the AI-declaration conflict** (TRP permits language editing only; the manuscript
+      discloses pipeline assistance). Author's call — recommend asking the editor first.
+- [ ] **Reformat and restructure to TRP house style**: Times New Roman 12 pt single-spaced;
+      250-word unstructured abstract; add a literature review; promote the study area out of
+      "Data"; re-cut methods into TRP's five subsections; third person; APA → inhouse Harvard;
+      figures to TIF/JPEG 300 dpi. Then re-run all gates and check the word count.
+- [ ] **Supply an ORCID iD** and sign the Author Agreement and Publishing Agreement. Author.
 
 ## Decisions & risks
 - **AJLP&GS is dropped: it failed the Scopus gate.** Four sources agree it is not

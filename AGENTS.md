@@ -3,18 +3,27 @@
 ## What this repo is
 - **A spatial study of urban agriculture in Nigeria, by Jerry Bannister Zachary** (Statistician,
   Abubakar Tafawa Balewa University, Bauchi; `jzbannister@atbu.edu.ng`). Manuscript:
-  *Where urban agriculture concentrates in Nigerian cities* — targeting the **African Journal on
-  Land Policy and Geospatial Sciences** (AJLP&GS, e-ISSN 2657-2664, no APC).
+  *Where urban agriculture concentrates in Nigerian cities* — targeting **Town and Regional
+  Planning** (University of the Free State; ISSN 1012-280X / 2415-0495; Diamond OA, no APC).
+  Selected 2026-10-16; it **passes the Scopus gate** that dropped the previous target, AJLP&GS.
+  Its house style is **not** the AJLP&GS style — read `docs/trp-author-guidelines.md` before
+  touching the front matter or the typography script.
 - Everything in this repo is the author's own work. All layers used in the analysis —
   OpenStreetMap cultivated-land features, the per-LGA mapping-coverage control, NASA POWER
   climate, GADM boundaries — were collected directly from public APIs by the author, and the
   pulls are frozen in `data/raw/` with `provenance.json` recording URL, timestamp, row count
   and licence for each. No third party supplied or contributed any layer.
-- **Git:** `D:\urban-agriculture-nigeria-spatial` is the clone on Drive D, mirrored to
-  **GitHub `batestguy/urban-agriculture-nigeria-spatial`** (public). Remote `origin` is set;
-  local = the Drive D copy. Every push mirrors Drive D → GitHub.
-- Windows 11, `D:\urban-agriculture-nigeria-spatial` is the project root. OpenCode reports
-  workspace root as `/` but it maps to `D:\` on this machine.
+- **Git:** mirrored to **GitHub `batestguy/urban-agriculture-nigeria-spatial`** (public). Remote
+  `origin` is set; local = the Drive D copy. Every push mirrors Drive D → GitHub.
+- **Path trap — the folder has not been renamed yet.** The repository is *named*
+  `urban-agriculture-nigeria-spatial` and every in-repo reference uses that name, but the
+  on-disk directory **still carries a different name**; the rename is pending.
+  `scripts/rename_folder.ps1` performs the move and refuses to half-move if its own working
+  directory is inside the source. It must be run from `D:\` with no session holding the folder
+  open. **Until it is run, trust the directory shown in the workspace context for anything the
+  filesystem resolves — not the name used inside these files.** This bullet deliberately does
+  not spell the old name, which is why it needs no edit when the rename lands. Windows 11;
+  OpenCode reports the workspace root as `/` but it maps to `D:\` on this machine.
 - `abandoned/` holds a **separate, retired** Bauchi survey paper from a former collaborator's
   M.Tech thesis. It shares no data with this study. Do not treat it as current work, and do not
   edit it — it is archived for recoverability only. Note that its author's name is different
@@ -28,8 +37,11 @@
   (see below). `references.bib` is **generated** — never hand-edit it.
 - `docs/methodology.qmd` — the technical companion (equations + plain-English boxes).
   `docs/spatial-report.qmd` — the earlier report version of the same analysis.
-  `docs/ajlpgs-author-guidelines.md` — the journal's own guidelines, verbatim.
-  `docs/submission-ajlpgs.md` — gap analysis and submission package.
+  `docs/trp-author-guidelines.md` — **Town and Regional Planning's guidelines, submission
+  checklist and full AI policy, verbatim** — the authority for the current target.
+  `docs/submission-trp.md` — the gap analysis for that venue, including the AI-policy conflict.
+  `docs/ajlpgs-author-guidelines.md` / `docs/submission-ajlpgs.md` — the **dropped** venue's
+  guidelines and gap analysis, kept because the reasoning and much of the work are reusable.
 - `build.R` — one entry point, 15 path-relative pipeline steps. `Rscript build.R --audit` runs
   only the three verification gates.
 - `analysis/spatial/*.R` — clean → Moran/LISA → maps → count models → exposure control →
@@ -102,8 +114,10 @@ Gotchas (`ENVIRONMENTS.md:77-92`):
   `scripts/build_bib.py`. A fabricated citation in a previous bibliography is why the generator
   exists: an unresolvable DOI cannot enter the file.
 - **`scripts/fix_docx_format.py` is retained but enforces an abandoned conference spec**
-  (Times New Roman, 1.5, 1 inch). It is a working tool for a different target. The AJLP&GS
-  spec is `scripts/fix_docx_ajlpgs.py`.
+  (Times New Roman, 1.5, 1 inch). `scripts/fix_docx_ajlpgs.py` enforces the **dropped** AJLP&GS
+  spec (Cambria 12, 1.2, cm margins). **Neither matches the current target.** Town and Regional
+  Planning wants Times New Roman 12 pt single-spaced — close to the abandoned conference spec
+  but not identical. A TRP typography script is outstanding; see `docs/submission-trp.md`.
 - **Before reporting a number, run the gate that checks it.** `Rscript build.R --audit` re-derives
   every headline figure from the frozen data. Editing the prose to satisfy a test is the wrong
   direction: the test asserts what the data says.

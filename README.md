@@ -187,69 +187,83 @@ run correctly and the discrepancy is recorded rather than hidden.
 
 ## Submitting
 
-Target venue: **not yet settled.** The first choice, the *African Journal on Land Policy and
-Geospatial Sciences* (ISSN 2657-2664, no APC), **failed the Scopus gate** and was dropped. The
-manuscript is formatted to that journal's template and that formatting is reusable, but the
-venue is not.
+Target venue: **Town and Regional Planning** (University of the Free State; ISSN 1012-280X /
+2415-0495; Diamond Open Access, no APC). Selected **2026-10-16**. It **passes the Scopus gate**
+that dropped the first choice.
 
-**Why AJLP&GS was dropped.** Four sources agree it is not Scopus-indexed and none disagrees:
+**Town and Regional Planning is Scopus-indexed.** Verified on the publisher's own site, not from
+a search summary: its accreditation page, `journals.ufs.ac.za/index.php/trp/accred`, states the
+journal "is accredited by the Department of Higher Education and Training of South Africa as it
+is indexed by" **Scopus**, Web of Science ESCI, SciELO SA, the Norwegian list, ERIH PLUS, DOAJ
+and AJOL. The page footer also carries a Scopus badge that links to a Scopus source search for
+`ISSN(1012-280X)`. Two independent places on the publisher's site, one a link into Scopus.
 
-- **SCImago** has no record — a title search returns *"Sorry, no results were found."* SCImago
-  indexes only Scopus journals, so this is positive evidence of absence.
-- **Google's AI Overview** states it "is not currently indexed in Scopus."
-- The **journal's own site** lists DOAJ and Cairn under "Indexed In", not Scopus.
-- The **DOAJ API record** carries no Scopus identifier.
-
-I could not check the Scopus source list itself — `scopus.com` and `scimagojr.com` both return
-Cloudflare 403 to this environment, and CWTS Journal Indicators is a JavaScript form. The
-authority is that source list (Browse sources → export), or <https://www.journalindicators.com>
-as a second Scopus-derived source.
+**Why AJLP&GS was dropped.** It failed the same gate — four sources agreed it is not
+Scopus-indexed and none disagreed (SCImago has no record; Google's AI Overview says so outright;
+the journal's own site lists DOAJ and Cairn only; the DOAJ API record carries no Scopus ID).
 
 > **A warning that came out of this check.** Two web-search summaries returned **two different
 > Scopus/SCImago IDs for the same journal** (`21101056111` and `21101034553`). Both cannot be
 > right and neither could be loaded. One also claimed DOAJ's record contains a Scopus ID — it
-> does not; I pulled the record. Treat any Scopus claim from a summary as unverified.
+> does not; I pulled the record. Treat any Scopus claim from a summary as unverified. The
+> publisher's own indexing statement is the authority, and it is reachable.
 
-### Check these ISSNs before formatting for anyone
+### What Town and Regional Planning requires
 
-```
-1012-280X   Town and Regional Planning
-1970-9889   TeMA: Journal of Land Use, Mobility and Environment
-2731-6661   Frontiers of Urban and Rural Planning
-2694-1589   Journal of Remote Sensing
-```
+The full guidelines, submission checklist and AI policy are extracted verbatim to
+[docs/trp-author-guidelines.md](docs/trp-author-guidelines.md); the gap analysis is
+[docs/submission-trp.md](docs/submission-trp.md). In brief: **Times New Roman 12 pt
+single-spaced** (not Cambria); a **250-word unstructured abstract**; a **literature-review
+section** that does not exist yet; the study area promoted out of "Data" to its own section;
+methods re-cut into the journal's five named subsections; third-person prose; and references
+converted from APA to the journal's **inhouse Harvard** style. Word count fits comfortably —
+**5,312 words excluding references** against a 4,000–8,000 window.
 
-All four are no-APC. **Their Scopus status is unverified** — that is exactly the point. Rank
-whichever pass on fit and on time to publication.
+**One item needs the author's decision, and it is not a formatting task.** TRP permits
+generative AI for "language editing and grammar support only" and asks the author to attest that
+AI "has not been used to generate substantive content, analysis, or data". This manuscript
+declares that an AI assistant helped implement and debug the analysis pipeline. Those statements
+conflict. The declaration is the honest document and has **not** been softened to fit; the
+options are laid out in [docs/submission-trp.md](docs/submission-trp.md).
 
-- [docs/venue-options.md](docs/venue-options.md) - the full evidence, the shortlist, AI-policy guidance
-- [docs/submission-ajlpgs.md](docs/submission-ajlpgs.md) - AJLP&GS gap analysis (kept: the formatting is reusable)
-- [docs/ajlpgs-author-guidelines.md](docs/ajlpgs-author-guidelines.md) - that journal's guidelines, verbatim
-
-### Status of the submission package
+### Status of the submission package (against TRP)
 
 | Requirement | Status |
 |---|---|
-| ≤ 20 pages | **19** — read from Word, not estimated |
-| Cambria throughout | done (`scripts/fix_docx_ajlpgs.py`) |
-| Body 12 pt justified, 1.2 spacing | done |
-| Margins top 2 cm, others 1.5 cm | done — read back from Word |
-| Abstract ≤ 500 words, structured | done |
+| Word count 4,000–8,000 excl. references | **5,312** — fits |
+| Times New Roman 12 pt, single spacing | **not done** — currently Cambria 12, 1.2 |
+| Paragraphs not indented | **not set** |
+| Tables TNR 10 pt single spacing | **not done** |
+| Abstract 250 words, unstructured | **not done** — currently structured, longer |
+| Literature review section | **not written** — section does not exist |
+| Study area as its own section | **not done** — sits inside "Data" |
+| Methods in the journal's five subsections | **not done** — different subsections |
+| Third person | **not done** — first person throughout |
+| References in inhouse Harvard | **not done** — currently APA |
+| Figures TIF/JPEG 300 dpi | **not done** — currently PNG |
 | Author block present | done, gated by `scripts/verify_author_block.py` |
-| AI-use declaration | done |
-| Anonymised copy for review | **not created** |
-| References in the venue's format | **not done** — currently APA |
-| Venue decided, guidelines obtained | **blocked on the Scopus check above** |
-| ORCID iD in the author block | **not supplied** |
+| AI declaration placed before references | exists; rename + relocate |
+| AI declaration consistent with TRP policy | **conflict — author's decision** |
+| Anonymised copy | **not required** by TRP |
+| ORCID iD | **not supplied** |
+| Author + Publishing Agreements signed | **not completed** |
+
+- [docs/venue-options.md](docs/venue-options.md) - the venue decision, the evidence, the fallbacks
+- [docs/trp-author-guidelines.md](docs/trp-author-guidelines.md) - TRP guidelines + AI policy, verbatim
+- [docs/submission-trp.md](docs/submission-trp.md) - TRP gap analysis and the AI-policy options
 
 Two points worth stating plainly, because they are easy to get wrong:
 
-- **Scopus indexing is not verifiable from this repository.** Check any candidate against the
-  Scopus source list. Search results and journal homepages are not the authority.
-- **Almost every reputable journal permits AI-assisted writing**, provided it is disclosed
-  and no AI is listed as an author (the COPE position, followed by most publishers). The
-  constraint is disclosure, not permission. Identify the minority that ban AI-generated text
-  outright and avoid them.
+- **Check a journal's indexing on the journal's own site.** The Scopus source list is not
+  reachable from this environment, but a publisher that *is* Scopus-indexed generally says so,
+  and often links into Scopus. Search results and journal homepages are not interchangeable —
+  the publisher's own accreditation statement is the evidence.
+- **Do not assume a journal permits AI-assisted writing.** Most do, on COPE lines — but Town
+  and Regional Planning permits generative AI for **language editing and grammar support only**
+  and requires the author to attest that AI generated no substantive content, analysis or data.
+  That is stricter than this manuscript's own disclosure, and the difference is a live decision
+  (see [docs/submission-trp.md](docs/submission-trp.md)). Read the AI policy before formatting,
+  not after.
 
 `scripts/find_journals.py` queries the DOAJ API for journals in the paper's subject areas
 that charge no article processing fee, and prints their publisher, licence, peer-review model

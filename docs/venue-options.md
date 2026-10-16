@@ -2,6 +2,16 @@
 
 **Compiled 15 October 2026.** Companion to `manuscript/manuscript.qmd`.
 
+> ## DECIDED 2026-10-16: the target venue is **Town and Regional Planning**
+>
+> The author selected it. It **passes the Scopus gate** that dropped AJLP&GS, and on evidence
+> stronger than anything available for the rejected venue: the journal's own accreditation page
+> lists Scopus, and its site footer carries a Scopus badge linking to a Scopus source search for
+> `ISSN(1012-280X)`. Verified 2026-10-16 by fetching the journal's site — see §1 below for the
+> receipt and `docs/trp-author-guidelines.md` for the guidelines verbatim.
+>
+> The gap analysis for this venue is `docs/submission-trp.md`.
+
 ---
 
 ## Read this first: what is verified, and what is not
@@ -131,18 +141,43 @@ venue.
 
 Neither is disqualifying. Both are worth knowing before committing a paper to it.
 
-### 1. Town and Regional Planning
+### 1. Town and Regional Planning — **SELECTED 2026-10-16**
 
 - **Publisher:** University of the Free State (South Africa) · **ISSN:** 1012-280X / 2415-0495
-- **APC:** none (DOAJ) · **Licence:** CC BY · **Typical time:** ~18 weeks
+- **APC:** none (Diamond Open Access) · **Licence:** CC BY 4.0 · **Frequency:** biannual
+- **Endorsement:** South African Council for Planners (SACPLAN), the statutory body regulating
+  the planning profession in South Africa
 - **Why it fits:** a Southern African planning journal with an established record on urban
-  agriculture in the region. Good regional readership.
-- **Caveat:** I could not cite to this journal earlier in the project because its Crossref
-  metadata is unreliable — author records are missing and one DOI resolved to an unrelated
-  paper. That says nothing about its editorial quality, but check the current author
-  guidelines carefully.
-- **Scopus:** **unverified.** I could not check it. Verify ISSN 1012-280X at
-  <https://www.scopus.com/sources> or <https://www.journalindicators.com> before relying on it.
+  agriculture in the region. Good regional readership, and the paper's core question — where
+  cultivation concentrates, and what that means for land allocation — is a planning question
+  before it is a geospatial one.
+- **Scopus: VERIFIED — this is the gate AJLP&GS failed, and it passes.**
+
+**The receipt (fetched 2026-10-16, not a search summary).** The journal's own accreditation page,
+<https://journals.ufs.ac.za/index.php/trp/accred>, states:
+
+> Town and Regional Planning is accredited by the Department of Higher Education and Training of
+> South Africa as it is indexed by the following collections: **Scopus**; Web of Science Core
+> Collection: Emerging Sources Citation Index; SciELO SA indexed by the Web of Science; Norwegian
+> list; ERIH PLUS; Directory of Open Access Journals (DOAJ); African Journals Online (AJOL);
+> Ebsco Discovery Service; Sabinet.
+
+Independently corroborated on the same site: the page footer carries `scopus`, `doaj`, `ajol` and
+`clarivate` badges, and the Scopus badge links out to a Scopus source search for `ISSN(1012-280X)`.
+Two places on the publisher's own site, one of them a link into Scopus itself. That is the
+specific-evidence standard the AJLP&GS claim could not meet.
+
+**Caveat — Crossref metadata.** I could not cite to this journal earlier in the project because
+its Crossref metadata is unreliable: author records are missing and one DOI resolved to an
+unrelated paper. This says nothing about editorial quality, and the journal has since been read
+more carefully while checking it as a venue. It does mean the *reference list* must not be
+rebuilt from Crossref records for this journal's own articles.
+
+**The caveat that matters most — the AI policy.** TRP permits generative AI for "language
+editing and grammar support only" and asks the author to attest that AI "has not been used to
+generate substantive content, analysis, or data". The manuscript's existing declaration says an
+AI assistant helped implement and debug the analysis pipeline. Those two statements conflict.
+This is a live decision for the author; the options are set out in `docs/submission-trp.md`.
 
 ### 2. TeMA: Journal of Land Use, Mobility and Environment
 
@@ -204,35 +239,33 @@ withdrawn — is precisely the material a good reviewer probes, and it holds up.
 
 ## What remains before submission
 
-**Blocked on the venue decision.** AJLP&GS was chosen and has now failed the Scopus gate, so
-items 1–4 below are on hold until a replacement is picked. Nothing else in the manuscript is
-waiting on anything.
-
-**Decide the venue first — it gates everything else.** Paste these ISSNs into
-<https://www.scopus.com/sources> or <https://www.journalindicators.com> and note which return a
-record with active coverage:
+**The venue is decided — Town and Regional Planning.** The Scopus check below is closed for it
+(verified on the publisher's own site) and the guidelines have been extracted to
+`docs/trp-author-guidelines.md`. The gap analysis is `docs/submission-trp.md`. The remaining
+ISSNs in the shortlist are retained only as fallbacks if the AI-policy conflict cannot be
+resolved.
 
 ```
-1012-280X   Town and Regional Planning
-1970-9889   TeMA: Journal of Land Use, Mobility and Environment
-2731-6661   Frontiers of Urban and Rural Planning
-2694-1589   Journal of Remote Sensing
+1012-280X   Town and Regional Planning          <- SELECTED, Scopus verified 2026-10-16
+1970-9889   TeMA: Journal of Land Use, Mobility and Environment   (fallback)
+2731-6661   Frontiers of Urban and Rural Planning                  (fallback)
+2694-1589   Journal of Remote Sensing                              (fallback)
 ```
 
-Whichever pass, rank them on fit and on time to publication. I can then reformat to that
-venue's house style, which is the one substantial piece of work still outstanding.
+**Manuscript-level, against TRP**
 
-**Manuscript-level, once the venue is fixed**
-
-1. **Reformat to the venue's house style.** The AJLP&GS guidelines are already extracted to
-   `docs/ajlpgs-author-guidelines.md` if that venue is reconsidered. A different journal will
-   need its own guidelines pulled and its own gap analysis.
-2. **Add the AI declaration** from the template above — the wording is venue-independent and
-   already used in the manuscript.
+1. **Reformat and restructure to the TRP house style.** Times New Roman 12 pt single-spaced;
+   a 250-word unstructured abstract; a literature-review section; the study area promoted out of
+   "Data" to its own section; the methods re-cut into TRP's five named subsections; and the
+   reference system converted from APA to the journal's inhouse Harvard. Full detail in
+   `docs/submission-trp.md`.
+2. **Resolve the AI declaration.** TRP permits AI for language editing only; the manuscript
+   discloses more. Author's decision — do not soften the declaration to fit.
 3. **Confirm the author list** and corresponding-author details. Done.
-4. **Create the anonymised review copy** if the venue requires one. AJLP&GS did.
-5. **Check the figure count** against the venue's limit. The manuscript has five; some journals
-   cap at four for a research article.
+4. **Supply an ORCID iD** and sign the Author Agreement and Publishing Agreement. Author.
+5. **Check the figure count.** The manuscript has five figures. TRP states no figure cap for
+   research articles — only Perspectives is capped, at five — so the constraint here is format
+   (TIF/JPEG, 300 dpi), not number.
 
 **Already done and venue-independent** — these survive a venue change:
 
