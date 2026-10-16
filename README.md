@@ -305,6 +305,11 @@ Audited 15 October 2026. The full statistical review is in
 `docs/statistical-review-2026-10-15.md`, the remediation plan in `docs/remediation-phases.md`,
 and the open-gaps register in `docs/section-scores.md`.
 
+**Where the work stands on 16 October 2026** — venue decided (Town and Regional Planning),
+byline corrected to *Jerry Zachary Bannister*, repository licensed CC BY 4.0, manuscript
+artefacts untracked. The next action and the one open blocker are set out in
+[`docs/handoff-2026-10-16.md`](docs/handoff-2026-10-16.md).
+
 ## Licence
 
 This repository is licensed **CC BY 4.0** — see [`LICENSE`](LICENSE). Copyright © 2026 Jerry
