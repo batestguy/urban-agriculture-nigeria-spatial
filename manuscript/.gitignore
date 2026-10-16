@@ -1,2 +1,23 @@
 /.quarto/
 **/*.quarto_ipynb
+
+# Rendered manuscript artefacts — deliberately NOT versioned.
+#
+# manuscript.qmd is the source and IS tracked; these are generated from it by Quarto and
+# scripts/fix_docx_*.py. They were tracked until 2026-10-16 and are removed here on purpose:
+#
+#   1. Double-blind review. The target journal's peer review conceals author identities, and a
+#      public copy of the submitted PDF/DOCX defeats that from outside the process.
+#   2. Self-archiving. The journal permits archiving only the PUBLISHED version, after
+#      publication. Public pre-publication posting is not granted.
+#   3. They are large binaries that change on every render, so tracking them churns history
+#      for no benefit — the source and the code that rebuilds them are both here.
+#
+# Keep them locally; rebuild with:
+#     cd manuscript; quarto render manuscript.qmd --to html
+#     cd manuscript; quarto render manuscript.qmd --to pdf
+#     cd manuscript; quarto render manuscript.qmd --to docx
+#     python scripts/fix_docx_trp.py ; python scripts/verify_author_block.py
+manuscript.pdf
+manuscript.docx
+manuscript.html

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """rename_project.py - retarget every in-repo identifier at the new project name.
 
-The study is Jerry Bannister Zachary's; the folder and repository previously carried
+The study is Jerry Zachary Bannister's; the folder and repository previously carried
 another person's name. This rewrites the self-references so the project is named after
 the work and its author rather than a former collaborator:
 

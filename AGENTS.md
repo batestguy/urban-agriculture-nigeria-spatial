@@ -1,13 +1,17 @@
 # AGENTS.md — urban-agriculture-nigeria-spatial
 
 ## What this repo is
-- **A spatial study of urban agriculture in Nigeria, by Jerry Bannister Zachary** (Statistician,
+- **A spatial study of urban agriculture in Nigeria, by Jerry Zachary Bannister** (Statistician,
   Abubakar Tafawa Balewa University, Bauchi; `jzbannister@atbu.edu.ng`). Manuscript:
   *Where urban agriculture concentrates in Nigerian cities* — targeting **Town and Regional
   Planning** (University of the Free State; ISSN 1012-280X / 2415-0495; Diamond OA, no APC).
   Selected 2026-10-16; it **passes the Scopus gate** that dropped the previous target, AJLP&GS.
   Its house style is **not** the AJLP&GS style — read `docs/trp-author-guidelines.md` before
   touching the front matter or the typography script.
+- **Author's name: `Jerry Zachary Bannister`** (family name *Bannister*), as given by ORCID
+  `0009-0002-3302-9558`. Corrected from "Jerry Bannister Zachary" on 2026-10-16 — an earlier
+  commit had it as "Ibrahim Yohanna". Do not reintroduce either spelling: the ORCID record is
+  the authority, and the identity gate scans for stale names.
 - Everything in this repo is the author's own work. All layers used in the analysis —
   OpenStreetMap cultivated-land features, the per-LGA mapping-coverage control, NASA POWER
   climate, GADM boundaries — were collected directly from public APIs by the author, and the

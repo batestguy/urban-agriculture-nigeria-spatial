@@ -55,21 +55,32 @@ substantially similar form in another publication". Public posting is not formal
 many journals tolerate preprints, but TRP states no preprint policy either way. **That is exactly
 the sort of thing to raise with the editor rather than assume.**
 
+**Resolved 2026-10-16 — the author chose to pull the manuscript artefacts.** The rendered
+manuscripts (`manuscript/manuscript.pdf`, `.docx`, `.html`) are **no longer tracked by git**; they
+are ignored in `manuscript/.gitignore` and remain on disk, rebuildable from `manuscript.qmd`, which
+stays tracked along with all the code, data and provenance the paper cites as its reproducibility
+record. Note that this stops the *future* republication of those files; they remain in the git
+history of the earlier commits, so if the author needs them fully gone, that is a history rewrite
+and a separate decision (see the note at the end of this section).
+
 **Options, in order of how much they protect the submission:**
 
 - **Make the repository private** for the duration of review, and reopen it — or post only the
   *published* version — after acceptance. Strongest, but it takes the work out of public view.
-- **Remove the manuscript artefacts from the repo** (keep the code, data and provenance, which
-  the paper cites as its reproducibility record) and leave the analysis public.
+- **Remove the manuscript artefacts from the repo** *(chosen)* — keep the code, data and
+  provenance public, which is what the paper's reproducibility claims rest on.
 - **Leave it and disclose it** in the Comments to the Editor, asking the editor whether a public
   code repository with the manuscript text is acceptable under double blind.
 
-This is a decision about publishing the author's own work, so it is the author's to make. It is
-recorded here rather than acted on.
+**Still open, and worth knowing:** untracking removes the files going forward but they are present
+in the history of the commits that carried them. Anyone can retrieve them from an earlier commit.
+If double-blind protection needs to be complete, the repository history has to be rewritten
+(`git filter-repo`) and force-pushed — which rewrites published history and is therefore the
+author's explicit decision, not a tidy-up.
 
 ---
 
-## The author's ORCID is already published — and it disagrees with the manuscript
+## The author's ORCID — verified, and the byline now matches it
 
 TRP requires "The ORCID's for individual authors have been verified and included in the article,
 as well as in the online profile." The author's ORCID is on the GitHub profile:
@@ -79,11 +90,11 @@ ORCID 0009-0002-3302-9558     https://orcid.org/0009-0002-3302-9558
 ```
 
 Read live from the ORCID public API on 2026-10-16 — same person: Abubakar Tafawa Balewa
-University, role "Statistician", the same PhD/MSc/BSc record as the GitHub profile. That closes
-the ORCID gap; it only needs inserting into the manuscript.
+University, role "Statistician", the same PhD/MSc/BSc record as the GitHub profile. It only needs
+inserting into the manuscript at submission.
 
-**But the name does not match.** ORCID distinguishes given and family names explicitly, and it
-says:
+**The byline was wrong and has been corrected.** ORCID distinguishes given and family names
+explicitly, and it says:
 
 | Field | Value |
 |---|---|
@@ -91,22 +102,21 @@ says:
 | family-name | **Bannister** |
 | credit-name | Jerry Zachary Bannister |
 
-So the authoritative name is **Jerry Zachary Bannister**, which also matches the GitHub profile
-headline and the e-mail `jzbannister@atbu.edu.ng` (J. Z. Bannister). The manuscript, the README,
-`AGENTS.md` and the repository description all say **Jerry Bannister Zachary** — which reads the
-surname as *Zachary*.
+The authoritative name is therefore **Jerry Zachary Bannister**, which also matches the GitHub
+profile headline and the e-mail `jzbannister@atbu.edu.ng` (J. Z. Bannister). The manuscript, the
+README, `AGENTS.md` and the repository description previously said **Jerry Bannister Zachary** —
+which read the surname as *Zachary*.
 
-**This needs the author's ruling, not a guess.** It is their own name. But note that TRP asks for
-the ORCID to be *verified and included*, so a byline that disagrees with the ORCID record is the
-kind of mismatch an editorial office notices — and it is printed on the agreements that carry a
-signature.
+**Changed on 2026-10-16** in: `manuscript/manuscript.qmd`, `docs/methodology.qmd`,
+`docs/spatial-report.qmd`, `README.md`, `AGENTS.md`, `scripts/fix_docx_ajlpgs.py`,
+`scripts/rename_project.py`. The three rendered manuscript artefacts were rebuilt from source and
+the identity gate re-run.
 
-One piece of history behind the current string, recorded because it is in the repository's own
-git history and the author should know it is there: commit `4fcbe44` (2026-10-15) changed the
-manuscript byline **from "Ibrahim Yohanna" to "Jerry Bannister Zachary"** in a single step, and
-the folder name and the M.Tech thesis file at the repo root are both "Yohanna". Nothing here says
-which spelling is right — that is precisely why it should be settled deliberately before a
-signature goes on an originality declaration.
+One piece of history behind the old string, recorded because it is in the repository's own git
+history anyway: commit `4fcbe44` (2026-10-15) changed the byline **from "Ibrahim Yohanna" to
+"Jerry Bannister Zachary"** in a single step, and the folder name and the M.Tech thesis file at the
+repo root are both "Yohanna". The ORCID record is the authority and it is what the corrected
+byline now follows.
 
 ---
 
@@ -232,8 +242,8 @@ rewrite.
 | Anonymised review copy | **to produce** — double blind |
 | `Declaration of AI Use` before references | exists; rename, relocate, restate per policy §2.2 |
 | ORCID iD | **found — `0009-0002-3302-9558`**, verified live; needs inserting |
-| Byline vs ORCID name | **mismatch — author's ruling needed** |
-| Public repo vs double blind | **decision needed** — see the section above |
+| Byline vs ORCID name | **resolved** — set to *Jerry Zachary Bannister* to match ORCID |
+| Public repo vs double blind | **resolved** — manuscript artefacts untracked; history not rewritten |
 | Author Agreement (form 115) signed | **author to complete** |
 | Publishing Agreement (form 56) signed | **author to complete** |
 | Comments to the Editor: origin of article | say **independent work**; no institutional proof needed |

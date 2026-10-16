@@ -1,7 +1,7 @@
 ---
 title: "Detailed Methodology — Urban Agriculture and Urban Food Security in Nigeria"
 subtitle: "From frozen API downloads to spatial regression: equations, layman explanations, and why each step matters"
-author: "Jerry Bannister Zachary — Statistician, Abubakar Tafawa Balewa University (ATBU), Bauchi, Nigeria"
+author: "Jerry Zachary Bannister — Statistician, Abubakar Tafawa Balewa University (ATBU), Bauchi, Nigeria"
 date: last-modified
 date-format: "D MMMM YYYY"
 format:

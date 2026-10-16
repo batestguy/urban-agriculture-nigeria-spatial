@@ -2,7 +2,7 @@
 title: "Where urban agriculture concentrates in Nigerian cities"
 subtitle: "A spatial analysis with coverage correction"
 author:
-  - name: "Jerry Bannister Zachary"
+  - name: "Jerry Zachary Bannister"
     affiliation: "Statistician, Abubakar Tafawa Balewa University (ATBU), Bauchi, Nigeria"
     email: "jzbannister@atbu.edu.ng"
     corresponding: true

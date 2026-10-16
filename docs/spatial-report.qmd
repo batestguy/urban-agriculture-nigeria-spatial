@@ -1,7 +1,7 @@
 ---
 title: "Urban Agriculture in Nigerian Cities"
 subtitle: "A spatial analysis of 484 OpenStreetMap features across 775 Local Government Areas"
-author: "Jerry Bannister Zachary — Statistician, Abubakar Tafawa Balewa University (ATBU), Bauchi, Nigeria"
+author: "Jerry Zachary Bannister — Statistician, Abubakar Tafawa Balewa University (ATBU), Bauchi, Nigeria"
 date: last-modified
 date-format: "D MMMM YYYY"
 abstract: |

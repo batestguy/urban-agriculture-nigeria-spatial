@@ -87,7 +87,7 @@ def _front_matter() -> dict:
 
 
 _FM = _front_matter()
-AUTHOR_NAME = _FM.get('name', 'Jerry Bannister Zachary')
+AUTHOR_NAME = _FM.get('name', 'Jerry Zachary Bannister')
 AUTHOR_LINES = [
     _FM.get('author-affiliation', ''),
     f"E-mail: {_FM.get('email', '')}",

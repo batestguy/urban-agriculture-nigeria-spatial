@@ -1,7 +1,7 @@
 # Where Does Urban Agriculture Concentrate in Nigerian Cities?
 
 > **A spatial analysis of 484 OpenStreetMap features across 775 Local Government Areas.**
-> Study design, data collection and analysis: **Jerry Bannister Zachary**, Statistician,
+> Study design, data collection and analysis: **Jerry Zachary Bannister**, Statistician,
 > Abubakar Tafawa Balewa University (ATBU), Bauchi — <jzbannister@atbu.edu.ng>.
 > All data collected by the author through public APIs in 2026. Every number reproducible
 > from frozen data.
@@ -15,7 +15,7 @@ Rscript build.R            # full 15-step pipeline from frozen data
 
 ## Author and ownership
 
-This study is the work of **Jerry Bannister Zachary**, Statistician, Abubakar Tafawa Balewa
+This study is the work of **Jerry Zachary Bannister**, Statistician, Abubakar Tafawa Balewa
 University (ATBU), Bauchi — <jzbannister@atbu.edu.ng>.
 
 Every layer used in the analysis is the author's own. The OpenStreetMap cultivated-land
@@ -138,14 +138,23 @@ figure's pixel dimensions against its generator and refuses to let the report ca
 ├── results/                    figures/, tables/, lga_lisa.gpkg
 ├── scripts/
 │   ├── fetch_*.py              the API harvests (the author's own data collection)
+│   ├── fetch_trp_guidelines.py pull the target journal's guidelines as text
 │   ├── build_bib.py            regenerate references.bib from Crossref
 │   ├── verify_bib.py           re-check every DOI
 │   ├── fix_docx_ajlpgs.py      AJLP&GS typography + inject the author block
 │   ├── verify_author_block.py  fail if any output lost the author block
 │   ├── rename_project.py       one-off rewrite of the project name in-repo
 │   └── rename_folder.ps1       one-off move of the folder itself (see note below)
+├── LICENSE                     CC BY 4.0 for the author's work; data under its own terms
 └── renv.lock                   exact package versions
 ```
+
+> **The rendered manuscripts are deliberately not tracked.** `manuscript/manuscript.pdf`,
+> `.docx` and `.html` are git-ignored and stay on your disk; only `manuscript.qmd` and the code
+> that rebuilds them are versioned. They were removed from version control on 16 October 2026
+> because the target journal reviews double-blind and permits self-archiving only after
+> publication. **Note:** they remain in the history of earlier commits — untracking stops future
+> publication, it does not unpublish the past. Rewriting history is a separate decision.
 
 > **The folder rename is still pending.** The GitHub repository and every in-repo reference use
 > the new name; the on-disk directory does not, because Windows will not rename a directory a
@@ -256,7 +265,7 @@ options are laid out in [docs/submission-trp.md](docs/submission-trp.md).
 | AI declaration consistent with TRP policy | **conflict — author's decision** |
 | Anonymised copy | **REQUIRED** — peer review is double blind |
 | ORCID iD | **found — `0009-0002-3302-9558`**, verified live; needs inserting |
-| Byline matches the ORCID record | **no — author's ruling needed** (ORCID says *Jerry Zachary Bannister*) |
+| Byline matches the ORCID record | **yes** — *Jerry Zachary Bannister*, per ORCID `0009-0002-3302-9558` |
 | Public repo vs double-blind review | **decision needed** — the manuscript is publicly posted |
 | Author + Publishing Agreements signed | **not completed** |
 
@@ -295,3 +304,20 @@ work; nothing in `abandoned/` is part of the study this repository documents.
 Audited 15 October 2026. The full statistical review is in
 `docs/statistical-review-2026-10-15.md`, the remediation plan in `docs/remediation-phases.md`,
 and the open-gaps register in `docs/section-scores.md`.
+
+## Licence
+
+This repository is licensed **CC BY 4.0** — see [`LICENSE`](LICENSE). Copyright © 2026 Jerry
+Zachary Bannister.
+
+The licence covers the author's own work: the analysis code, the written text, the figures and
+tables, and the documentation. The frozen extracts in `data/raw/` are redistributions of openly
+licensed data and **remain under their own providers' terms** — OpenStreetMap under ODbL ©
+OpenStreetMap contributors, GADM under CC BY 4.0, NASA POWER as a U.S. Government work in the
+public domain, and World Bank indicators under CC BY 4.0. Per-source URL, timestamp, row count and
+licence are recorded in `data/raw/provenance.json`.
+
+If you use this work, please cite:
+
+> Bannister, J.Z. (2026). *Where urban agriculture concentrates in Nigerian cities: a spatial
+> analysis with coverage correction.* Manuscript in preparation; Town and Regional Planning.
