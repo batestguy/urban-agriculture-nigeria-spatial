@@ -43,6 +43,7 @@ PAGES = [
     "policies",      # editorial policies index
     "ethics",        # ethics and malpractice
     "peerreview",
+    "selfarchive",   # self-archiving  <- what may be posted, and when
     "conflicts",
     "copyright",
 ]

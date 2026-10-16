@@ -512,6 +512,54 @@ the journal's own indexing statement is. That is worth remembering: the block wa
 
 ---
 
+## 2026-10-16 (later) — GitHub profile audited; two findings change the submission
+
+Checked the GitHub side at the author's request: the account, its 25 public repositories,
+the profile README, the repository remote, and the ORCID record the profile publishes.
+
+**Account:** `batestguy` — 25 public repos, 1 private (`FundingandGrantsDisabilty`), 2FA on,
+created 2023-07-21. Local `master` is **1 commit ahead** of `origin/master` (the venue decision,
+`5b7f4d9`, is unpushed). The public repo carries the full manuscript: `manuscript.pdf`, `.docx`,
+`.html` and `.qmd` all return from the remote, and the repository description names the author.
+
+**Finding 1 — the manuscript is publicly posted, and that collides with TRP.** Two policies pull
+the same way:
+
+1. **Peer review is double blind** (`/peerreview`: "both authors' and reviewers' identities are
+   concealed"). A reviewer who searches the title finds the author and the full text in one
+   click, so double blind is defeated from outside the process.
+2. **Self-archiving is post-publication only** (`/selfarchive` permits archiving "the final
+   published version … immediately after publication"; Publishing Agreement §3.1.11 forbids
+   depositing the manuscript in a repository "until the Manuscript has been published by the
+   UFS"). Neither contemplates the *submitted* manuscript being publicly downloadable.
+
+This also **corrected an error of mine**: I had recorded that TRP does not require an anonymised
+copy, inferring it from the absence of a checklist line. The double-blind policy settles it the
+other way — an anonymised review copy **is** required. Fixed in `README.md`,
+`docs/submission-trp.md` and `docs/trp-author-guidelines.md`.
+
+**Finding 2 — the ORCID is already published, and the name disagrees with the manuscript.**
+The profile states `ORCID 0009-0002-3302-9558`; read live from the ORCID public API it is the same
+person (ATBU, Statistician, same degrees). That **closes the ORCID requirement** — it only needs
+inserting. But ORCID gives `given-names: Jerry Zachary`, `family-name: Bannister`, i.e.
+**Jerry Zachary Bannister**. The manuscript, README, AGENTS.md and repo description all say
+**Jerry Bannister Zachary**, which reads the surname as *Zachary*. The e-mail
+`jzbannister@atbu.edu.ng` (J. Z. Bannister) agrees with the ORCID.
+
+*Not decided here.* It is the author's own name, and TRP asks for the ORCID to be "verified and
+included in the article" — so the byline and the ORCID record should agree before a signature
+goes on an originality declaration. Noted for context, because it is in the repository's own
+git history: commit `4fcbe44` changed the byline **from "Ibrahim Yohanna" to "Jerry Bannister
+Zachary"** in one step, and the folder name and the M.Tech thesis at the repo root are both
+"Yohanna". Which spelling is right is the author's to say.
+
+**Minor:** the profile README links this project as
+`urban-agriculture-and-urban-food-security-in-nigeria` — the pre-rename slug. It still resolves
+(GitHub 301-redirects a renamed repo; verified), but the visible title is stale. The repository
+also has **no licence** despite being public.
+
+---
+
 ## Next actions (owner: batestguy) — Phase 6 submission
 - [x] Phase 0: verify done
 - [x] Phase 1a: worldbank — done
@@ -539,10 +587,16 @@ the journal's own indexing statement is. That is worth remembering: the block wa
       `docs/trp-author-guidelines.md`; gap analysis in `docs/submission-trp.md`.
 - [ ] **Resolve the AI-declaration conflict** (TRP permits language editing only; the manuscript
       discloses pipeline assistance). Author's call — recommend asking the editor first.
+- [ ] **Rule on the byline.** ORCID says *Jerry Zachary Bannister*; the manuscript says *Jerry
+      Bannister Zachary*. One of them is wrong and it is printed on the agreements.
+- [ ] **Decide what to do about the public repo** during double-blind review: make it private,
+      pull the manuscript artefacts, or disclose and ask the editor.
 - [ ] **Reformat and restructure to TRP house style**: Times New Roman 12 pt single-spaced;
       250-word unstructured abstract; add a literature review; promote the study area out of
       "Data"; re-cut methods into TRP's five subsections; third person; APA → inhouse Harvard;
       figures to TIF/JPEG 300 dpi. Then re-run all gates and check the word count.
+- [ ] **Produce the anonymised review copy** — TRP peer review is double blind.
+- [ ] **Insert the ORCID** `0009-0002-3302-9558` into the named version. Author.
 - [ ] **Supply an ORCID iD** and sign the Author Agreement and Publishing Agreement. Author.
 
 ## Decisions & risks

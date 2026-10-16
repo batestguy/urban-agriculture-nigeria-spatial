@@ -23,7 +23,90 @@ Three things are comfortable:
   mid-range.
 - **The title is already compliant.** "Where urban agriculture concentrates in Nigerian cities"
   is 8 words and informative.
-- **No anonymised copy is required.** That was an AJLP&GS requirement; TRP does not ask for one.
+- **An anonymised copy IS required — earlier notes here said otherwise, and they were wrong.**
+  TRP's peer review is **double blind**: "both authors' and reviewers' identities are concealed"
+  (`docs/trp-author-guidelines.md`, from `/peerreview`). The byline, affiliation and e-mail must be
+  stripped from the review copy. The named version still carries the ORCIDs, as the checklist
+  requires. Two artefacts.
+
+---
+
+## Checked on the record: the manuscript is **publicly posted**, and that collides with TRP
+
+Verified 2026-10-16 against the GitHub profile and the public remote (see the audit summary in
+`PROGRESS.md`). The repository `batestguy/urban-agriculture-nigeria-spatial` is **PUBLIC**, and the
+full manuscript is committed and readable there — `manuscript/manuscript.pdf`, `.docx`, `.html`
+and `.qmd` all return from the public remote. The repository description names the author.
+
+Two TRP policies bear on this, and the two pull in the same direction:
+
+1. **Double-blind review.** "Both authors' and reviewers' identities are concealed"
+   (`/peerreview`). A reviewer who searches the paper's title finds the author's name, the
+   affiliation and the full text in one click. Double blind is defeated from the outside, before
+   any anonymised file is even opened.
+2. **Self-archiving is post-publication only.** `/selfarchive` permits archiving "the final
+   published version … immediately after publication", and Publishing Agreement §3.1.11 says the
+author "will not deposit the final version of the Manuscript into a subject or institutional
+repository until the Manuscript has been published by the UFS". Neither contemplates the
+**submitted** manuscript being publicly downloadable in advance.
+
+There is also §3.1.1 — the manuscript "has not been published before in its current or
+substantially similar form in another publication". Public posting is not formal publication, and
+many journals tolerate preprints, but TRP states no preprint policy either way. **That is exactly
+the sort of thing to raise with the editor rather than assume.**
+
+**Options, in order of how much they protect the submission:**
+
+- **Make the repository private** for the duration of review, and reopen it — or post only the
+  *published* version — after acceptance. Strongest, but it takes the work out of public view.
+- **Remove the manuscript artefacts from the repo** (keep the code, data and provenance, which
+  the paper cites as its reproducibility record) and leave the analysis public.
+- **Leave it and disclose it** in the Comments to the Editor, asking the editor whether a public
+  code repository with the manuscript text is acceptable under double blind.
+
+This is a decision about publishing the author's own work, so it is the author's to make. It is
+recorded here rather than acted on.
+
+---
+
+## The author's ORCID is already published — and it disagrees with the manuscript
+
+TRP requires "The ORCID's for individual authors have been verified and included in the article,
+as well as in the online profile." The author's ORCID is on the GitHub profile:
+
+```
+ORCID 0009-0002-3302-9558     https://orcid.org/0009-0002-3302-9558
+```
+
+Read live from the ORCID public API on 2026-10-16 — same person: Abubakar Tafawa Balewa
+University, role "Statistician", the same PhD/MSc/BSc record as the GitHub profile. That closes
+the ORCID gap; it only needs inserting into the manuscript.
+
+**But the name does not match.** ORCID distinguishes given and family names explicitly, and it
+says:
+
+| Field | Value |
+|---|---|
+| given-names | Jerry Zachary |
+| family-name | **Bannister** |
+| credit-name | Jerry Zachary Bannister |
+
+So the authoritative name is **Jerry Zachary Bannister**, which also matches the GitHub profile
+headline and the e-mail `jzbannister@atbu.edu.ng` (J. Z. Bannister). The manuscript, the README,
+`AGENTS.md` and the repository description all say **Jerry Bannister Zachary** — which reads the
+surname as *Zachary*.
+
+**This needs the author's ruling, not a guess.** It is their own name. But note that TRP asks for
+the ORCID to be *verified and included*, so a byline that disagrees with the ORCID record is the
+kind of mismatch an editorial office notices — and it is printed on the agreements that carry a
+signature.
+
+One piece of history behind the current string, recorded because it is in the repository's own
+git history and the author should know it is there: commit `4fcbe44` (2026-10-15) changed the
+manuscript byline **from "Ibrahim Yohanna" to "Jerry Bannister Zachary"** in a single step, and
+the folder name and the M.Tech thesis file at the repo root are both "Yohanna". Nothing here says
+which spelling is right — that is precisely why it should be settled deliberately before a
+signature goes on an originality declaration.
 
 ---
 
@@ -146,8 +229,11 @@ rewrite.
 | Item | Status |
 |---|---|
 | Manuscript `.docx`, TRP style | **to produce** (reformat + restructure) |
+| Anonymised review copy | **to produce** — double blind |
 | `Declaration of AI Use` before references | exists; rename, relocate, restate per policy §2.2 |
-| ORCID iD | **required — author to supply** |
+| ORCID iD | **found — `0009-0002-3302-9558`**, verified live; needs inserting |
+| Byline vs ORCID name | **mismatch — author's ruling needed** |
+| Public repo vs double blind | **decision needed** — see the section above |
 | Author Agreement (form 115) signed | **author to complete** |
 | Publishing Agreement (form 56) signed | **author to complete** |
 | Comments to the Editor: origin of article | say **independent work**; no institutional proof needed |

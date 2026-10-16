@@ -261,9 +261,15 @@ resolved.
    `docs/submission-trp.md`.
 2. **Resolve the AI declaration.** TRP permits AI for language editing only; the manuscript
    discloses more. Author's decision — do not soften the declaration to fit.
-3. **Confirm the author list** and corresponding-author details. Done.
-4. **Supply an ORCID iD** and sign the Author Agreement and Publishing Agreement. Author.
-5. **Check the figure count.** The manuscript has five figures. TRP states no figure cap for
+3. **Rule on the byline.** The ORCID record says *Jerry Zachary Bannister* (family *Bannister*);
+   the manuscript says *Jerry Bannister Zachary*. TRP asks for the ORCID to be verified and
+   included, so the two should agree before signing anything. Author's decision.
+4. **ORCID found — `0009-0002-3302-9558`**, verified live from the ORCID public API; it needs
+   inserting into the manuscript. Sign the Author Agreement and Publishing Agreement. Author.
+5. **Produce the anonymised review copy.** TRP peer review is double blind.
+6. **Decide what to do about the public GitHub repo** during review — the manuscript is publicly
+   downloadable. See `docs/submission-trp.md`.
+7. **Check the figure count.** The manuscript has five figures. TRP states no figure cap for
    research articles — only Perspectives is capped, at five — so the constraint here is format
    (TIF/JPEG, 300 dpi), not number.
 

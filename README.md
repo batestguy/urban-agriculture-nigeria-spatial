@@ -226,6 +226,16 @@ declares that an AI assistant helped implement and debug the analysis pipeline. 
 conflict. The declaration is the honest document and has **not** been softened to fit; the
 options are laid out in [docs/submission-trp.md](docs/submission-trp.md).
 
+**Two more things a check of the GitHub profile turned up** (2026-10-16):
+
+- **Peer review at TRP is double blind**, so an anonymised review copy *is* required — an earlier
+  note in this file said it was not, and that was wrong. Corrected here and in the docs.
+- **The manuscript is publicly downloadable** from this public repository (`.pdf`, `.docx`,
+  `.html`, `.qmd`), and the repo description names the author. That defeats double blind from the
+  outside and sits awkwardly with TRP's post-publication-only self-archiving policy. It is the
+  author's call whether to make the repo private during review, pull the manuscript artefacts, or
+  disclose and ask. Detail in [docs/submission-trp.md](docs/submission-trp.md).
+
 ### Status of the submission package (against TRP)
 
 | Requirement | Status |
@@ -244,8 +254,10 @@ options are laid out in [docs/submission-trp.md](docs/submission-trp.md).
 | Author block present | done, gated by `scripts/verify_author_block.py` |
 | AI declaration placed before references | exists; rename + relocate |
 | AI declaration consistent with TRP policy | **conflict — author's decision** |
-| Anonymised copy | **not required** by TRP |
-| ORCID iD | **not supplied** |
+| Anonymised copy | **REQUIRED** — peer review is double blind |
+| ORCID iD | **found — `0009-0002-3302-9558`**, verified live; needs inserting |
+| Byline matches the ORCID record | **no — author's ruling needed** (ORCID says *Jerry Zachary Bannister*) |
+| Public repo vs double-blind review | **decision needed** — the manuscript is publicly posted |
 | Author + Publishing Agreements signed | **not completed** |
 
 - [docs/venue-options.md](docs/venue-options.md) - the venue decision, the evidence, the fallbacks

@@ -80,6 +80,44 @@ links to a Scopus source search for `ISSN(1012-280X)`.
 > Journals Online (AJOL). All content deposited in KovsieScholar is digitally preserved through
 > DuraSpace.
 
+## Peer review (from `/peerreview`) — **double blind**
+
+> Manuscripts are submitted to the Editorial Office or via the online platform. All manuscripts
+> undergo an initial assessment by the Editorial Office to ensure that they comply with the
+> guidelines. Manuscripts are then assigned to the Editor-in-Chief to decide whether or not they
+> fall within the remit of the journal. … If a manuscript is deemed suitable for review, the
+> Editor-in-Chief/Associate Editor appoints and invites independent Reviewers. …
+>
+> Reviewers are given 30 days to submit a report. … **At least two reports are required to make a
+> decision. The review process is double blind, that is, both authors' and reviewers' identities
+> are concealed.**
+>
+> Once at least two reports have been received, the Editor-in-Chief, in consultation with an
+> Associate Editor (if applicable), makes a decision on whether the manuscript is publishable. …
+>
+> Authors are given 14 calendar days to revise a manuscript needing minor revisions and 21
+> calendar days to revise a manuscript needing major revisions. …
+
+**Consequence for us.** Double-blind review means the author's identity must not reach the
+reviewer. The guidelines never spell out a separate anonymised file, but the submitted manuscript
+has to arrive without byline, affiliation and e-mail on page 1. Note the tension with the
+checklist item that ORCIDs be "included in the article": the named final version carries them; the
+review version must not. Two artefacts, not one.
+
+## Self-archiving (from `/selfarchive`) — after publication only
+
+> All articles are published under a Creative Commons Attribution Licence (CC BY 4.0). Authors are
+> encouraged to deposit the final published version in institutional repositories. Authors may
+> also archive the final published version of their articles in personal or institutional
+> repositories **immediately after publication**, provided that the original source is
+> acknowledged. This acknowledgement must include a citation of the journal and the insertion of
+> the article's DOI.
+
+Read with the Publishing Agreement §3.1.11 — "the Author(s) will not deposit the final version of
+ the Manuscript into a subject or institutional repository until the Manuscript has been
+published by the UFS" — the policy contemplates archiving the **published** version, **after**
+publication. It grants no permission to post the submitted manuscript beforehand.
+
 ---
 
 ## Author guidelines (from `/about/submissions`)
@@ -342,6 +380,6 @@ Governing law: Republic of South Africa. Complete on submission.
 | Headings | numbered | numbered, max three levels (1 / 1.1 / 1.1.1) |
 | References | journal's own format | **inhouse Harvard**, surnames capitalised |
 | Length | ≤20 pages | **4,000–8,000 words excluding references** |
-| Anonymised copy | required for review | **not required** |
+| Anonymised copy | required for review (double blind) | **required** — not yet produced |
 | ORCID | not mentioned | **required** |
 | AI policy | silent | **explicit: language editing only** |
