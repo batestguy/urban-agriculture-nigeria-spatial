@@ -1,11 +1,7 @@
-Attribution 4.0 International (CC BY 4.0)
-=========================================
+Creative Commons Attribution 4.0 International
+===============================================
 
 SPDX-License-Identifier: CC-BY-4.0
-
-This work — the manuscript source, analysis code, figures, tables and documentation in
-this repository — is licensed under the Creative Commons Attribution 4.0 International
-Licence (CC BY 4.0).
 
 Copyright (c) 2026 Jerry Zachary Bannister
 
@@ -18,51 +14,19 @@ You are free to:
 
 Under the following terms:
 
-  Attribution — You must give appropriate credit, provide a link to the licence, and
-  indicate if changes were made. You may do so in any reasonable manner, but not in any
-  way that suggests the licensor endorses you or your use.
+  Attribution — You must give appropriate credit, provide a link to the licence,
+  and indicate if changes were made. You may do so in any reasonable manner, but
+  not in any way that suggests the licensor endorses you or your use.
 
-  No additional restrictions — You may not apply legal terms or technological measures
-  that legally restrict others from doing anything the licence permits.
+  No additional restrictions — You may not apply legal terms or technological
+  measures that legally restrict others from doing anything the licence permits.
 
-Full licence text: https://creativecommons.org/licenses/by/4.0/legalcode
+This licence covers the author's own work in this repository: the manuscript
+source, analysis code, figures, tables and documentation. The frozen data
+extracts in `data/raw/` are redistributions of openly licensed data and remain
+under their providers' terms — OpenStreetMap under the Open Database Licence
+(ODbL), GADM under CC BY 4.0, NASA POWER as a U.S. Government work in the public
+domain, and World Bank indicators under CC BY 4.0. Per-source URL, timestamp,
+row count and licence are recorded in `data/raw/provenance.json`.
 
-Human-readable summary: https://creativecommons.org/licenses/by/4.0/
-
-
-Attribution
------------
-
-Please cite as:
-
-  Bannister, J.Z. (2026). Where urban agriculture concentrates in Nigerian cities: a
-  spatial analysis with coverage correction. Manuscript in preparation; Town and Regional
-  Planning. https://github.com/batestguy/urban-agriculture-nigeria-spatial
-
-
-Third-party data — NOT covered by the licence above
----------------------------------------------------
-
-This repository redistributes derived extracts of openly licensed datasets. Each remains
-under its own licence, and attribution for them belongs to their providers:
-
-  OpenStreetMap cultivated-land features and mapping-coverage counts
-      © OpenStreetMap contributors — Open Database Licence (ODbL) 1.0
-      https://www.openstreetmap.org/copyright
-
-  GADM v4.1 administrative boundaries
-      GADM — CC BY 4.0
-      https://gadm.org/license.html
-
-  NASA POWER agro-climate data
-      NASA Langley Research Center — public domain (U.S. Government work)
-
-  World Bank World Development Indicators
-      World Bank — CC BY 4.0
-      https://datacatalog.worldbank.org/public-licenses
-
-The CC BY 4.0 licence above applies to the author's own work: the analysis code, the
-written text, the figures and tables he produced, and the documentation. Where the frozen
-data in data/raw/ is a redistribution of the sources listed above, those sources' terms
-apply to it. Per-source URL, retrieval timestamp, row count and licence are recorded in
-data/raw/provenance.json.
+Full legal text: https://creativecommons.org/licenses/by/4.0/legalcode
