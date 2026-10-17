@@ -71,6 +71,44 @@ def verify(docx: pathlib.Path, anon: pathlib.Path | None) -> bool:
     n_tables = len(re.findall(r"<w:tbl>", doc))
     ok &= check("tables present", n_tables > 0, f"{n_tables} tables")
 
+    # --- Tables: the two defects the author actually saw ---------------------
+    # A table with no w:tblStyle draws no rules at all, and a table whose columns all
+    # carry pandoc's 2.5 cm width runs its headings and numbers together. Both are
+    # invisible in a text extraction, so they are checked here against the XML.
+    print()
+    print(f"=== {docx.name} :: tables ===")
+    tables = re.findall(r"<w:tbl>.*?</w:tbl>", doc, re.S)
+    unstyled = [i + 1 for i, t in enumerate(tables) if "w:tblStyle" not in t]
+    ok &= check("every table carries a table style", not unstyled,
+                f"unstyled: {unstyled}" if unstyled else f"{len(tables)} tables")
+
+    narrow = []
+    for i, t in enumerate(tables):
+        cols = [int(w) for w in re.findall(r'<w:gridCol w:w="(\d+)"', t)]
+        if cols and min(cols) <= 900:      # <= 1.6 cm: a heading or a number cannot fit
+            narrow.append((i + 1, min(cols)))
+    ok &= check("no column narrower than 1.6 cm", not narrow,
+                f"narrow: {narrow}" if narrow else "widths distributed")
+
+    nine_pt = rich_text_in_tables_has_size_ten(tables)
+    ok &= check("table cell runs are 10 pt", nine_pt,
+                "all sized 20 half-points" if nine_pt else "some cells inherit 12 pt")
+
+    print()
+    print(f"=== {docx.name} :: opens as a Word file ===")
+    # A malformed document.xml still unzips and still passes every regex check, so open it
+    # with a real parser. This is what caught a regex that overwrote a paragraph's <w:p>
+    # with <w:pPr>: every check above passed and no renderer would load the file.
+    opens = True
+    detail = ""
+    try:
+        from docx import Document
+        Document(str(docx))
+    except Exception as exc:
+        opens = False
+        detail = f"{type(exc).__name__}: {exc}"
+    ok &= check("parses as a Word document", opens, "" if opens else detail)
+
     if anon and anon.exists():
         print()
         print(f"=== {anon.name} :: double-blind copy ===")
@@ -83,6 +121,16 @@ def verify(docx: pathlib.Path, anon: pathlib.Path | None) -> bool:
         ok &= check("body still present", "Moran" in atext)
 
     return ok
+
+
+def rich_text_in_tables_has_size_ten(tables: list[str]) -> bool:
+    for t in tables:
+        for run in re.findall(r"<w:r>(?:(?!</w:r>).)*?</w:r>", t, re.S):
+            if "<w:t" not in run:
+                continue
+            if '<w:sz w:val="20"' not in run:
+                return False
+    return True
 
 
 def main() -> int:

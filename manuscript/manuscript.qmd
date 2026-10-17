@@ -71,6 +71,9 @@ format:
     toc: false
     number-sections: true
     reference-doc: reference.docx
+    # Captions stay as the paragraph kable() writes above each table; the docx post-process
+    # keeps it with the table and clears space below it, so it cannot be orphaned.
+    tbl-cap-location: bottom
 ---
 
 
@@ -176,7 +179,7 @@ Nigeria spans a steep agro-ecological gradient, from humid coastal forest to sem
 
 ## Research design
 
-The areal unit is the Local Government Area. Nigeria's 774 LGAs are the tier of government formally responsible for local land allocation and development control, which makes them the level at which any zoning instrument would operate. The analysis uses the 775 polygons of GADM v4.1, whose boundaries include several urban LGAs as small as 12 km² and rural LGAs exceeding 10,000 km².
+The areal unit is the Local Government Area. Nigeria's 774 LGAs are the tier of government formally responsible for local land allocation and development control, which makes them the level at which any zoning instrument would operate. The analysis uses the 775 polygons of GADM v4.1 — 774 LGAs as the tier is usually counted in Nigeria, and one subdivision the dataset records separately — whose boundaries include several urban LGAs as small as 12 km² and rural LGAs exceeding 10,000 km².
 
 That nine-hundredfold spread in area is the reason this paper uses density rather than counts throughout. A count of ten features means something quite different in the 23.6 km² of Tarauni than in the 369 km² of Ikorodu.
 
@@ -448,7 +451,7 @@ use, **a doubling of LGA area multiplies density by 0.341** — a fall of about 
 Two diagnostics support the specification. Poisson regression, fitted for comparison, gives a
 Pearson dispersion of 39.1, far above the value of 1 the Poisson family assumes; the negative
 binomial is required, not preferred. And the negative binomial's own dispersion parameter
-(θ = 0.015) confirms substantial extra-Poisson variation even after conditioning on area.
+($\theta$ = 0.015) confirms substantial extra-Poisson variation even after conditioning on area.
 
 Substantively: Nigeria's urban LGAs are small and densely cultivated; its rural LGAs are large
 and sparse. Because small LGAs are also where urban populations concentrate, this is close to
