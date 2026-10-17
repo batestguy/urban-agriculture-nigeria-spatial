@@ -236,12 +236,21 @@ rewrite.
 
 ## Submission package (owner: the author)
 
+**Status 2026-10-17: the reformat is done.** Everything below marked *done* was verified against
+the rendered artefacts, not the source.
+
 | Item | Status |
 |---|---|
-| Manuscript `.docx`, TRP style | **to produce** (reformat + restructure) |
-| Anonymised review copy | **to produce** — double blind |
-| `Declaration of AI Use` before references | exists; rename, relocate, restate per policy §2.2 |
-| ORCID iD | **found — `0009-0002-3302-9558`**, verified live; needs inserting |
+| Manuscript `.docx`, TRP style | **done** — TNR 12 pt, single-spaced, no indent, 300 dpi figures |
+| Section architecture | **done** — 1 Intro · 2 Literature review · 3 Study area · 4 Methods · 5 Results · 6 Discussion · 7 Conclusion |
+| Literature review | **written** — three subsections plus the hypothesis statements |
+| Abstract 250 words, unstructured | **done** — 249 words |
+| Inhouse Harvard references | **done** — `manuscript/trp-harvard.csl` |
+| Word count 4,000-8,000 excl. refs | **5,639** — in range |
+| Figures TIF/JPEG 300 dpi | **done** — `results/figures/submission/` (rebuilt by `scripts/prepare_figures_trp.py`) |
+| Anonymised review copy | **done** — `manuscript/manuscript-anonymised.docx` |
+| `Declaration of AI Use` | **AUTHOR'S** — section left byte-identical; see the conflict below |
+| ORCID iD | **found — `0009-0002-3302-9558`**, verified live; needs inserting into the named version |
 | Byline vs ORCID name | **resolved** — set to *Jerry Zachary Bannister* to match ORCID |
 | Public repo vs double blind | **resolved** — manuscript artefacts untracked; history not rewritten |
 | Author Agreement (form 115) signed | **author to complete** |
@@ -249,6 +258,16 @@ rewrite.
 | Comments to the Editor: origin of article | say **independent work**; no institutional proof needed |
 | Suggested referees (optional, 3, outside own institution) | optional |
 | Cover note | not requested; a short compliance note saves a round trip |
+
+### What was built to do it
+
+- `manuscript/trp-harvard.csl` — the journal's inhouse Harvard, built from its own published
+  articles (`SURNAME, I.I. & SURNAME, J.J. 1999. Title.` … `57(1), pp. 289-300. doi-url`).
+- `scripts/fix_docx_trp.py` — typography, author-block injection, and `--anonymise`.
+- `scripts/prepare_figures_trp.py` — 300 dpi JPEG + TIFF with embedded DPI metadata.
+- `scripts/verify_trp_format.py` — reads the rendered `.docx` and asserts the house style.
+- `scripts/build_bib.py` — now brace-protects proper nouns in titles. Pandoc lowercases
+  unprotected BibTeX title words, which was rendering "Ghana" as "ghana".
 
 ---
 

@@ -16,47 +16,31 @@ author-affiliation: "Statistician, Abubakar Tafawa Balewa University (ATBU), Bau
 date: last-modified
 date-format: "D MMMM YYYY"
 abstract: |
-  **Context and background.** Urban agriculture is widely promoted as a lever for urban food
-  security in Nigeria, yet its spatial distribution has rarely been measured. Policy questions
-  about where land should be protected require spatial evidence, and the existing literature,
-  dominated by single-city household surveys, cannot supply it. The principal obstacle to
-  spatial measurement is that the best available open data — volunteered geographic
-  information — is contributed unevenly, so that mapping density and agricultural density are
-  easily confused.
-
-  **Goal and objectives.** This study measures where cultivated land concentrates across
-  Nigerian Local Government Areas and tests whether the observed pattern survives correction for
-  that coverage problem. Three questions are addressed: whether cultivation is spatially
-  clustered; whether density depends on the size of the administrative unit; and whether any
-  pattern survives an explicit control for how much of each unit has been mapped.
-
-  **Methodology.** Cultivated-land features were extracted from OpenStreetMap for five cities
-  spanning the country's agro-ecological gradient — Abuja, Lagos, Kano, Port Harcourt and
-  Gombe — and analysed across 775 Local Government Areas. Spatial clustering was assessed using
-  Moran's I, local indicators of spatial association with false-discovery-rate control, a
-  join-count test and Ripley's K within each city. The scale effect was modelled with a
-  negative binomial specification using area as an exposure offset, re-estimated with per-area
-  counts of mapped buildings and highways as an additional offset.
-
-  **Results.** Density is strongly clustered (Moran's I equal to 0.300; z equal to 17.6), and the
-  clustering survives the exclusion of Kano State, the best-mapped region (I equal to 0.274).
-  Point-pattern analysis finds significant clustering within all five cities independently.
-  Density falls by approximately 66 per cent per doubling of Local Government Area, and this
-  effect strengthens rather than weakens when mapping coverage is controlled, with an
-  improvement of 20 AIC points. Coverage is itself demonstrably confounded with the outcome:
-  features correlate with mapped highway density at a Spearman coefficient of 0.613, and areas
-  containing cultivation have nearly twice the median mapped buildings of those without.
-
-  **Conclusion.** Clustering means that targeted land protection is feasible: 39 of 775 Local
-  Government Areas contain any mapped cultivation, and 19 show statistically significant local
-  clustering. The coverage control strengthens rather than undermines the principal finding,
-  which is a result of methodological as well as substantive interest. A climate hypothesis
-  forming part of the original design could not be tested, for reasons reported in the paper.
+  Urban agriculture is widely promoted as a lever for urban food security in Nigeria, yet its
+  spatial distribution has rarely been measured; the literature is dominated by single-city
+  surveys that cannot say where cultivation concentrates. Planning needs that evidence, because
+  protecting agricultural land requires knowing which land. The obstacle is that the best
+  available open data — volunteered geographic information — is contributed
+  unevenly, so a map of cultivation is easily confused with a map of mapping effort. This study
+  measures where cultivated land concentrates across Nigerian Local Government Areas and tests
+  whether the pattern survives correction for that coverage problem. Cultivated-land features
+  were extracted from OpenStreetMap for five cities spanning the country's agro-ecological
+  gradient, and analysed across 775 Local Government Areas using Moran's I, local indicators of
+  spatial association with false-discovery-rate control, a join-count test and Ripley's K, with
+  the scale effect modelled by a negative binomial specification using area as an exposure
+  offset. Density is strongly clustered (Moran's I = 0.300), clustering holds within each
+  city, and density falls by approximately 66 per cent per doubling of Local Government Area — an
+  effect that strengthens when coverage is controlled. Because clustering places the
+  activity in a few identifiable areas, targeted rather than blanket land protection
+  becomes feasible, and the coverage control generalises: the same data analysed without it
+  would have supported a climate conclusion the data cannot carry. The findings describe mapped
+  cultivation in one 2026 snapshot, and measure cultivated land within city regions rather than
+  statutory urban agriculture.
 
   *Keywords:* urban agriculture; Nigeria; OpenStreetMap; spatial autocorrelation; volunteered
   geographic information; land policy
 bibliography: references.bib
-csl: apa.csl
+csl: trp-harvard.csl
 format:
   html:
     toc: true
@@ -101,29 +85,98 @@ library(spdep); library(MASS); library(jsonlite)
 
 Urban agriculture — the production, processing and marketing of food within and around cities — is promoted by the Food and Agriculture Organization as a lever for both urban food security and circular-economy goals [@fao2023]. In Nigeria the case for it is easy to state. The urban population reached 146.5 million in 2024, a majority of the national total, and food inflation has repeatedly exceeded thirty per cent in recent years, making urban food access a live political problem rather than a distant development goal.
 
-The evidence base, however, is largely non-spatial. Urban agriculture in Nigeria has been studied through household surveys that establish who farms and why — among urban food-crop farmers in Cross River State [@ibok2014], fish farmers in Jos [@wuyep2018], and urban households facing gendered food insecurity [@elum2025] — and through reviews that establish what policy ought to do [@gottero2025]. Such work cannot answer the questions that land-use planning actually poses. *Where* does cultivation concentrate? Is it dispersed or clustered? Should a city protect a small number of intensively farmed areas, or many scattered ones? What area of land is involved? Policy documents acknowledge the gap: successive Nigerian urban policy frameworks commit to safeguarding agricultural land without providing instruments to identify it.
+The evidence base, however, is largely non-spatial (Section 2). Urban agriculture in Nigeria has been studied through household surveys that establish who farms and why — among urban food-crop farmers in Cross River State [@ibok2014], fish farmers in Jos [@wuyep2018], and urban households facing gendered food insecurity [@elum2025] — and through reviews that establish what policy ought to do [@gottero2025]. Such work cannot answer the questions that land-use planning actually poses. *Where* does cultivation concentrate? Is it dispersed or clustered? Should a city protect a small number of intensively farmed areas, or many scattered ones? What area of land is involved? Policy documents acknowledge the gap: successive Nigerian urban policy frameworks commit to safeguarding agricultural land without providing instruments to identify it.
 
 Cities across West Africa face the same pressure from a different direction, as urban expansion converts peri-urban farmland faster than planning systems can respond [@cobbinah2017; @prados2026]. The spatial question is therefore not only academic: it determines whether land protection is targeted or aspirational.
 
 Satellite and crowdsourced data have changed what is measurable, but they bring their own problem. OpenStreetMap is the most complete openly licensed source of intra-urban land-use data available, and it is contributed unevenly. Coverage is known to vary systematically with wealth, population density and contributor attention, both globally and within regions [@haklay2010; @herfort2023]. In Nigeria this matters acutely: Kano is among the best-mapped states in the country, and Kano is also where most cultivation is recorded. Any analysis that treats mapping density as agricultural density risks measuring the behaviour of volunteers rather than the behaviour of farmers.
 
-This paper takes that risk seriously rather than setting it aside. We ask three questions of a national-layer dataset, and we test each against the objection that most threatens it:
+This paper takes that risk seriously rather than setting it aside. It asks three questions of a
+national-layer dataset, and tests each against the objection that most threatens it — the
+questions are stated in Section 2.
 
 - **H1 — Clustering.** Is cultivation clustered across Local Government Areas, or distributed at random?
 - **H2 — Scale.** Does density depend on the size of the administrative unit?
 - **H3 — Coverage.** Do any observed patterns survive correction for the uneven completeness of the underlying map?
 
-A fourth question — whether cultivation concentrates in drier areas — was part of the original design and is *not* answered here; we explain in Section 5.5 why the available climate data cannot support it, and report the withdrawal rather than the result. We regard the disclosure as part of the contribution: the same data, analysed without the coverage correction we describe, yield confident conclusions that do not hold.
+The rest of this paper proceeds as follows. Section 2 reviews the two literatures this study
+joins and states the gap it addresses. Section 3 describes the study area. Section 4 sets out
+the design, the data and the analysis. Section 5 reports the results, Section 6 discusses them,
+and Section 7 states the contribution.
 
-# Data
+# Literature review
 
-## Study area
+Two bodies of research bear on this study, and they meet at a single question: whether the
+spatial distribution of urban cultivation can be measured at all from the data that exist.
 
-Nigeria spans a steep agro-ecological gradient, from humid coastal forest to semi-arid Sahel, over roughly 1,000 km. We selected five cities that sample that gradient and represent distinct urban forms: **Abuja** (planned federal capital, Guinea savanna), **Lagos** (coastal megacity, the largest urban agglomeration in Africa), **Kano** (ancient Sahelian commercial city in the most intensively farmed region of the country), **Port Harcourt** (humid Niger Delta, oil economy), and **Gombe** (mid-size savanna city in the north-east). Together they span annual rainfall from roughly 400 mm to 1,900 mm.
+## Urban agriculture in Nigeria
 
-## The unit of analysis
+Research on urban agriculture in Nigeria has documented practice in detail — who farms, at what
+scale, and under what tenure — and has consistently recommended that planning systems formalise
+it [@ibok2014; @wuyep2018; @elum2025; @gottero2025; @vagneron2007]. It has been studied through
+household surveys among urban food-crop farmers in Cross River State [@ibok2014], fish farmers in
+Jos [@wuyep2018], and urban households facing gendered food insecurity [@elum2025], and through
+reviews of what policy ought to do [@gottero2025]. That literature establishes the policy case
+but has not, so far as this study is aware, measured the spatial distribution of cultivation
+across administrative units. The gap matters because the recommendations it produces are spatial
+in form and non-spatial in evidence: a report advising that a state protect urban farmland
+cannot say which land without a map, and no such map has been published at national scale.
 
-The areal unit is the Local Government Area. Nigeria's 774 LGAs are the tier of government formally responsible for local land allocation and development control, which makes them the level at which any zoning instrument would operate. We use the 775 polygons of GADM v4.1, whose boundaries include several urban LGAs as small as 12 km² and rural LGAs exceeding 10,000 km².
+Cities across West Africa face the same pressure from a different direction, as urban expansion
+converts peri-urban farmland faster than planning systems can respond [@cobbinah2017;
+@prados2026]. The spatial question is therefore not only academic — it determines whether land
+protection is targeted or aspirational.
+
+## Volunteered geographic information and its biases
+
+The second body of work explains why a national map of this kind is difficult to trust.
+Satellite and crowdsourced data have changed what is measurable, and they bring their own
+problem. OpenStreetMap is the most complete openly licensed source of intra-urban land-use data
+available, and it is contributed unevenly. Coverage is known to vary systematically with wealth,
+population density and contributor attention, both globally and within regions [@haklay2010;
+@herfort2023; @jacobs2017]. In Nigeria this matters acutely: Kano is among the best-mapped states
+in the country, and Kano is also where most cultivation is recorded. An analysis that treats
+mapping density as agricultural density risks measuring the behaviour of volunteers rather than
+the behaviour of farmers.
+
+That critique is well established, but demonstrations that a specific finding survives it are
+less common. Work on OpenStreetMap completeness is the reason this study treats coverage as a
+hypothesis to be tested rather than an assumption to be set aside, and the exposure control
+described in Section 4.3 is a direct application of its concerns.
+
+## The gap this study addresses
+
+Taken together, the two literatures leave a specific opening. The urban-agriculture literature
+supplies the policy question without the spatial measurement; the volunteered-geographic-
+information literature supplies the methodological warning without an application that answers
+it. This study joins them by measuring the spatial distribution of cultivated land across
+Nigeria's Local Government Areas and then subjecting the measurement to an explicit control for
+mapping completeness. It does not replace the survey literature; it supplies the layer that
+recommendations of this kind have lacked.
+
+Three questions follow from that gap:
+
+- **H1 — Clustering.** Is cultivation clustered across Local Government Areas, or distributed at
+  random?
+- **H2 — Scale.** Does density depend on the size of the administrative unit?
+- **H3 — Coverage.** Do any observed patterns survive correction for the uneven completeness of
+  the underlying map?
+
+A fourth question — whether cultivation concentrates in drier areas — formed part of the original
+design and is *not* answered here. The available climate data cannot support it, and the reasons
+are given in Section 5.5. The result is withdrawn rather than reported, and the withdrawal is
+treated as part of the contribution: the same data, analysed without the coverage correction
+described here, would yield confident conclusions that do not hold.
+
+# Study area
+
+Nigeria spans a steep agro-ecological gradient, from humid coastal forest to semi-arid Sahel, over roughly 1,000 km. Five cities were selected that sample that gradient and represent distinct urban forms: **Abuja** (planned federal capital, Guinea savanna), **Lagos** (coastal megacity, the largest urban agglomeration in Africa), **Kano** (ancient Sahelian commercial city in the most intensively farmed region of the country), **Port Harcourt** (humid Niger Delta, oil economy), and **Gombe** (mid-size savanna city in the north-east). Together they span annual rainfall from roughly 400 mm to 1,900 mm.
+
+# Methods
+
+## Research design
+
+The areal unit is the Local Government Area. Nigeria's 774 LGAs are the tier of government formally responsible for local land allocation and development control, which makes them the level at which any zoning instrument would operate. The analysis uses the 775 polygons of GADM v4.1, whose boundaries include several urban LGAs as small as 12 km² and rural LGAs exceeding 10,000 km².
 
 That nine-hundredfold spread in area is the reason this paper uses density rather than counts throughout. A count of ten features means something quite different in the 23.6 km² of Tarauni than in the 369 km² of Ikorodu.
 
@@ -147,7 +200,7 @@ tibble::tibble(
 ) |> knitr::kable(caption = "The analysis frame. The final row confirms every feature reconciles to exactly one LGA.")
 ```
 
-## Cultivated-land features
+## Data collection
 
 Features were extracted from the OpenStreetMap Overpass API using the tags conventionally
 applied to cultivated land: `landuse=farmland`, `landuse=farmyard`, `landuse=allotments`, and
@@ -176,23 +229,21 @@ osm |> count(city, sort = TRUE, name = "Features") |>
   knitr::kable(caption = "Features by city. Kano alone holds 39% of all features.")
 ```
 
-## Climate and coverage layers
+## Population, sampling and data sources
 
 Two supplementary layers were collected. Daily agro-climate variables for 2023 (temperature,
 bias-corrected precipitation, relative humidity) came from the NASA POWER API at the centroid of
-each city. The limitations of that sampling frame are discussed in Section 3.4 and are the reason
+each city. The limitations of that sampling frame are discussed in Section 4.3 and are the reason
 H4 is not reported.
 
-To measure mapping coverage independently of cultivation, we queried the Overpass API for
+To measure mapping coverage independently of cultivation, the Overpass API was queried for
 aggregate counts of `way["building"]` and `way["highway"]` within each LGA polygon. These counts
 have nothing to do with agriculture; they record how much of an LGA has been mapped at all. They
 are the exposure control that makes H3 testable.
 
 ![Bounding-box leakage in the feature layer. Forty-three of 484 features (8.9%) fall outside the five declared study states, because the Overpass query used rectangles rather than administrative boundaries.](../results/figures/study_extent.png){#fig-extent}
 
-# Methods
-
-## Density and the zero-inflation problem
+## Data analysis and interpretation
 
 Density is computed as features per square kilometre, using spherical geometry.
 
@@ -217,9 +268,9 @@ This shape has two consequences. It rules out ordinary least squares for the reg
 a Gaussian model applied to a non-negative variable with a large point mass at zero will
 predict values that cannot exist. It does not invalidate the spatial-autocorrelation
 statistics, which are correlation coefficients rather than likelihoods, but it does mean
-their assumptions need checking, and we do so in Section 4.1.
+their assumptions need checking, and this is done in Section 5.1.
 
-## Spatial weights
+### Spatial weights
 
 Neighbour structure is defined by queen contiguity: two LGAs are neighbours if their boundaries
 share an edge *or* a vertex. Weights are row-standardised, so each LGA's neighbours sum to one
@@ -230,9 +281,9 @@ $$w_{ij} = \begin{cases}1 & \text{if LGAs } i, j \text{ share an edge or vertex}
 
 Rook contiguity (shared edges only) serves as a robustness check.
 
-## Models
+### Models
 
-**H1, global clustering.** We test for spatial autocorrelation using Moran's I [@moran1950; @griffith2021],
+**H1, global clustering.** Spatial autocorrelation is tested using Moran's I [@moran1950; @griffith2021],
 a cross-product correlation that compares each unit's deviation from the mean with that of its
 neighbours.
 
@@ -247,13 +298,13 @@ value per unit:
 
 $$I_i = \frac{x_i-\bar{x}}{m_2}\sum_j w^{*}_{ij}(x_j-\bar{x}), \qquad m_2 = N^{-1}\sum_i (x_i-\bar{x})^2$$
 
-We classify units by quadrant (high–high, low–low, high–low, low–high) and, critically, apply
+Units are classified by quadrant (high–high, low–low, high–low, low–high) and, critically, apply
 Benjamini–Hochberg false-discovery-rate control [@benjamini1995] across the 775 simultaneous
 tests. Reporting 775 unadjusted local statistics would generate roughly 39 false positives at
 the conventional 5% level.
 
 **H1, point scale.** Areal statistics impose an administrative frame on what is really a point
-pattern. We therefore add two tests that do not: a join-count test on the binary indicator of
+pattern. Two further tests are therefore added that do not: a join-count test on the binary indicator of
 whether an LGA contains any feature, and Ripley's $K$[^k] computed within each city, using the
 translation from $K$ to $L$ that linearises the expected value under complete spatial randomness
 [@ripley1977].
@@ -261,8 +312,9 @@ translation from $K$ to $L$ that linearises the expected value under complete sp
 [^k]: Implemented with the border-edge correction in `spatstat`. Envelopes are from 199
 Monte Carlo simulations.
 
-**H2, the scale effect.** The outcome is a count with unequal exposure. We therefore model it as
-such, using a negative binomial specification with the logarithm of area as an **offset**:
+**H2, the scale effect.** The outcome is a count with unequal exposure. The model is therefore
+specified as such, using a negative binomial specification with the logarithm of area as an
+**offset**:
 
 $$n_i \sim \text{NegBin}(\mu_i, \theta), \qquad \log \mu_i = \log(\text{area}_i) + X_i\beta$$
 
@@ -271,9 +323,9 @@ The offset form is not cosmetic. Regressing the *ratio* `density` on its own den
 interpretable as an effect. Writing area as exposure instead asks the density question
 directly: does the rate at which features occur per unit area depend on area? The coefficient
 $\beta$ is then an incidence rate ratio, and the test of $H_0: \beta = 0$ is a test of whether
-density varies with scale. We use the negative binomial rather than Poisson because counts of
-this kind are almost always overdispersed [@cameron2013; @linden2011], and we report the
-dispersion diagnostic rather than assuming it away.
+density varies with scale. The negative binomial is used rather than Poisson because counts of
+this kind are almost always overdispersed [@cameron2013; @linden2011], and the dispersion
+diagnostic is reported rather than assumed away.
 
 **H3, coverage.** The same specification is then refitted with the LGA's mapped-building count
 as a second offset:
@@ -284,7 +336,7 @@ The model now predicts cultivation per unit of *mapped environment* rather than 
 kilometre. If the area effect were an artefact of where volunteers have mapped, adding this
 term should attenuate or reverse it. The comparison of the two fits is the test.
 
-## Software and reproducibility
+## Limitations of the research design
 
 Analysis is in R 4.5.2 with `sf`, `spdep`, `spatialreg`, `spatstat` and `MASS`. Every layer is
 frozen with a provenance record (URL, timestamp, row count, licence) in `data/raw/provenance.json`.
@@ -353,7 +405,7 @@ One diagnostic deserves emphasis rather than a footnote. The raw count of signif
 is *below* the number expected by chance alone (38.8). This does not indicate an absence of
 clustering — the global statistic rules that out decisively. It indicates that the normal
 approximation behind the local p-values is conservative when 95% of the variable sits at a single
-value, because the permutation distribution is discrete. We report the adjusted set and state the
+value, because the permutation distribution is discrete. The adjusted set is reported and the
 conservatism rather than presenting the raw count as a result.
 
 Point-pattern tests corroborate the areal analysis without depending on it. The join-count test on
@@ -447,7 +499,7 @@ coefficient from −1.001 to −1.421 and improves fit by ΔAIC = 20.0. Rather t
 the correction that most threatens it, the scale effect becomes sharper. Nigerian LGAs that are
 large are less densely cultivated *even holding constant how much of them has been mapped*.
 
-This is the paper's central empirical claim, and we state its scope precisely: it is a claim
+This is the paper's central empirical claim, and its scope is stated precisely: it is a claim
 about the spatial distribution of *mapped* cultivated land, robust to the coverage confound that
 would most obviously explain it away.
 
@@ -474,8 +526,8 @@ prioritises Tarauni, Shomolu and the Kano ring.
 ## A hypothesis the data could not test
 
 The original design included a fourth question: whether cultivation concentrates in drier areas,
-on the reasoning that irrigation potential shapes where farming is viable. We report here that
-the available data cannot answer it, and we withdraw the result rather than presenting it.
+on the reasoning that irrigation potential shapes where farming is viable. It is reported here
+that the available data cannot answer it, and the result is withdrawn rather than presented.
 
 Rainfall was sampled at the centroid of each city — sensible for a five-city climate gradient,
 fatal for an LGA-level regression. When those five values are assigned to the LGAs of each city,
@@ -526,7 +578,7 @@ Interventions — overlay zoning, land allocation, extension services — could 
 places rather than spread thinly, which is a materially different proposition for a state or local
 budget.
 
-**Scale matters, and counts mislead.** The finding that density falls by two-thirds per doubling
+**Scale matters, and counts mislead.** The finding that density falls by about 66 per cent per doubling
 of area is, in one sense, arithmetic. In another it is a warning about how this sector is
 described. A state report noting that it "contains 200 urban farms" says nothing about intensity
 unless it also says how much land they occupy and how large the administrative units are. The
@@ -534,19 +586,19 @@ Ikorodu–Tarauni contrast makes this concrete: both are Lagos-area LGAs, both c
 cultivation, and a count-based ranking inverts the density-based one.
 
 **The coverage correction strengthens rather than weakens the case.** Because the coverage confound
-is the obvious objection to any OpenStreetMap-based agricultural analysis, we expected the
-correction to attenuate the result. It did not. That is reassuring for this class of method more
+is the obvious objection to any OpenStreetMap-based agricultural analysis, the correction was
+expected to attenuate the result. It did not. That is reassuring for this class of method more
 generally: where a scale effect is genuine, controlling for mapping effort does not eliminate it.
 
 ## What the pattern does not show
 
-We are explicit about three limits, because the alternative — a confident map with unstated
+Three limits are stated explicitly, because the alternative — a confident map with unstated
 assumptions — is how spatial analyses of this kind mislead.
 
 **The concern about coverage is reduced, not removed.** The exposure control demonstrates that the
 *scale* effect is not a coverage artefact. It does not establish that the layer is complete, and
 the LISA geography does remain partly a coverage map: 18 of the 19 significant LGAs also contain
-any feature at all. We can say with confidence where recorded cultivation clusters; we cannot say
+any feature at all. It can be said with confidence where recorded cultivation clusters; it cannot be said
 that unrecorded cultivation is absent from the places that show none.
 
 **`farmland` is not `allotments`.** Only 5 of 484 features are formally designated allotments. The
@@ -559,26 +611,8 @@ distinction should be stated.
 **The study extent is rectangular.** The Overpass queries used bounding boxes, which leak across
 state lines: 43 features (8.9%) lie outside the five intended states, and the "Abuja" box returns
 more features in Niger State (17) than in the Federal Capital Territory (15). A polygon-based
-query using the same mechanism as the coverage layer would fix this. We report the leakage rather
+query using the same mechanism as the coverage layer would fix this. The leakage is reported rather
 than silently dropping the features (@fig-extent).
-
-## Relation to prior work
-
-Two literatures bear on these results, and they pull in different directions.
-
-Work on urban agriculture in Nigeria has documented practice in detail — who farms, at what scale,
-with what tenure — and has consistently recommended that planning systems formalise it
-[@ibok2014; @wuyep2018; @elum2025; @gottero2025; @vagneron2007]. That literature establishes the
-policy case but has not, so far as we are aware, measured the spatial distribution of cultivation
-across administrative units. The present study does not replace that work; it supplies the layer
-that recommendations of this kind have lacked.
-
-Work on volunteered geographic information has established that OpenStreetMap completeness is
-systematically uneven, globally and within regions [@haklay2010; @herfort2023; @jacobs2017].
-That literature is the reason this paper treats coverage as a hypothesis rather than an
-assumption, and the exposure control is a direct application of its concerns. The finding that a
-substantive result can survive such a control is a modest contribution back: the critiques are
-well established, but demonstrations that specific findings withstand them are less common.
 
 ## Limitations
 
@@ -586,15 +620,15 @@ The design is cross-sectional, and the models describe association rather than c
 here identifies why cultivation concentrates where it does; tenure security, market access, water
 availability and historical land use are all plausible and all unmeasured.
 
-The feature layer is a proxy whose completeness we have quantified but not eliminated. Coverage
-differs between cities in ways that correlate with urban size, and our exposure control is a
+The feature layer is a proxy whose completeness has been quantified but not eliminated. Coverage
+differs between cities in ways that correlate with urban size, and the exposure control is a
 single measure of mapped environment rather than a full model of contributor behaviour.
 
 The analysis covers five cities chosen to span the agro-ecological gradient. They are not a random
 sample of Nigerian cities, and the density estimates are averages over enormously varied
 metropolitan areas, some of which contain substantial rural territory within their boundaries.
 
-The climate question remains open, for the sampling reason explained in Section 4.5.
+The climate question remains open, for the sampling reason explained in Section 5.5.
 
 Finally, the findings are only as good as the underlying map, and the map is a volunteer product
 that changes continuously. The layer here is frozen to August 2026; conclusions about specific
@@ -602,12 +636,12 @@ LGAs should be understood as characterising that snapshot.
 
 # Conclusion
 
-We set out to measure where urban agriculture concentrates in Nigerian cities, and to test
-whether what we found survives the objection that most threatens it. It does.
+This study set out to measure where urban agriculture concentrates in Nigerian cities, and to test
+whether what it found survives the objection that most threatens it. It does.
 
 Cultivation is strongly clustered across Local Government Areas (Moran's I = 0.300), the
 clustering is present within each of the five cities studied, and it is not an artefact of any
-single region. Density falls by roughly two-thirds per doubling of LGA area, and that effect
+single region. Density falls by approximately 66 per cent per doubling of LGA area, and that effect
 strengthens when per-LGA mapping coverage is controlled. The most intensively cultivated LGAs —
 Tarauni and Shomolu among them — are small, dense and urban; the places with the most features
 are not necessarily the most intensively cultivated.
@@ -615,7 +649,7 @@ are not necessarily the most intensively cultivated.
 Two things follow. For policy, the clustering means that a targeted intervention is feasible: a
 small set of specific LGAs carries most of the activity. For method, the coverage control matters:
 the same data, analysed without it, would have supported a climate conclusion that does not hold
-at the level the data actually replicate. We report the withdrawal alongside the findings because
+at the level the data actually replicate. The withdrawal is reported alongside the findings because
 the difference between the two is the difference between a map of agriculture and a map of
 mapping.
 
@@ -686,7 +720,6 @@ clusters to be identified rather than merely their existence.
 
 **Spatial autocorrelation.** The tendency of nearby locations to hold similar values. Positive
 autocorrelation indicates clustering; a value near zero indicates spatial randomness.
-
 
 # References
 

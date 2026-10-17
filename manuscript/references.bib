@@ -4,6 +4,11 @@
 % resolved through the Crossref REST API and every field (authors, title, journal,
 % year, volume, pages) is taken from that response rather than typed or inferred.
 %
+% Titles are brace-protected word by word (see _protect_title_case). Pandoc's BibTeX
+% reader lowercases unprotected capitalised words, which turned "Ghana" into
+% "ghana" in the reference list. The protection preserves proper nouns while
+% leaving the sentence case the journal's inhouse Harvard style requires.
+%
 % Regenerate with:  python scripts/build_bib.py
 % Verify with:      python scripts/verify_bib.py
 %
@@ -11,11 +16,11 @@
 % invented co-author, and a paper year that does not exist). Generation from the
 % registry is the structural fix: an unresolvable DOI cannot reach this file.
 %
-% Generated 2026-10-15
+% Generated 2026-10-16
 
 @article{moran1950,
   author  = {MORAN, P. A. P.},
-  title   = {NOTES ON CONTINUOUS STOCHASTIC PHENOMENA},
+  title   = {{NOTES} {ON} {CONTINUOUS} {STOCHASTIC} {PHENOMENA}},
   journal = {Biometrika},
   year    = {1950},
   volume  = {37},
@@ -26,7 +31,7 @@
 
 @article{anselin1995,
   author  = {Anselin, L.},
-  title   = {Local Indicators of Spatial Association—LISA},
+  title   = {Local Indicators of Spatial {Association—LISA}},
   journal = {Geographical Analysis},
   year    = {1995},
   volume  = {27},
@@ -59,7 +64,7 @@
 
 @incollection{griffith2021,
   author  = {Griffith, D. and Chun, Y.},
-  title   = {Spatial Autocorrelation and Moran Eigenvector Spatial Filtering},
+  title   = {Spatial Autocorrelation and {Moran} Eigenvector Spatial Filtering},
   journal = {Handbook of Regional Science},
   year    = {2021},
   pages   = {1863-1893},
@@ -87,7 +92,7 @@
 
 @article{haklay2010,
   author  = {Haklay, M.},
-  title   = {How Good is Volunteered Geographical Information? A Comparative Study of OpenStreetMap and Ordnance Survey Datasets},
+  title   = {How Good is Volunteered Geographical Information? A Comparative Study of {OpenStreetMap} and {Ordnance} {Survey} Datasets},
   journal = {Environment and Planning B: Planning and Design},
   year    = {2010},
   volume  = {37},
@@ -98,7 +103,7 @@
 
 @article{herfort2023,
   author  = {Herfort, B. and Lautenbach, S. and Porto de Albuquerque, J. and Anderson, J. and Zipf, A.},
-  title   = {A spatio-temporal analysis investigating completeness and inequalities of global urban building data in OpenStreetMap},
+  title   = {A spatio-temporal analysis investigating completeness and inequalities of global urban building data in {OpenStreetMap}},
   journal = {Nature Communications},
   year    = {2023},
   volume  = {14},
@@ -120,7 +125,7 @@
 
 @book{fao2023,
   author  = {{Food and Agriculture Organization of the United Nations and International Fund for Agricultural Development and United Nations Children's Fund and World Food Programme and World Health Organization}},
-  title   = {The State of Food Security and Nutrition in the World 2023},
+  title   = {The {State} of Food Security and Nutrition in the World 2023},
   publisher = {FAO; IFAD; UNICEF; WFP; WHO;},
   year    = {2023},
   doi     = {10.4060/cc3017en},
@@ -128,7 +133,7 @@
 
 @article{wuyep2018,
   author  = {Wuyep, S. Z. and Rampedi, I. T.},
-  title   = {Urban Fish Farming in Jos, Nigeria: Contributions towards Employment Opportunities, Income Generation, and Poverty Alleviation for Improved Livelihoods},
+  title   = {Urban Fish Farming in {Jos}, {Nigeria}: Contributions towards Employment Opportunities, Income Generation, and Poverty Alleviation for Improved Livelihoods},
   journal = {Agriculture},
   year    = {2018},
   volume  = {8},
@@ -139,7 +144,7 @@
 
 @article{ibok2014,
   author  = {Ibok, O.},
-  title   = {Food Security Determinants among Urban Food Crop Farming Households in Cross River State, Nigeria},
+  title   = {Food Security Determinants among Urban Food Crop Farming Households in {Cross} {River} {State}, {Nigeria}},
   journal = {Asian Journal of Agricultural Extension, Economics & Sociology},
   year    = {2014},
   volume  = {3},
@@ -150,7 +155,7 @@
 
 @article{elum2025,
   author  = {Elum, Z. A. and Emodi, A. I.},
-  title   = {Gender, poverty and food security: Perceptions and implications for urban households in Nigeria},
+  title   = {Gender, poverty and food security: Perceptions and implications for urban households in {Nigeria}},
   journal = {Scientific African},
   year    = {2025},
   volume  = {28},
@@ -160,7 +165,7 @@
 
 @article{gottero2025,
   author  = {Gottero, E.},
-  title   = {Assessing Benefits and Risks of Urban and Peri-Urban Agriculture (UPA): A Spatial Approach},
+  title   = {Assessing Benefits and Risks of Urban and {Peri-Urban} Agriculture ({UPA}): A Spatial Approach},
   journal = {Sustainability},
   year    = {2025},
   volume  = {17},
@@ -171,7 +176,7 @@
 
 @article{vagneron2007,
   author  = {Vagneron, I.},
-  title   = {Economic appraisal of profitability and sustainability of peri-urban agriculture in Bangkok},
+  title   = {Economic appraisal of profitability and sustainability of peri-urban agriculture in {Bangkok}},
   journal = {Ecological Economics},
   year    = {2007},
   volume  = {61},
@@ -182,7 +187,7 @@
 
 @article{cobbinah2017,
   author  = {Cobbinah, P. B. and Niminga-Beka, R.},
-  title   = {Urbanisation in Ghana: Residential land use under siege in Kumasi central},
+  title   = {Urbanisation in {Ghana}: Residential land use under siege in {Kumasi} central},
   journal = {Cities},
   year    = {2017},
   volume  = {60},
@@ -192,7 +197,7 @@
 
 @article{prados2026,
   author  = {Prados, Y. and Azadi, H.},
-  title   = {Drivers of urbanisation and land-use and land-cover change across spatial scales: A comparative bibliometric synthesis from Global to Central and Eastern Europe},
+  title   = {Drivers of urbanisation and land-use and land-cover change across spatial scales: A comparative bibliometric synthesis from {Global} to {Central} and {Eastern} {Europe}},
   journal = {Land Use Policy},
   year    = {2026},
   volume  = {170},

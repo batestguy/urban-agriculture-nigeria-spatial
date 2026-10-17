@@ -21,3 +21,8 @@
 manuscript.pdf
 manuscript.docx
 manuscript.html
+
+# The double-blind review copy. Same reasoning as above, and additionally it must never be
+# confused with the named file: the review copy is what gets uploaded, the named one is the
+# record. Rebuilt by `python scripts/fix_docx_trp.py --anonymise`.
+manuscript-anonymised.docx

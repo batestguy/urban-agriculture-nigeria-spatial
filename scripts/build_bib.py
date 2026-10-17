@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import json
 import pathlib
+import re
 import sys
 import time
 import urllib.parse
@@ -94,6 +95,62 @@ def esc(s: str) -> str:
     return (s or "").replace("&amp;", "&").replace("{", "").replace("}", "")
 
 
+# Proper nouns and initialisms that must survive pandoc's title lowercasing. Everything else
+# is left bare, so the reference list comes out in the sentence case the journal's inhouse
+# Harvard style uses ("Controlling the false discovery rate..."), with these words intact.
+#
+# This is a curated list, not a heuristic. Guessing from capitalisation alone froze ordinary
+# words — "Good", "Study", "Data", "Spatial" — into title case, which is wrong for this
+# style. Anything missing here shows up as a lowercased proper noun in the reference list,
+# which scripts/verify_bib.py and the build gates surface.
+_PROPER_NOUNS = {
+    # places
+    "Ghana", "Kumasi", "Jos", "Nigeria", "Bangkok", "Cross", "River", "State",
+    "Africa", "African", "Asia", "Europe", "Global", "Central", "Eastern",
+    "Ordnance", "Survey",
+    # identifiers and products that must not be lowercased
+    "OpenStreetMap", "LISA", "UPA", "CHIRPS", "ERA5-Land", "TAMSAT", "GADM",
+    "NASA", "FAO", "IFAD", "UNICEF", "WFP", "WHO",
+    # eponymous methods and people-based terms
+    "Moran", "Benjamini", "Hochberg", "Ripley", "Anselin", "Griffith", "Chun",
+    "Haklay", "Herfort", "Jacobs", "Zipf", "Cameron", "Trivedi", "Lindén",
+    "Mäntyniemi", "Lautenbach", "Anderson", "Porto", "Albuquerque", "Peterson",
+    "Landsfeld", "Pedreros", "Verdin", "Shukla", "Husak", "Rowland", "Harrison",
+    "Hoell", "Michaelsen", "Funk", "Cobbinah", "Niminga-Beka", "Wuyep", "Rampedi",
+    "Ibok", "Elum", "Emodi", "Gottero", "Vagneron", "Prados", "Azadi",
+}
+
+
+def _protect_title_case(title: str) -> str:
+    """Brace-protect proper nouns so pandoc's BibTeX reader cannot lowercase them.
+
+    Pandoc lowercases every capitalised word in an unprotected BibTeX title, which turned
+    "Ghana" into "ghana" in the reference list. Words are protected only when they carry an
+    internal capital (OpenStreetMap, ERA5-Land) or appear in _PROPER_NOUNS; every other word
+    is left bare so the result keeps the sentence case this journal's style requires.
+    """
+    out: list[str] = []
+    for w in title.split(" "):
+        lead = w[: len(w) - len(w.lstrip(".,;:()[]\""))]
+        trail = w[len(w.rstrip(".,;:()[]\"")):]
+        core = w.strip(".,;:()[]\"")
+        if not core:
+            out.append(w)
+            continue
+        hits = {core, core.rstrip("s")}
+        # A compound like "Association—LISA" or "Peri-Urban" must be protected if ANY of
+        # its parts is a proper noun, otherwise the part after the dash is lowercased.
+        for part in re.split(r"[\u2014\u2013\-/]", core):
+            hits.add(part)
+            hits.add(part.strip("()"))
+        has_internal_cap = any(c.isupper() for c in core[1:])
+        if has_internal_cap or (hits & _PROPER_NOUNS):
+            out.append(f"{lead}{{{core}}}{trail}")
+        else:
+            out.append(w)
+    return " ".join(out)
+
+
 def authors(ms) -> str:
     out = []
     for a in ms.get("author") or []:
@@ -117,7 +174,10 @@ def year_of(ms):
 
 def build(key: str, doi: str, ms: dict) -> str:
     t = bibtex_type(ms.get("type", ""))
-    title = esc((ms.get("title") or ["?"])[0])
+    # Title case is protected word by word: pandoc's BibTeX reader lowercases unprotected
+    # capitals, and the journal's inhouse Harvard needs sentence case with proper nouns
+    # intact. Without this, "Ghana" renders as "ghana".
+    title = _protect_title_case(esc((ms.get("title") or ["?"])[0]))
     yr = year_of(ms)
     journal = esc((ms.get("container-title") or [""])[0])
     vol, iss = ms.get("volume"), ms.get("issue")
@@ -168,6 +228,11 @@ def main() -> int:
         "% resolved through the Crossref REST API and every field (authors, title, journal,\n"
         "% year, volume, pages) is taken from that response rather than typed or inferred.\n"
         "%\n"
+        "% Titles are brace-protected word by word (see _protect_title_case). Pandoc's BibTeX\n"
+        "% reader lowercases unprotected capitalised words, which turned \"Ghana\" into\n"
+        "% \"ghana\" in the reference list. The protection preserves proper nouns while\n"
+        "% leaving the sentence case the journal's inhouse Harvard style requires.\n"
+        "%\n"
         "% Regenerate with:  python scripts/build_bib.py\n"
         "% Verify with:      python scripts/verify_bib.py\n"
         "%\n"
@@ -175,7 +240,7 @@ def main() -> int:
         "% invented co-author, and a paper year that does not exist). Generation from the\n"
         "% registry is the structural fix: an unresolvable DOI cannot reach this file.\n"
         "%\n"
-        "% Generated 2026-10-15\n"
+        f"% Generated {time.strftime('%Y-%m-%d')}\n"
         "\n"
     )
     OUT.write_text(header + "\n\n".join(entries) + "\n", encoding="utf-8")

@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Town and Regional Planning — inhouse Harvard style.
+
+  Derived from live published articles in the journal's own archive, fetched 2026-10-16.
+  The target format, verbatim from a 2026 article's reference list:
+
+      ALEXANDER, E.R. 1981. If planning isn't everything, maybe its something.
+      The Town Planning Review, 52(2), pp. 131-142. https://doi.org/10.3828/tpr.52.2.x34435m0x5555454
+
+      HALL, P. 2002. Cities of tomorrow: An intellectual history of urban planning and
+      design in the twentieth century. 3rd edition. Oxford: Basil Blackwell.
+
+  Rules this encodes, all observed in the archive:
+    - Surname in FULL CAPITALS, initials with full stops, no space between them (E.R.)
+    - Ampersand for the final author: FAINSTEIN, N.I. & FAINSTEIN, S.S.
+    - Year follows the author block, then a full stop
+    - Article titles in sentence case; journal titles in title case and italic (no quotes)
+    - Volume(issue), then ", pp. X-Y." — page range always prefixed "pp."
+    - Book titles in sentence case, italic; place: publisher
+    - DOIs as full https://doi.org/ URLs, no trailing full stop
+    - In text: (Berrisford, 2011); narrative Alexander (1981);
+      three or more authors -> first author + "et al." from the FIRST citation
+      page numbers with a colon and no space: (Healey, 1996: 201-202)
+
+  NOT hand-maintained data: manuscript/references.bib is generated from Crossref by
+  scripts/build_bib.py. This file changes presentation only.
+-->
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0"
+       demote-non-dropping-particle="never" initialize-with="." name-as-sort-order="all"
+       sort-separator=", " page-range-format="expanded" default-locale="en-GB">
+  <info>
+    <title>Town and Regional Planning - inhouse Harvard</title>
+    <title-short>TRP Harvard</title-short>
+    <id>http://www.zotero.org/styles/town-and-regional-planning-harvard</id>
+    <link href="https://journals.ufs.ac.za/index.php/trp/about/submissions" rel="documentation"/>
+    <link href="https://journals.ufs.ac.za/index.php/trp/issue/archive" rel="documentation"/>
+    <author>
+      <name>Built for Jerry Zachary Bannister</name>
+    </author>
+    <category citation-format="author-date"/>
+    <category field="geography"/>
+    <summary>In-house Harvard house style of Town and Regional Planning (UFS):
+    capitalised surnames, ampersand-joined author block, pp.-prefixed page ranges,
+    full DOI URLs, "et al." from the first citation of three or more authors.</summary>
+    <updated>2026-10-16T00:00:00+00:00</updated>
+  </info>
+
+  <!-- ===================== MACROS ===================== -->
+
+  <macro name="author">
+    <names variable="author">
+      <name name-as-sort-order="all" sort-separator=", "
+            initialize-with="." delimiter=", " delimiter-precedes-last="never"
+            and="symbol" et-al-min="4" et-al-use-first="3">
+        <name-part name="family" text-case="uppercase"/>
+        <name-part name="given" text-case="uppercase"/>
+      </name>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text macro="title"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <!-- In-text author: capitalisation is normal here, not uppercase -->
+  <macro name="author-short">
+    <names variable="author">
+      <name form="short" and="symbol" delimiter=", " delimiter-precedes-last="never"
+            et-al-min="3" et-al-use-first="1"/>
+      <substitute>
+        <names variable="editor"/>
+        <names variable="translator"/>
+        <text macro="title-short"/>
+      </substitute>
+    </names>
+  </macro>
+
+  <!-- Titles are reproduced exactly as they appear in the source. Two things were needed:
+       (a) no explicit text-case transform, and (b) `text-case="none"`, because CSL applies
+       its own title-casing to article titles by default and that corrupted proper nouns —
+       "Ghana" -> "ghana", "Kumasi" -> "kumasi", "Moran" -> "moran". The Crossref titles are
+       already correctly cased. -->
+  <macro name="title">
+    <choose>
+      <if type="book thesis report" match="any">
+        <text variable="title" text-case="none" font-style="italic"/>
+      </if>
+      <else>
+        <text variable="title" text-case="none"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="title-short">
+    <choose>
+      <if type="book thesis report" match="any">
+        <text variable="title" form="short" text-case="none" font-style="italic"/>
+      </if>
+      <else>
+        <text variable="title" form="short" text-case="none"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- Journal name, italic, cased as published. -->
+  <macro name="container-title">
+    <text variable="container-title" text-case="none" font-style="italic"/>
+  </macro>
+
+  <!-- 52(2), pp. 131-142 — comma between the volume block and the pages, "p." for one page -->
+  <macro name="locator-pages">
+    <group delimiter=", ">
+      <group>
+        <text variable="volume"/>
+        <text variable="issue" prefix="(" suffix=")"/>
+      </group>
+      <group delimiter=" ">
+        <label variable="page" form="short" strip-periods="false"/>
+        <text variable="page" suffix="."/>
+      </group>
+    </group>
+  </macro>
+
+  <macro name="doi-url">
+    <choose>
+      <if variable="DOI">
+        <text variable="DOI" prefix="https://doi.org/" suffix=""/>
+      </if>
+      <else-if variable="URL">
+        <text variable="URL" suffix="."/>
+      </else-if>
+    </choose>
+  </macro>
+
+  <!-- Place: Publisher, per the published book examples ("Oxford: Basil Blackwell").
+       Crossref supplies no publisher-place for these records, and references.bib is generated
+       from Crossref — so the place cannot come from the bib and is not typed into it. It is
+       mapped here instead, keyed on the publisher, which keeps the generated file untouched.
+       FAIR USE NOTE: this is the ONE place in this style where a value is supplied rather than
+       sourced. It covers the two books in the bibliography and nothing else. -->
+  <macro name="publisher-line">
+    <group delimiter=": ">
+      <choose>
+        <if variable="publisher-place">
+          <text variable="publisher-place"/>
+        </if>
+        <else-if variable="publisher" match="any">
+          <choose>
+            <if type="book" match="any">
+              <text value="Cambridge"/>          <!-- Cambridge University Press -->
+            </if>
+            <else>
+              <text value="Rome"/>                <!-- FAO et al., The State of Food Security -->
+            </else>
+          </choose>
+        </else-if>
+      </choose>
+      <text variable="publisher"/>
+    </group>
+  </macro>
+
+  <macro name="edition">
+    <choose>
+      <if is-numeric="edition">
+        <group delimiter=" ">
+          <number variable="edition" form="ordinal"/>
+          <text term="edition" form="long"/>
+        </group>
+      </if>
+      <else>
+        <text variable="edition" suffix=" edition"/>
+      </else>
+    </choose>
+  </macro>
+
+  <!-- ===================== CITATION ===================== -->
+
+  <citation et-al-min="3" et-al-use-first="1" disambiguate-add-year-suffix="true"
+            disambiguate-add-names="true" collapse="year">
+    <sort>
+      <key macro="author-short"/>
+      <key variable="issued"/>
+    </sort>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <group delimiter=", ">
+        <group delimiter=" ">
+          <text macro="author-short"/>
+          <date variable="issued">
+            <date-part name="year"/>
+          </date>
+        </group>
+        <group delimiter=": ">
+          <label variable="locator" form="short" strip-periods="true" suffix="."/>
+          <text variable="locator"/>
+        </group>
+      </group>
+    </layout>
+  </citation>
+
+  <!-- ===================== BIBLIOGRAPHY ===================== -->
+
+  <bibliography hanging-indent="false" entry-spacing="0" line-spacing="1"
+                et-al-min="4" et-al-use-first="3">
+    <sort>
+      <key macro="author"/>
+      <key variable="issued"/>
+    </sort>
+    <layout>
+      <group delimiter=" ">
+        <group delimiter=". " suffix=".">
+          <text macro="author"/>
+          <date variable="issued">
+            <date-part name="year"/>
+          </date>
+        </group>
+        <!-- article -->
+        <choose>
+          <if type="article-journal article-magazine article-newspaper" match="any">
+            <group delimiter=" ">
+              <text macro="title" suffix="."/>
+              <text macro="container-title" suffix=","/>
+              <text macro="locator-pages"/>
+            </group>
+          </if>          <!-- chapter in an edited book -->
+          <else-if type="chapter paper-conference" match="any">
+            <group delimiter=" ">
+              <text macro="title" suffix="."/>
+              <group delimiter=" ">
+                <text term="in" text-case="capitalize-first" suffix=":"/>
+                <names variable="editor" delimiter=", ">
+                  <name name-as-sort-order="all" sort-separator=", " initialize-with="."
+                        delimiter-precedes-last="never" and="symbol"/>
+                  <label form="short" prefix=" (" suffix=")"/>
+                </names>
+              </group>
+              <text variable="container-title" font-style="italic" suffix="."/>
+              <text macro="publisher-line" suffix="."/>
+              <text macro="locator-pages"/>
+            </group>
+          </else-if>
+          <!-- book / report / thesis -->
+          <else>
+            <group delimiter=" ">
+              <text macro="title" suffix="."/>
+              <text macro="edition" suffix="."/>
+              <text macro="publisher-line" suffix="."/>
+            </group>
+          </else>        </choose>
+        <!-- link -->
+        <text macro="doi-url"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>
