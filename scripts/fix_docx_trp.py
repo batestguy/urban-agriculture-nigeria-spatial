@@ -531,7 +531,7 @@ def front_matter() -> dict:
     out: dict[str, str] = {}
     for line in block.splitlines():
         s = line.strip().lstrip("-").strip()
-        for key in ("author-affiliation", "affiliation", "name", "email"):
+        for key in ("author-affiliation", "affiliation", "name", "email", "orcid"):
             if s.startswith(key + ":") and key not in out:
                 out[key] = s.split(":", 1)[1].strip().strip("\"'")
     return out
@@ -558,7 +558,11 @@ def inject_author_block(xml: str) -> tuple[str, bool]:
                f'<w:t xml:space="preserve">{affil}</w:t></w:r>'
                f'<w:r><w:br/></w:r>'
                f'<w:r><w:rPr><w:rFonts w:ascii="{FONT}" w:hAnsi="{FONT}"/></w:rPr>'
-               f'<w:t xml:space="preserve">E-mail: {email}</w:t></w:r>')
+               f'<w:t xml:space="preserve">E-mail: {email}</w:t></w:r>'
+               + (f'<w:r><w:br/></w:r>'
+                  f'<w:r><w:rPr><w:rFonts w:ascii="{FONT}" w:hAnsi="{FONT}"/></w:rPr>'
+                  f'<w:t xml:space="preserve">ORCID: https://orcid.org/{fm["orcid"]}</w:t></w:r>'
+                  if fm.get("orcid") else ''))
         done = True
         return block.replace("</w:p>", add + "</w:p>", 1)
 
@@ -590,6 +594,9 @@ def regroup_front_matter(xml: str) -> tuple[str, bool]:
     if email:
         lines += ['<w:r><w:br/></w:r>',
                   f'<w:r><w:t xml:space="preserve">E-mail: {_esc(email)}</w:t></w:r>']
+    if fm.get("orcid"):
+        lines += ['<w:r><w:br/></w:r>',
+                  f'<w:r><w:t xml:space="preserve">ORCID: https://orcid.org/{_esc(fm["orcid"])}</w:t></w:r>']
     byline = ('<w:p><w:pPr><w:spacing w:before="0" w:after="240" w:line="240" '
               'w:lineRule="auto"/><w:jc w:val="center"/></w:pPr>' + "".join(lines) + '</w:p>')
 
