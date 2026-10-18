@@ -12,11 +12,11 @@ Government Areas, with an explicit correction for uneven mapping coverage.**
 Bauchi, Nigeria · [ORCID 0009-0002-3302-9558](https://orcid.org/0009-0002-3302-9558) ·
 <jzbannister@atbu.edu.ng>
 
-**Target venue:** [Town and Regional Planning](https://journals.ufs.ac.za/index.php/trp)
-(University of the Free State; ISSN 1012-280X / 2415-0495; Scopus-indexed; Diamond Open Access,
-no APC).
+**Target venue:** [TeMA — Journal of Land Use, Mobility and Environment](https://serena.sharepress.it/tema/)
+(University of Naples Federico II; ISSN 1970-9889 / 1970-9870; Scopus-indexed since 2023, Web of
+Science since 2015, ANVUR class A; no APC).
 
-**Manuscript:** [Word](manuscript/manuscript.docx) — 18 pages, the submission file — · [PDF](manuscript/manuscript.pdf) ·
+**Manuscript:** [Word](manuscript/manuscript.docx) — the submission file — · [PDF](manuscript/manuscript.pdf) ·
 [HTML](manuscript/manuscript.html) — or read the source, [`manuscript.qmd`](manuscript/manuscript.qmd).
 Every layer is frozen in `data/raw/` with provenance, and every headline number is re-derived
 from it by the audit gates.
@@ -132,7 +132,7 @@ in Niger State than in the Federal Capital Territory.
 ```
 manuscript/
   manuscript.qmd            the manuscript source → HTML, PDF, Word
-  trp-harvard.csl           the journal's inhouse Harvard, built from published TRP articles
+  apa.csl                   APA citation style, as required by TeMA
   references.bib            generated from Crossref — never hand-edited
 analysis/spatial/           clean · Moran/LISA · maps · count models · exposure control
                             · sensitivity · the verification gates
@@ -159,8 +159,8 @@ python scripts/verify_readme_claims.py   # 23 claims on this page, from the froz
 | `analysis/spatial/audit_claims.R` | 61 | Every headline figure, from raw data |
 | `analysis/spatial/verify_report_claims.R` | 61 | Every number and figure in the report |
 | `analysis/spatial/verify_manuscript_claims.R` | 53 | Every number quoted in the manuscript |
-| `scripts/verify_author_block.py` | 5 artefacts | Author, affiliation and e-mail present; no stale name |
-| `scripts/verify_trp_format.py` | — | House style: TNR 12 pt, single-spaced, sections 1–7, anonymised copy clean |
+| `scripts/verify_author_block.py` | 5 artefacts | Author, affiliation, e-mail and ORCID present; no stale name |
+| `scripts/verify_trp_format.py` | — | House style: TNR 12 pt, single-spaced, required sections, anonymised copy clean |
 | `scripts/verify_bib.py` | every DOI | Each reference resolves on Crossref |
 | `scripts/verify_readme_claims.py` | 23 | Every number and page count stated in this README |
 | `scripts/derive_readme_numbers.R` | — | Writes `results/tables/readme_numbers.csv`, the source of the README's model figures |
@@ -182,33 +182,34 @@ python scripts/fix_docx_trp.py --anonymise  # house style + author block + blind
 Environment: R 4.5.2 with `sf`, `spdep`, `spatialreg`, `spatstat`, `MASS`; Python 3.12 (`pandas`,
 `Pillow`) for the harvests and image preparation. Exact package versions in `renv.lock`.
 
-## Submission status — Town and Regional Planning
+## Submission status — TeMA
 
 | Requirement | Status |
 |---|---|
 | Word count, 4,000–8,000 excluding references | **4,500–6,500 words excluding references**, inside the window |
-| Times New Roman 12 pt, single-spaced | done, enforced by `scripts/fix_docx_trp.py` |
-| Abstract, 250 words, unstructured | done — 249 |
-| Literature review section | done |
-| Study area as its own section | done |
-| Methods in the journal's five named subsections | done |
-| Third person | done |
-| Inhouse Harvard references with DOIs | done |
-| Figures TIF/JPEG at 300 dpi | done |
-| Author block | done and gated |
+| Article text at most 50,000 characters including references | **39,496 characters**, inside the limit |
+| Title at most 50 characters excluding spaces | **49** |
+| Subtitle at most 50 characters excluding spaces | **38** |
+| Abstract at most 200 words | done — **200** |
+| Three to five keywords | done — six supplied; trim to five if the editor asks |
+| APA references, ordered alphabetically | done — `manuscript/apa.csl`; zero Harvard-style entries remain |
+| Figures at 300 dpi | done — `scripts/prepare_figures_trp.py` (JPEG + TIFF, embedded DPI) |
+| Author profile | done — final section before References |
+| ORCID iD in the named manuscript | done — `0009-0002-3302-9558`, also in the front matter |
 | Anonymised review copy | done — `manuscript/manuscript-anonymised.docx` |
-| ORCID iD in the named manuscript | **author to insert** |
+| Typeset against the journal's own template | **author to do** — `Format_TeMA_paper_2026.docx` |
 | Author and Publishing Agreements | **author to sign** |
-| Declaration of generative AI use | **author to finalise** |
 
-The AI declaration is the author's to complete: the journal's policy and the manuscript's own
-disclosure are set out side by side in
-[`docs/submission-trp.md`](docs/submission-trp.md), and the text is not altered here.
+The manuscript is typeset in Times New Roman 12 pt single-spaced, which matches the journal
+template, but the DOCX is generated from the analysis pipeline rather than filled into TeMA's
+`Format_TeMA_paper_2026.docx`. TeMA's editorial staff re-typeset accepted papers, so this should
+not block review; if a pixel-perfect template copy is wanted, that is a separate job.
 
 ## Citing this work
 
 > Bannister, J.Z. (2026). *Where urban agriculture concentrates in Nigerian cities: a spatial
-> analysis with coverage correction.* Manuscript in preparation for Town and Regional Planning.
+> analysis with coverage correction.* Manuscript in preparation for TeMA — Journal of Land Use,
+> Mobility and Environment.
 
 ## Licence
 

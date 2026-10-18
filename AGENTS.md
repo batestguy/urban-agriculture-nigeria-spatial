@@ -3,11 +3,17 @@
 ## What this repo is
 - **A spatial study of urban agriculture in Nigeria, by Jerry Zachary Bannister** (Statistician,
   Abubakar Tafawa Balewa University, Bauchi; `jzbannister@atbu.edu.ng`). Manuscript:
-  *Where urban agriculture concentrates in Nigerian cities* — targeting **Town and Regional
-  Planning** (University of the Free State; ISSN 1012-280X / 2415-0495; Diamond OA, no APC).
-  Selected 2026-10-16; it **passes the Scopus gate** that dropped the previous target, AJLP&GS.
-  Its house style is **not** the AJLP&GS style — read `docs/trp-author-guidelines.md` before
-  touching the front matter or the typography script.
+  *Where urban agriculture concentrates in Nigerian cities* — targeting **TeMA — Journal of Land
+  Use, Mobility and Environment** (University of Naples Federico II; ISSN 1970-9889 / 1970-9870;
+  no APC; Scopus since 2023, Web of Science since 2015, ANVUR class A). Selected 2026-10-18,
+  superseding Town and Regional Planning. TeMA publishes **no AI policy** — its template has no AI
+  clause and `about/editorialPolicies` 404s — so the AI declaration was **removed from the
+  manuscript** by the author's instruction on 2026-10-18. Do not reintroduce it.
+  TeMA's requirements differ from TRP's: **APA** references (not the inhouse Harvard in
+  `manuscript/trp-harvard.csl`), a **200-word** abstract, title and subtitle each **≤50 characters
+  excluding spaces**, and **≤50,000 characters** including references. The holdover script
+  `scripts/fix_docx_trp.py` is still used because its output (TNR 12 pt, single-spaced) matches
+  TeMA's template, and `scripts/verify_trp_format.py` still gates it.
 - **Author's name: `Jerry Zachary Bannister`** (family name *Bannister*), as given by ORCID
   `0009-0002-3302-9558`. Corrected from "Jerry Bannister Zachary" on 2026-10-16 — an earlier
   commit had it as "Ibrahim Yohanna". Do not reintroduce either spelling: the ORCID record is
@@ -42,8 +48,10 @@
 - `docs/methodology.qmd` — the technical companion (equations + plain-English boxes).
   `docs/spatial-report.qmd` — the earlier report version of the same analysis.
   `docs/trp-author-guidelines.md` — **Town and Regional Planning's guidelines, submission
-  checklist and full AI policy, verbatim** — the authority for the current target.
-  `docs/submission-trp.md` — the gap analysis for that venue, including the AI-policy conflict.
+  checklist and full AI policy, verbatim** — retained as the **previous** target's record.
+  `docs/submission-trp.md` — the gap analysis for that venue, including the AI-policy conflict
+  (now marked resolved by the venue change).
+  `docs/venue-options.md` — the venue shortlist and the evidence behind each choice; §2 is TeMA.
   `docs/ajlpgs-author-guidelines.md` / `docs/submission-ajlpgs.md` — the **dropped** venue's
   guidelines and gap analysis, kept because the reasoning and much of the work are reusable.
 - `build.R` — one entry point, 15 path-relative pipeline steps. `Rscript build.R --audit` runs
@@ -119,9 +127,10 @@ Gotchas (`ENVIRONMENTS.md:77-92`):
   exists: an unresolvable DOI cannot enter the file.
 - **`scripts/fix_docx_format.py` is retained but enforces an abandoned conference spec**
   (Times New Roman, 1.5, 1 inch). `scripts/fix_docx_ajlpgs.py` enforces the **dropped** AJLP&GS
-  spec (Cambria 12, 1.2, cm margins). **Neither matches the current target.** Town and Regional
-  Planning wants Times New Roman 12 pt single-spaced — close to the abandoned conference spec
-  but not identical. A TRP typography script is outstanding; see `docs/submission-trp.md`.
+  spec (Cambria 12, 1.2, cm margins). Neither matches the current target. **`fix_docx_trp.py`
+  is the one to use**: it enforces Times New Roman 12 pt single-spaced, which is what TeMA's
+  template uses too, and it injects the author block including the ORCID. Its name is a
+  holdover from the previous venue; the style it produces is correct for the current one.
 - **Before reporting a number, run the gate that checks it.** `Rscript build.R --audit` re-derives
   every headline figure from the frozen data. Editing the prose to satisfy a test is the wrong
   direction: the test asserts what the data says.

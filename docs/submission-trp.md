@@ -122,6 +122,20 @@ byline now follows.
 
 ## The one item that is a policy conflict, not a formatting task
 
+**RESOLVED 2026-10-18: the venue changed to TeMA, and the declaration was removed.**
+
+This section is kept as the record of why. The author decided to submit to
+**TeMA — Journal of Land Use, Mobility and Environment** instead, after the Scopus gate was
+verified on the publisher's own site (Scopus since 2023, Web of Science since 2015, ANVUR A).
+TeMA publishes no AI policy: the official `Format_TeMA_paper_2026.docx` contains no AI clause and
+`about/editorialPolicies` returns 404, so there is no conflicting attestation to sign.
+
+The `# Declaration of Generative AI Use` section was therefore **removed from the manuscript** by
+the author's instruction on 2026-10-18, on the grounds that the journal does not require it. The
+text was accurate while it stood; the record of what it said is preserved verbatim below.
+
+---
+
 **TRP's AI policy is stricter than the disclosure this manuscript currently makes.**
 
 The journal's submission checklist requires the author to confirm:

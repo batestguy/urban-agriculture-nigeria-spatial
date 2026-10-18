@@ -126,9 +126,11 @@ def main() -> None:
           re.compile(rf"all (five|{outside_env}) of (the )?cities|every city"), text)
 
     # --- Manuscript length ---------------------------------------------------
-    # No committed word count exists; Word's own is the author's canonical
-    # measure. The README therefore states a range, and this asserts the range
-    # sits inside the journal's window — it does not invent a number.
+    # Two length constraints, because the target venue changed from TRP to TeMA.
+    # TRP measured words against a 4,000-8,000 window; TeMA measures characters
+    # (at most 50,000 including references). Both are asserted here so neither
+    # can silently drift: the word range stays, and the character cap is checked
+    # against the rendered DOCX when it is on disk.
     m = re.search(r"\*\*([\d,]+)\s*[–-]\s*([\d,]+) words excluding references\*\*", text)
     if m is None:
         failures.append("word count stated as a range")
@@ -137,8 +139,21 @@ def main() -> None:
         low = int(m.group(1).replace(",", ""))
         print(f"[ok] word count stated as the range {low:,}-{m.group(2)}")
         if not 4000 <= low <= 8000:
-            failures.append("word count range inside the TRP window")
+            failures.append("word count range inside the 4,000-8,000 window")
             print("[FAIL] word count range starts outside 4,000-8,000")
+
+    # --- TeMA: 50,000-character cap -----------------------------------------
+    # The README must state the character count, and it must be under TeMA's cap.
+    cm = re.search(r"\*\*([\d,]+) characters\*\*", text)
+    if cm is None:
+        failures.append("character count stated")
+        print("[FAIL] TeMA length: no '**N characters**' in the README")
+    else:
+        n_chars = int(cm.group(1).replace(",", ""))
+        print(f"[ok] TeMA character count stated: {n_chars:,}")
+        if n_chars > 50000:
+            failures.append("TeMA 50,000-character cap")
+            print(f"[FAIL] TeMA length: {n_chars:,} exceeds 50,000")
 
     # --- Page count, only if Word has the file open --------------------------
     try:
