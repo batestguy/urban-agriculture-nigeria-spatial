@@ -436,12 +436,26 @@ def style_tables(parts: dict[str, bytes]) -> tuple[dict[str, bytes], dict]:
               "figure blocks unwrapped": 0, "columns resized": 0}
 
     for table in doc.tables:
-        # Figure captions are emitted by pandoc as a one-cell table with an inline image.
-        # They are not tabular data and must not get table rules.
+        # Figure captions are emitted by pandoc as a one-cell table wrapping the image.
+        # They are not tabular data and must not get table rules. The WRAPPER is removed,
+        # but its contents are promoted into the parent, not discarded: an earlier version
+        # called parent.remove(tbl) here and silently deleted the figure itself along with
+        # its cell, which left five of the manuscript's six figures out of the shipped DOCX
+        # while the media files survived as orphans in the package. Keep every child.
         if len(table.columns) == 1 and len(table.rows) == 1:
             tbl = table._tbl
             parent = tbl.getparent()
             if parent is not None:
+                idx = list(parent).index(tbl)
+                for child in list(tbl):
+                    # Drop only the table scaffolding (properties, grid, the cell wrapper);
+                    # promote the paragraphs that actually hold the image and caption.
+                    if child.tag == qn("w:tr"):
+                        for tc in child.findall(qn("w:tc")):
+                            for inner in list(tc):
+                                if inner.tag in (qn("w:p"), qn("w:tbl")):
+                                    parent.insert(idx, inner)
+                                    idx += 1
                 parent.remove(tbl)
                 counts["figure blocks unwrapped"] += 1
             continue
