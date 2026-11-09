@@ -180,6 +180,7 @@ The areal unit is the Local Government Area. Nigeria's 774 LGAs are the tier of 
 That nine-hundredfold spread in area is the reason this paper uses density rather than counts throughout. A count of ten features means something quite different in the 23.6 km² of Tarauni than in the 369 km² of Ikorodu.
 
 ```{r density}
+#| include: false
 lga <- st_read("../results/lga_lisa.gpkg", quiet = TRUE)
 lga$log_area <- log(lga$area_km2)
 tibble::tibble(
@@ -207,6 +208,7 @@ applied to cultivated land: `landuse=farmland`, `landuse=farmyard`, `landuse=all
 disk. Analysis reads only the frozen files; the network is never touched at analysis time.
 
 ```{r composition}
+#| include: false
 osm <- read_csv("../data/raw/osm_urban_ag.csv", show_col_types = FALSE)
 osm |>
   mutate(kind = ifelse(!is.na(landuse) & landuse != "", landuse, leisure)) |>
@@ -222,12 +224,6 @@ urban agriculture narrowly defined. Second, genuine allotments, the land-use cla
 for cultivation, number five. Whatever this layer is measuring, it is overwhelmingly cultivation
 that has been recorded on land zoned for something else.
 
-```{r by-city}
-osm |> count(city, sort = TRUE, name = "Features") |>
-  mutate(Share = sprintf("%.1f%%", 100 * Features / sum(Features))) |>
-  knitr::kable(caption = "Features by city. Kano alone holds 39% of all features.")
-```
-
 ## Population, sampling and data sources
 
 Two supplementary layers were collected. Daily agro-climate variables for 2023 (temperature,
@@ -240,8 +236,6 @@ aggregate counts of `way["building"]` and `way["highway"]` within each LGA polyg
 have nothing to do with agriculture; they record how much of an LGA has been mapped at all. They
 are the exposure control that makes H3 testable.
 
-![Bounding-box leakage in the feature layer. Forty-three of 484 features (8.9%) fall outside the five declared study states, because the Overpass query used rectangles rather than administrative boundaries.](../results/figures/study_extent.png){#fig-extent}
-
 ## Data analysis and interpretation
 
 Density is computed as features per square kilometre, using spherical geometry.
@@ -252,16 +246,6 @@ The resulting distribution is the central methodological fact of this paper, and
 stating before any model is fitted: 95% of LGAs have a density of exactly zero, the
 distribution has a skewness of 15.5, and the maximum is 1.06 km⁻². Most of Nigeria, on this
 measure, has no recorded cultivation at all.
-
-```{r zero-inflation, fig.height=3.4, fig.width=9, fig.cap="Distribution of urban agriculture density across 775 LGAs: a spike at zero with a long right tail."}
-ggplot(lga, aes(x = density)) +
-  geom_histogram(bins = 60, fill = "#4575b4", colour = "white", linewidth = 0.1) +
-  labs(x = "Density (features per km²)", y = "LGAs") +
-  theme_minimal(base_size = 11) +
-  annotate("text", x = 0.35, y = 300,
-           label = sprintf("95%% of LGAs = exactly zero\nskewness = 15.5\nmax = %.2f per km2", max(lga$density)),
-           hjust = 0, size = 3.4, colour = "grey25")
-```
 
 This shape has two consequences. It rules out ordinary least squares for the regression:
 a Gaussian model applied to a non-negative variable with a large point mass at zero will
@@ -389,17 +373,6 @@ Local statistics locate the clustering. Under false-discovery-rate control, 19 o
 significant, concentrated in the Kano metropolitan ring (Ungogo, Tarauni, Kumbotso) and in the
 contiguous Lagos mainland LGAs (Shomolu, Mushin).
 
-```{r lisa-fdr}
-lm_res <- localmoran(lga$density, lw_q, zero.policy = TRUE)
-p_raw <- lm_res[, 5]; p_bh <- p.adjust(p_raw, method = "BH")
-tibble::tibble(
-  Criterion = c("Raw p < 0.05, uncorrected", "Benjamini–Hochberg FDR 5%", "Bonferroni",
-                "Expected false positives at α = 0.05"),
-  LGAs = c(sum(p_raw < 0.05), sum(p_bh < 0.05), sum(p.adjust(p_raw, "bonferroni") < 0.05),
-           sprintf("%.1f", 0.05 * length(p_raw)))
-) |> knitr::kable(caption = "Local clustering before and after multiplicity control.")
-```
-
 One diagnostic deserves emphasis rather than a footnote. The raw count of significant LGAs (23)
 is *below* the number expected by chance alone (38.8). This does not indicate an absence of
 clustering, which the global statistic rules out decisively. It indicates that the normal
@@ -412,8 +385,6 @@ whether an LGA contains any feature gives z = 30.3 (p < 2e-16). Ripley's $L$ exc
 envelope in all five cities independently, at characteristic scales between roughly 300 m and
 9 km. Clustering is therefore a property of the cities, not of the administrative boundaries we
 happened to impose on them.
-
-![The 484 features across the five study cities.](../results/figures/osm_points.png){#fig-points}
 
 ## H2. Density falls sharply as LGA area grows
 
@@ -432,6 +403,7 @@ tibble::tibble(
 ```
 
 ```{r per-doubling}
+#| include: false
 b <- co["log_area", 1]
 tibble::tibble(
   Expression = c("Per e-fold increase in area", "Per doubling of area", "Per tenfold increase"),
@@ -460,6 +432,7 @@ This is the test that matters most, because the obvious objection to everything 
 OpenStreetMap records where people map, not where people farm.
 
 ```{r exposure}
+#| include: false
 expo <- read_csv("../data/raw/osm_exposure_by_lga.csv", show_col_types = FALSE) |>
   filter(!is.na(n_buildings), n_buildings > 0)
 d <- lga |>
@@ -535,6 +508,7 @@ returns R² = 1.000, meaning rainfall *is* city identity. Treating the LGAs as i
 observations inflates the apparent sample size roughly sevenfold.
 
 ```{r climate}
+#| include: false
 nasa <- read_csv("../data/processed/nasa_annual.csv", show_col_types = FALSE)
 map <- c("Federal Capital Territory" = "abuja", "Lagos" = "lagos", "Kano" = "kano",
          "Rivers" = "port_harcourt", "Gombe" = "gombe")
@@ -556,8 +530,6 @@ tibble::tibble(
 
 Analysed naively, the climate model appears to produce a significant effect. Analysed at the
 level the data actually replicate, five cities, it does not (p = 0.58).
-
-![The climate question at the honest unit of analysis. The data are consistent with an aridity effect but cannot establish one.](../results/figures/climate_honest.png){#fig-climate}
 
 Rainfall with *within*-city variation would make the question testable. CHIRPS [@funk2015],
 ERA5-Land and TAMSAT all provide precipitation at spatial resolutions fine enough to assign each
@@ -679,6 +651,44 @@ The author has approved the final version and takes responsibility for the integ
 All datasets used here were obtained by the author from the public sources listed under Data and
 code availability; no third party supplied or contributed any layer used in this analysis.
 
+# Declaration of Interest
+
+The author declares no competing financial interests or personal relationships that could have
+influenced the work reported in this paper. The author is the sole author and received no
+funding, honorarium or other support for this study. The use of generative AI in the preparation
+of this work is declared separately below.
+
+# Declaration of Generative AI Use
+
+Generative AI tools were used during preparation of this work, and are named here with their
+versions as the journal requires.
+
+**Tools used: DeepSeek Flash 4.1 (build 1017) and Opus 5.5.**
+
+Both were used as AI coding assistants. Their role was to assist with implementing and debugging
+the analysis pipeline, writing the verification scripts, and drafting and editing the prose. The
+reason for their use was to accelerate code development and to check the author's reasoning
+during implementation, in a study whose analysis runs to several thousand lines of R across
+twelve scripts. No generative AI tool was used to generate data, to produce any figure or map,
+or to select or interpret the results reported here; every figure is drawn by committed R code
+from frozen input files.
+
+All research design, data acquisition, analytical decisions and interpretation are the author's
+own. Every numerical result is independently re-derived from the frozen data by the committed
+verification gates described under Data and code availability, and every cited reference is
+resolved against the Crossref registry. The author takes full responsibility for the content.
+
+# Supplementary Material
+
+Seven supplementary tables and four supplementary figures are supplied in a separate file,
+`supplementary.docx`. They report the analysis frame; feature composition and distribution by
+city; the distribution of density across Local Government Areas; local clustering counts before
+and after multiplicity control; the scale coefficient in interpretable units; the coverage
+confound; the climate diagnostic; and maps of bounding-box leakage, feature locations and the
+city-level climate relationship. Every value quoted in this article is reported in the main
+text, so the supplementary file supplies the tabulations behind those values rather than claims
+additional to them.
+
 # Additional Reading
 
 - Herfort, B., Lautenbach, S., Porto de Albuquerque, J., Anderson, J. & Zipf, A. (2023). A
@@ -708,15 +718,6 @@ clusters to be identified rather than merely their existence.
 
 **Spatial autocorrelation.** The tendency of nearby locations to hold similar values. Positive
 autocorrelation indicates clustering; a value near zero indicates spatial randomness.
-
-# Author's profile
-
-**Jerry Zachary Bannister** is a Statistician at Abubakar Tafawa Balewa University, Bauchi,
-Nigeria. His work concerns spatial statistics and the analysis of spatially referenced public
-data, with a particular interest in how volunteered geographic information can be used to
-describe urban and peri-urban land use where official records are incomplete, and in the
-coverage corrections such data require before a map drawn from it can support planning
-decisions.
 
 # References
 

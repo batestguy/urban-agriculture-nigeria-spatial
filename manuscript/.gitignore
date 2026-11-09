@@ -26,3 +26,9 @@ manuscript.html
 # confused with the named file: the review copy is what gets uploaded, the named one is the
 # record. Rebuilt by `python scripts/fix_docx_trp.py --anonymise`.
 manuscript-anonymised.docx
+
+# The supplementary file. Same reasoning as the manuscript artefacts above: it is
+# rendered from supplementary.qmd, it is a large binary, and the journal permits
+# archiving only the published version. Rebuild by:
+#     cd manuscript; quarto render supplementary.qmd
+supplementary.docx
