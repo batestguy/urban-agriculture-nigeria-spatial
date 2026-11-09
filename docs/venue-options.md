@@ -2,7 +2,34 @@
 
 **Compiled 15 October 2026.** Companion to `manuscript/manuscript.qmd`.
 
-> ## DECIDED 2026-10-16: the target venue is **Town and Regional Planning**
+> ## OUTCOME — this shortlist is closed. See `docs/decisions.md` and `docs/venue-search-2026-11-09.md`.
+>
+> All three venues recommended below were tried and none survived:
+>
+> - **AJLP&GS** — dropped on the Scopus gate; never submitted (D-01).
+> - **Town and Regional Planning** — selected on 2026-10-16, abandoned on 2026-10-18 over its AI
+>   attestation clause; **never submitted** (D-03). Do not record it as a rejection.
+> - **TeMA** — selected, submitted, and **desk-rejected on scope within 24 hours on 19 Oct 2026**,
+>   without a reviewer. A scope screen, not an evaluation (D-05).
+>
+> The manuscript was **submitted to African Geographical Review** on 9 November 2026
+> (ID 260528906). The search that selected it tested editorial *fit* against what each journal has
+> actually published — a criterion this shortlist never applied.
+>
+> Two corrections to the text below, both evidence-backed:
+>
+> 1. **§2's SCImago SID for TeMA, 21100830974, does not exist.** `scopus.com/sourceid/21100830974`
+>    returns `?invalidSource=t`. TeMA's real Scopus source is **21101185191**. The document's own
+>    warning about invented Scopus IDs caught its own example.
+> 2. **The `has_apc:false` DOAJ filter used here can only return fully-open-access journals,** so it
+>    structurally excluded every subscription title that charges authors nothing to publish — which
+>    is the category the best-fitting venues turned out to be in (D-07).
+>
+> Kept as the dated record of how the shortlist was reasoned. Nothing below should be acted on.
+
+---
+
+> ## DECIDED 2026-10-16 (superseded): the target venue was **Town and Regional Planning**
 >
 > The author selected it. It **passes the Scopus gate** that dropped AJLP&GS, and on evidence
 > stronger than anything available for the rejected venue: the journal's own accreditation page

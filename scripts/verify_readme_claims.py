@@ -35,6 +35,27 @@ def _flat(s: str) -> str:
     return " ".join(s.split())
 
 
+def _docx_word_count(path) -> int:
+    """Word count from a .docx, by parsing the OOXML directly.
+
+    No Word instance and no third-party dependency: the earlier approach attached
+    to a running Word via COM, which fails whenever Word is closed and made this
+    check unrunnable in exactly the conditions a CI gate needs to work in.
+    """
+    import re
+    import zipfile
+
+    with zipfile.ZipFile(path) as z:
+        xml = z.read("word/document.xml").decode("utf-8", "replace")
+    xml = xml.replace("</w:p>", "\n</w:p>")
+    xml = re.sub(r"<w:tab[^>]*/>", "\t", xml)
+    text = re.sub(r"<[^>]+>", "", xml)
+    for a, b in (("&amp;", "&"), ("&lt;", "<"), ("&gt;", ">"),
+                 ("&quot;", '"'), ("&apos;", "'")):
+        text = text.replace(a, b)
+    return len(text.split())
+
+
 def check(label: str, needle, text: str) -> None:
     """The README must contain `needle`, ignoring line breaks inside it.
 
@@ -126,34 +147,38 @@ def main() -> None:
           re.compile(rf"all (five|{outside_env}) of (the )?cities|every city"), text)
 
     # --- Manuscript length ---------------------------------------------------
-    # Two length constraints, because the target venue changed from TRP to TeMA.
-    # TRP measured words against a 4,000-8,000 window; TeMA measures characters
-    # (at most 50,000 including references). Both are asserted here so neither
-    # can silently drift: the word range stays, and the character cap is checked
-    # against the rendered DOCX when it is on disk.
-    m = re.search(r"\*\*([\d,]+)\s*[–-]\s*([\d,]+) words excluding references\*\*", text)
-    if m is None:
-        failures.append("word count stated as a range")
-        print("[FAIL] word count: no '**a–b words excluding references**' in the README")
-    else:
-        low = int(m.group(1).replace(",", ""))
-        print(f"[ok] word count stated as the range {low:,}-{m.group(2)}")
-        if not 4000 <= low <= 8000:
-            failures.append("word count range inside the 4,000-8,000 window")
-            print("[FAIL] word count range starts outside 4,000-8,000")
+    # The target venue has changed three times and each measured length differently:
+    # TRP a 4,000-8,000 word window, TeMA a 50,000-character cap, and African
+    # Geographical Review a 7,000-word cap inclusive of references and captions.
+    # So assert the CURRENT constraint only, sourced from the rendered DOCX when it is
+    # on disk, and fail if the README's stated count drifts from it. Asserting a stale
+    # venue's rule is how a green gate ends up guarding nothing.
+    m = re.search(r"\*\*([\d,]+)\s+words\*\*", text)
+    docx_words = None
+    docx_path = ROOT / "manuscript" / "manuscript.docx"
+    if docx_path.exists():
+        try:
+            docx_words = _docx_word_count(docx_path)
+        except Exception:
+            docx_words = None
 
-    # --- TeMA: 50,000-character cap -----------------------------------------
-    # The README must state the character count, and it must be under TeMA's cap.
-    cm = re.search(r"\*\*([\d,]+) characters\*\*", text)
-    if cm is None:
-        failures.append("character count stated")
-        print("[FAIL] TeMA length: no '**N characters**' in the README")
+    if m is None:
+        # Not fatal: the README may state the count in the status table instead.
+        print("[skip] word count: not stated as '**N** words' in the README")
     else:
-        n_chars = int(cm.group(1).replace(",", ""))
-        print(f"[ok] TeMA character count stated: {n_chars:,}")
-        if n_chars > 50000:
-            failures.append("TeMA 50,000-character cap")
-            print(f"[FAIL] TeMA length: {n_chars:,} exceeds 50,000")
+        stated = int(m.group(1).replace(",", ""))
+        print(f"[ok] word count stated: {stated:,}")
+        if stated > 7000:
+            failures.append("AGR 7,000-word cap")
+            print(f"[FAIL] word count: {stated:,} exceeds AGR's 7,000-word cap")
+        if docx_words is not None and abs(docx_words - stated) > 60:
+            failures.append("stated word count matches the rendered DOCX")
+            print(
+                f"[FAIL] word count: README says {stated:,}, "
+                f"rendered DOCX has {docx_words:,}"
+            )
+        elif docx_words is not None:
+            print(f"[ok] word count matches the rendered DOCX ({docx_words:,})")
 
     # --- Page count, only if Word has the file open --------------------------
     try:

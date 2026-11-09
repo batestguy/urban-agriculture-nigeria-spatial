@@ -3,17 +3,29 @@
 ## What this repo is
 - **A spatial study of urban agriculture in Nigeria, by Jerry Zachary Bannister** (Statistician,
   Abubakar Tafawa Balewa University, Bauchi; `jzbannister@atbu.edu.ng`). Manuscript:
-  *Where urban agriculture concentrates in Nigerian cities* — targeting **TeMA — Journal of Land
-  Use, Mobility and Environment** (University of Naples Federico II; ISSN 1970-9889 / 1970-9870;
-  no APC; Scopus since 2023, Web of Science since 2015, ANVUR class A). Selected 2026-10-18,
-  superseding Town and Regional Planning. TeMA publishes **no AI policy** — its template has no AI
-  clause and `about/editorialPolicies` 404s — so the AI declaration was **removed from the
-  manuscript** by the author's instruction on 2026-10-18. Do not reintroduce it.
-  TeMA's requirements differ from TRP's: **APA** references (not the inhouse Harvard in
-  `manuscript/trp-harvard.csl`), a **200-word** abstract, title and subtitle each **≤50 characters
-  excluding spaces**, and **≤50,000 characters** including references. The holdover script
-  `scripts/fix_docx_trp.py` is still used because its output (TNR 12 pt, single-spaced) matches
-  TeMA's template, and `scripts/verify_trp_format.py` still gates it.
+  *Where urban agriculture concentrates in Nigerian cities*.
+- **Status: SUBMITTED and in review.** *African Geographical Review* (Taylor & Francis, ISSN
+  1937-6812 / 2163-2642), **submission ID 260528906**, submitted 9 November 2026. The current state
+  is `docs/handoff-2026-11-09.md`; **every decision behind it is `docs/decisions.md` (D-01 … D-16)**
+  — read that before changing the venue, the declarations, or the table/figure count.
+- **Venue history, and the two traps in it.** AJLP&GS was dropped on a Scopus check and never
+  submitted. Town and Regional Planning was abandoned over its AI clause and **never submitted** —
+  do not record it as a rejection. TeMA **did** receive the manuscript and desk-rejected it on
+  **scope** on 19 Oct 2026, in under 24 hours, without a reviewer: a scope screen, not an
+  evaluation, and nothing to revise in response.
+- **The AI declaration is REQUIRED and must not be removed.** TeMA had no AI policy, so it was
+  deleted on 2026-10-18; that reasoning was venue-specific. Taylor & Francis requires
+  acknowledgement and counts coding assistance as a permitted use. The declaration names **DeepSeek
+  Flash 4.1 (build 1017)** and **Opus 5.5**, as the submission form's attestation demands, and
+  states that no generative tool produced data, a figure, a map or an interpretation. Never tick an
+  AI attestation against a declaration that omits the tool names and versions — ask the author.
+- **Current manuscript constraints** (AGR): **APA** references (`csl: apa.csl`, not the inhouse
+  Harvard in `manuscript/trp-harvard.csl`); **200-word** abstract, **4–6** keywords; **7,000 words**
+  including references (currently 6,136); **no more than 6 tables and figures combined** — the
+  article carries 4 tables and 2 figures, and anything further goes to `manuscript/supplementary.qmd`.
+  The holdover script `scripts/fix_docx_trp.py` is still the one to use, despite its name: it
+  produces TNR 12 pt single-spaced and injects the author block, and
+  `scripts/verify_trp_format.py` still gates it.
 - **Author's name: `Jerry Zachary Bannister`** (family name *Bannister*), as given by ORCID
   `0009-0002-3302-9558`. Corrected from "Jerry Bannister Zachary" on 2026-10-16 — an earlier
   commit had it as "Ibrahim Yohanna". Do not reintroduce either spelling: the ORCID record is
@@ -51,7 +63,12 @@
   checklist and full AI policy, verbatim** — retained as the **previous** target's record.
   `docs/submission-trp.md` — the gap analysis for that venue, including the AI-policy conflict
   (now marked resolved by the venue change).
-  `docs/venue-options.md` — the venue shortlist and the evidence behind each choice; §2 is TeMA.
+  `docs/venue-search-2026-11-09.md` — the search that selected AGR, with the Scopus verification
+  instrument and the fit evidence. Supersedes the shortlist in `docs/venue-options.md`.
+  `docs/decisions.md` — **the canonical decision log (D-01 … D-16).** Append, never rewrite.
+  `docs/venue-options.md` — the earlier shortlist and the evidence behind each choice; §2 is TeMA.
+  Its header still announces TRP as the decision and does not record TeMA's rejection — treat
+  `docs/decisions.md` as authoritative where they differ.
   `docs/ajlpgs-author-guidelines.md` / `docs/submission-ajlpgs.md` — the **dropped** venue's
   guidelines and gap analysis, kept because the reasoning and much of the work are reusable.
 - `build.R` — one entry point, 15 path-relative pipeline steps. `Rscript build.R --audit` runs
@@ -128,9 +145,19 @@ Gotchas (`ENVIRONMENTS.md:77-92`):
 - **`scripts/fix_docx_format.py` is retained but enforces an abandoned conference spec**
   (Times New Roman, 1.5, 1 inch). `scripts/fix_docx_ajlpgs.py` enforces the **dropped** AJLP&GS
   spec (Cambria 12, 1.2, cm margins). Neither matches the current target. **`fix_docx_trp.py`
-  is the one to use**: it enforces Times New Roman 12 pt single-spaced, which is what TeMA's
-  template uses too, and it injects the author block including the ORCID. Its name is a
-  holdover from the previous venue; the style it produces is correct for the current one.
+  is the one to use**: it enforces Times New Roman 12 pt single-spaced and it injects the author
+  block including the ORCID. Its name is a holdover from the previous venue; the style it produces
+  is still correct.
+- **`scripts/normalize_docx_meta.py` must run after `fix_docx_trp.py` on every render.** Quarto
+  writes `compatibilityMode 14` (Word 2010) into every DOCX and `reference.docx` carries a Mac Word
+  2010 stamp, so Word opens the file in [Compatibility Mode]. The script sets mode 15 and
+  normalises the app metadata, touching only `word/settings.xml` and `docProps/app.xml`. Full
+  rebuild order: `quarto render manuscript.qmd` → `quarto render supplementary.qmd` →
+  `python scripts/fix_docx_trp.py --anonymise` → `python scripts/normalize_docx_meta.py`.
+  Re-rendering alone silently drops the author block and the compatibility fix.
+- **Rendered DOCX/PDF/HTML are deliberately untracked** (`manuscript/.gitignore`, including
+  `supplementary.docx`). The journal permits archiving only the published version, and they are
+  large binaries that change on every render. The `.qmd` sources are tracked and rebuild them.
 - **Before reporting a number, run the gate that checks it.** `Rscript build.R --audit` re-derives
   every headline figure from the frozen data. Editing the prose to satisfy a test is the wrong
   direction: the test asserts what the data says.

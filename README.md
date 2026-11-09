@@ -3,21 +3,23 @@
 **A spatial analysis of 484 OpenStreetMap cultivated-land features across 775 Nigerian Local
 Government Areas, with an explicit correction for uneven mapping coverage.**
 
-[![DOI](https://img.shields.io/badge/status-manuscript%20in%20preparation-lightgrey)](#citing-this-work)
+[![DOI](https://img.shields.io/badge/status-under%20review-orange)](#submission-status)
 [![Licence: CC BY 4.0](https://img.shields.io/badge/licence-CC%20BY%204.0-blue)](LICENSE)
 [![R 4.5.2](https://img.shields.io/badge/R-4.5.2-276DC3)](renv.lock)
-[![Gates](https://img.shields.io/badge/verification-175%20checks%2C%200%20discrepancies-brightgreen)](#verification)
+[![Gates](https://img.shields.io/badge/verification-114%20checks%2C%200%20discrepancies-brightgreen)](#verification)
 
 **Author:** Jerry Zachary Bannister — Statistician, Abubakar Tafawa Balewa University (ATBU),
 Bauchi, Nigeria · [ORCID 0009-0002-3302-9558](https://orcid.org/0009-0002-3302-9558) ·
 <jzbannister@atbu.edu.ng>
 
-**Target venue:** [TeMA — Journal of Land Use, Mobility and Environment](https://serena.sharepress.it/tema/)
-(University of Naples Federico II; ISSN 1970-9889 / 1970-9870; Scopus-indexed since 2023, Web of
-Science since 2015, ANVUR class A; no APC).
+**Status: under review.** Submitted to **African Geographical Review** (Taylor & Francis;
+ISSN 1937-6812 / 2163-2642; Scopus-indexed; no submission or page charges) on 9 November 2026,
+**submission ID 260528906**.
 
-**Manuscript:** [Word](manuscript/manuscript.docx) — the submission file — · [PDF](manuscript/manuscript.pdf) ·
-[HTML](manuscript/manuscript.html) — or read the source, [`manuscript.qmd`](manuscript/manuscript.qmd).
+**Manuscript:** [`manuscript.qmd`](manuscript/manuscript.qmd) is the source. The rendered Word, PDF
+and HTML files are rebuilt locally and deliberately not versioned — the journal permits archiving
+only the published version. Supplementary tables and figures not carried in the article are in
+[`manuscript/supplementary.qmd`](manuscript/supplementary.qmd).
 Every layer is frozen in `data/raw/` with provenance, and every headline number is re-derived
 from it by the audit gates.
 
@@ -132,7 +134,7 @@ in Niger State than in the Federal Capital Territory.
 ```
 manuscript/
   manuscript.qmd            the manuscript source → HTML, PDF, Word
-  apa.csl                   APA citation style, as required by TeMA
+  apa.csl                   APA citation style, as required by the journal
   references.bib            generated from Crossref — never hand-edited
 analysis/spatial/           clean · Moran/LISA · maps · count models · exposure control
                             · sensitivity · the verification gates
@@ -182,34 +184,34 @@ python scripts/fix_docx_trp.py --anonymise  # house style + author block + blind
 Environment: R 4.5.2 with `sf`, `spdep`, `spatialreg`, `spatstat`, `MASS`; Python 3.12 (`pandas`,
 `Pillow`) for the harvests and image preparation. Exact package versions in `renv.lock`.
 
-## Submission status — TeMA
+## Submission status — African Geographical Review
+
+Submitted 9 November 2026, **submission ID 260528906**, now with the journal.
 
 | Requirement | Status |
 |---|---|
-| Word count, 4,000–8,000 excluding references | **4,500–6,500 words excluding references**, inside the window |
-| Article text at most 50,000 characters including references | **39,496 characters**, inside the limit |
-| Title at most 50 characters excluding spaces | **49** |
-| Subtitle at most 50 characters excluding spaces | **38** |
-| Abstract at most 200 words | done — **200** |
-| Three to five keywords | done — six supplied; trim to five if the editor asks |
-| APA references, ordered alphabetically | done — `manuscript/apa.csl`; zero Harvard-style entries remain |
-| Figures at 300 dpi | done — `scripts/prepare_figures_trp.py` (JPEG + TIFF, embedded DPI) |
-| Author profile | done — final section before References |
-| ORCID iD in the named manuscript | done — `0009-0002-3302-9558`, also in the front matter |
-| Anonymised review copy | done — `manuscript/manuscript-anonymised.docx` |
-| Typeset against the journal's own template | **author to do** — `Format_TeMA_paper_2026.docx` |
-| Author and Publishing Agreements | **author to sign** |
+| At most 7,000 words including references | **6,136 words** in the rendered DOCX |
+| Unstructured abstract of 200 words | **200** |
+| Four to six keywords | **six** |
+| No more than 6 tables and figures | **4 tables + 2 figures**; the rest in `supplementary.qmd` |
+| Declaration of interest statement | present |
+| Declaration of Generative AI Use, naming tools and versions | present |
+| ORCID iD | `0009-0002-3302-9558` |
+| Double-anonymous review copy | `manuscript/manuscript-anonymised.docx` |
+| Submission fee | none — the journal charges no submission, publication or page fees |
+| Open Select (optional OA) | declined for now; offered again post-acceptance |
 
-The manuscript is typeset in Times New Roman 12 pt single-spaced, which matches the journal
-template, but the DOCX is generated from the analysis pipeline rather than filled into TeMA's
-`Format_TeMA_paper_2026.docx`. TeMA's editorial staff re-typeset accepted papers, so this should
-not block review; if a pixel-perfect template copy is wanted, that is a separate job.
+The manuscript is typeset in Times New Roman 12 pt single-spaced. The journal accepts format-free
+submissions and re-typesets accepted articles, so no template fill is required.
+
+Two constraints the file must satisfy at every re-render, because the portal enforces them:
+**4 tables and 2 figures** in the article, and an **AI declaration that names each tool and
+version**. Both have already caught this project out once.
 
 ## Citing this work
 
 > Bannister, J.Z. (2026). *Where urban agriculture concentrates in Nigerian cities: a spatial
-> analysis with coverage correction.* Manuscript in preparation for TeMA — Journal of Land Use,
-> Mobility and Environment.
+> analysis with coverage correction.* Manuscript under review at African Geographical Review.
 
 ## Licence
 
