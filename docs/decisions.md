@@ -336,13 +336,14 @@ Not yet made. Recorded so they are not silently forgotten.
 
 1. **Folder rename.** `scripts/rename_folder.ps1` performs it and refuses to half-move from inside
    the source; run from `D:\` with nothing holding the folder. Pending since before 2026-10-15.
-2. **`docs/venue-options.md` final annotation.** Its header still announces TRP as the decision and
-   does not record that TeMA rejected on scope. The handoff and this file carry the truth; the
-   shortlist does not yet.
-3. **GitHub licence detection** still reports none despite `LICENSE` and an SPDX identifier.
-4. **Response to reviewers,** whenever AGR sends them — including whether the response letter names
+2. **GitHub licence detection** still reports none despite `LICENSE` and an SPDX identifier.
+3. **Response to reviewers,** whenever AGR sends them — including whether the response letter names
    the AI tools again.
-5. **Preprint or self-archive** — currently excluded by the journal's terms until publication.
+4. **Preprint or self-archive** — currently excluded by the journal's terms until publication.
+5. **`manuscript/TEMA-SUBMISSION.txt`** — delete or commit (D-16). Currently untracked.
+
+**Closed since first written:** `docs/venue-options.md` now records the outcome of all three
+shortlisted venues, so it no longer announces a decision that was abandoned.
 
 ---
 
