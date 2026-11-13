@@ -4,9 +4,13 @@
 - **A spatial study of urban agriculture in Nigeria, by Jerry Zachary Bannister** (Statistician,
   Abubakar Tafawa Balewa University, Bauchi; `jzbannister@atbu.edu.ng`). Manuscript:
   *Where urban agriculture concentrates in Nigerian cities*.
-- **Status: SUBMITTED and in review.** *African Geographical Review* (Taylor & Francis, ISSN
-  1937-6812 / 2163-2642), **submission ID 260528906**, submitted 9 November 2026. The current state
-  is `docs/handoff-2026-11-09.md`; **every decision behind it is `docs/decisions.md` (D-01 … D-16)**
+- **Status: RE-SUBMITTED, in review.** *African Geographical Review* (Taylor & Francis, ISSN
+  1937-6812 / 2163-2642), **submission ID 260528906**. First submitted 9 November 2026, returned
+  unreviewed 10 November because the author's name was in the anonymous file's properties,
+  re-submitted with scrubbed files on 13 November 2026 (D-17 … D-19). **All journal mail goes to
+  `jzbannister@atbu.edu.ng`**, not the personal Gmail — check that inbox for status. The current
+  state is `docs/handoff-2026-11-13.md`; **every decision behind it
+  is `docs/decisions.md` (D-01 … D-19)**
   — read that before changing the venue, the declarations, or the table/figure count.
 - **Venue history, and the two traps in it.** AJLP&GS was dropped on a Scopus check and never
   submitted. Town and Regional Planning was abandoned over its AI clause and **never submitted** —
@@ -153,8 +157,13 @@ Gotchas (`ENVIRONMENTS.md:77-92`):
   2010 stamp, so Word opens the file in [Compatibility Mode]. The script sets mode 15 and
   normalises the app metadata, touching only `word/settings.xml` and `docProps/app.xml`. Full
   rebuild order: `quarto render manuscript.qmd` → `quarto render supplementary.qmd` →
-  `python scripts/fix_docx_trp.py --anonymise` → `python scripts/normalize_docx_meta.py`.
+  `python scripts/fix_docx_trp.py --anonymise` → `python scripts/scrub_review_copies.py` →
+  `python scripts/normalize_docx_meta.py` → `python scripts/scrub_review_copies.py --check`.
   Re-rendering alone silently drops the author block and the compatibility fix.
+- **Anonymity is checked in EVERY part of the review files, not just the body text.** The first
+  AGR submission was returned because the author's name sat in the Word "Author" property while
+  the body was clean (D-18). `scrub_review_copies.py --check` scans every part of
+  `manuscript-anonymised.docx` and `supplementary.docx`; never upload either unless it passes.
 - **Rendered DOCX/PDF/HTML are deliberately untracked** (`manuscript/.gitignore`, including
   `supplementary.docx`). The journal permits archiving only the published version, and they are
   large binaries that change on every render. The `.qmd` sources are tracked and rebuild them.

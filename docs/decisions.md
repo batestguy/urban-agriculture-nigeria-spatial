@@ -330,6 +330,105 @@ author says otherwise.
 
 ---
 
+## D-17 · 2026-11-13 · Correction: AGR returned the submission unreviewed; inbox recorded
+
+**Not a decision — a correction of fact.** D-15's "Status: In review" was wrong from 10 November.
+
+**Which inbox:** every AGR / Taylor & Francis message for this submission goes to the
+corresponding-author address `jzbannister@atbu.edu.ng` (university Google Workspace mail). None
+are in the author's personal Gmail — that account was searched across all folders including trash
+on 2026-11-13 and holds nothing from the journal. Instrument: the university inbox read in the
+browser on 2026-11-13, search `260528906`, three messages.
+
+**What the inbox shows:**
+
+| Received | From | Subject |
+|---|---|---|
+| 9 Nov 2026 | `RAFG-peerreview@journals.tandf.co.uk` | Submission received … (Submission ID: 260528906) |
+| 10 Nov 2026, 05:43 (letter dated 09-Nov-2026) | AGR Editorial Office via `onbehalfof@manuscriptcentral.com` | 260528906 (African Geographical Review) - changes required to your submission |
+| 13 Nov 2026, 00:53 | `RAFG-peerreview@journals.tandf.co.uk` | Incomplete submission to African Geographical Review, ID: 260528906 |
+
+**The editorial office's reason, in substance:** the author's name was found in the anonymous
+file; the journal runs double-blind review and needs a fully blinded document. The author is to
+fix it and re-submit via the author dashboard ("Resume"). The 13 Nov message is a reminder that
+the submission is still incomplete.
+
+**Consequence:** the paper is **not in review**. It is back with the author, awaiting a corrected
+anonymous file. D-15's claim "identity verified absent" in `manuscript_anonymised.docx` is
+contradicted by the journal. Where the name survives in that file has **not yet been
+investigated** — do not guess; text-extract the rendered artefact, including headers, footers,
+document properties and comments, before re-uploading.
+
+**Status:** Investigated and fixed in D-18; re-submission pending.
+
+---
+
+## D-18 · 2026-11-13 · Review copies scrubbed in every part; supplementary de-authored
+
+**Where the identity was** (instrument: a scan of every zip part of the files as uploaded,
+copies kept in `.scratch/pre-scrub/`):
+
+- `manuscript-anonymised.docx` — body clean. Name in `docProps/core.xml` (`dc:creator`, the Word
+  "Author" field); affiliation in `docProps/custom.xml` (`author-affiliation`). Pandoc writes both
+  from the front matter; `fix_docx_trp.py --anonymise` only rewrites `word/document.xml`, and its
+  own check only reads that part — so it truthfully reported "identity absent" about the one part
+  it looked at.
+- `supplementary.docx` — **not flagged by the journal, but also exposed**: the name was printed
+  as a byline in the body, and in `docProps/core.xml`. It was uploaded as "for review".
+
+**Decision:**
+
+1. New `scripts/scrub_review_copies.py` empties `dc:creator` / `cp:lastModifiedBy`, drops author
+   and identity-bearing custom properties, removes any body paragraph carrying identity, then
+   scans every part of both review files for ten identity strings (name, name parts, e-mail,
+   ORCID, affiliation, institution). `--check` verifies only. Added to the rebuild order after
+   `fix_docx_trp.py --anonymise` and again as a final check after `normalize_docx_meta.py`.
+2. `author:` removed from `manuscript/supplementary.qmd` — the supplementary has no named
+   version, so the source should not carry the name at all.
+
+**Verified 2026-11-13:** scrub → normalise → `--check`: 2 files, every part, 0 hits. Break-test:
+the same check on the pre-scrub copies fails with 15 hits. Paragraph text diff: anonymised copy
+283 → 283 paragraphs, only `docProps/core.xml` and `custom.xml` changed; supplementary 127 → 126,
+the one removed paragraph is the byline. `verify_trp_format.py` passes; `verify_docx_figures.py`
+2 figures placed; every XML part re-parses. `verify_author_block.py` shows only the two known
+`.codewhale/state/` hits.
+
+**Not verified:** the supplementary was not re-rendered from the edited `.qmd`; the uploaded file
+is the post-processed 9 Nov render. The files were not opened in Word.
+
+**Status:** Fixed locally; re-uploaded and re-submitted in D-19.
+
+---
+
+## D-19 · 2026-11-13 · Re-submitted to AGR with clean review files; data link withheld
+
+**Done** — the author instructed the upload, the change to the data field, the submit, and the
+acceptance of the T&F terms, each explicitly in the session.
+
+**Portal changes (submission 260528906, author dashboard → Resume):**
+
+- `manuscript_anonymised.docx` (Manuscript - anonymous) and `supplementary.docx` (Supplementary
+  Material - for review) deleted and replaced with the D-18 scrubbed files, both shown "Added 13
+  November 2026". `manuscript.docx` (with author details) untouched, still "Added 9 November".
+- **Data-availability field** changed from the GitHub repository URL to "Public repository link
+  withheld for double-blind review; to be provided on acceptance". Reason: the URL carries the
+  GitHub username, and the public repo's `AGENTS.md` names the author and institution; whether
+  the field reaches reviewers is unknown. The manuscript itself carries no data-availability
+  statement and no repository link (verified by scan).
+- All other fields carried over from 9 Nov unchanged; author-list confirmation answered "Yes".
+
+**Confirmed:** portal page "Thank you for your submission … submission ID is 260528906", and a
+new "Submission received" e-mail from `RAFG-peerreview@journals.tandf.co.uk` in
+`jzbannister@atbu.edu.ng` on 13 Nov 2026, 03:46.
+
+**Not verified:** the portal-generated anonymous PDF proof was opened (required to enable
+Submit) but could not be read by the browser tool, so the portal's own rendering was not
+inspected for identity — only the source files were.
+
+**Status:** In review (re-submitted 13 Nov 2026). On acceptance, supply the repository link.
+
+---
+
 ## Open decisions
 
 Not yet made. Recorded so they are not silently forgotten.
@@ -341,6 +440,8 @@ Not yet made. Recorded so they are not silently forgotten.
    the AI tools again.
 4. **Preprint or self-archive** — currently excluded by the journal's terms until publication.
 5. **`manuscript/TEMA-SUBMISSION.txt`** — delete or commit (D-16). Currently untracked.
+6. **Data link on acceptance** — the portal's data field was withheld for blind review (D-19);
+   supply the repository URL (or a DOI) once the paper is accepted.
 
 **Closed since first written:** `docs/venue-options.md` now records the outcome of all three
 shortlisted venues, so it no longer announces a decision that was abandoned.

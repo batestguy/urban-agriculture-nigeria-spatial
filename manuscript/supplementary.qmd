@@ -1,7 +1,7 @@
 ---
 title: "Supplementary Material"
 subtitle: "Where urban agriculture concentrates in Nigerian cities: A spatial analysis with coverage correction"
-author: "Jerry Zachary Bannister"
+# No `author:` on purpose: this file is uploaded for double-blind review (docs/decisions.md D-18).
 format:
   docx:
     toc: false
