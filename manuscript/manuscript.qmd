@@ -24,7 +24,7 @@ abstract: |
   information is contributed unevenly, so a map of cultivation is easily confused with a map of
   mapping effort. This study measures where cultivated land concentrates across Nigerian Local
   Government Areas and tests whether the pattern survives coverage correction. Cultivated-land
-  features were extracted from OpenStreetMap for five cities and analysed over 775 Local
+  features were extracted from OpenStreetMap for five cities and analysed over 774 Local
   Government Areas using Moran's I, false-discovery-rate-controlled local indicators, a
   join-count test and Ripley's K; scale was modelled by negative binomial regression with area
   as exposure. Density is strongly clustered (Moran's I = 0.300) and falls by about
@@ -175,7 +175,7 @@ Nigeria spans a steep agro-ecological gradient, from humid coastal forest to sem
 
 ## Research design
 
-The areal unit is the Local Government Area. Nigeria's 774 LGAs are the tier of government formally responsible for local land allocation and development control, which makes them the level at which any zoning instrument would operate. The analysis uses the 775 polygons of GADM v4.1, comprising 774 LGAs as the tier is usually counted in Nigeria plus one subdivision the dataset records separately, whose boundaries include several urban LGAs as small as 12 km² and rural LGAs exceeding 10,000 km².
+The areal unit is the polygon of the GADM v4.1 boundary layer. Nigeria has 774 local government areas, the tier of government formally responsible for local land allocation and development control, which makes them the level at which any zoning instrument would operate. The study area comprises 775 of these polygons, of which 774 are local government areas and one, the Lake Chad polygon, is a water body containing no mapped cultivated-land feature. Their boundaries include several urban LGAs as small as 12 km² and rural LGAs exceeding 10,000 km².
 
 That nine-hundredfold spread in area is the reason this paper uses density rather than counts throughout. A count of ten features means something quite different in the 23.6 km² of Tarauni than in the 369 km² of Ikorodu.
 
@@ -358,7 +358,7 @@ Three checks are worth drawing out. Density is substantially more clustered than
 (I = 0.300 versus 0.158), which is the arithmetic consequence of normalising by area: counts
 conflate intensity with administrative size, and density does not. The result is insensitive to
 the contiguity definition, with rook weights giving I = 0.306. And the clustering is not a
-Kano artefact: excluding Kano State entirely, that is 44 of the 775 LGAs, and the strongest single
+Kano artefact: excluding Kano State entirely, that is 44 of the 775 areal units, and the strongest single
 source of features, leaves I = 0.274 (z = 16.3). Whatever is driving the pattern operates
 across the country.
 
@@ -369,7 +369,7 @@ removal.
 
 ![LISA clusters after Benjamini–Hochberg control. Red indicates high-density clusters. The grey majority are not statistically significant.](../results/figures/lisa_fdr_map.png){#fig-lisa}
 
-Local statistics locate the clustering. Under false-discovery-rate control, 19 of 775 LGAs are
+Local statistics locate the clustering. Under false-discovery-rate control, 19 of 775 areal units are
 significant, concentrated in the Kano metropolitan ring (Ungogo, Tarauni, Kumbotso) and in the
 contiguous Lagos mainland LGAs (Shomolu, Mushin).
 
@@ -542,7 +542,7 @@ LGA its own value. Until one of them is integrated, this question remains open.
 Three findings bear directly on how Nigerian cities might protect urban cultivation.
 
 Clustering means targeting is viable. If cultivation were dispersed randomly, protecting it
-would require blanket measures and a large budget. It is not: 39 LGAs of 775 contain any mapped
+would require blanket measures and a large budget. It is not: 39 of the 775 areal units contain any mapped
 cultivation, and 19 show statistically significant local clustering, concentrated in the Kano
 metropolitan ring and the Lagos mainland. A small number of specific places carry the activity.
 Interventions such as overlay zoning, land allocation and extension services could be directed at those
@@ -604,6 +604,11 @@ The climate question remains open, for the sampling reason explained in Section 
 Finally, the findings are only as good as the underlying map, and the map is a volunteer product
 that changes continuously. The layer here is frozen to August 2026; conclusions about specific
 LGAs should be understood as characterising that snapshot.
+
+One of the 775 areal units is not a local government area: the Lake Chad polygon, which
+GADM v4.1 records as a water body inside Borno State and which contains none of the 484 mapped
+features. No estimate therefore depends on it, but the number of simultaneous local tests is 775
+rather than 774.
 
 # Conclusion
 

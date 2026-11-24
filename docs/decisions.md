@@ -429,6 +429,45 @@ inspected for identity — only the source files were.
 
 ---
 
+## D-20 · 2026-11-24 · The 775th polygon is a lake, not a local government area
+
+**Decision** — the prose now distinguishes two different facts that were previously stated as one:
+
+- Nigeria has **774 local government areas**. Any sentence stating that is a fact about the country.
+- The GADM v4.1 boundary layer used here has **775 polygons**: the 774 LGAs plus the **Lake Chad**
+  polygon in Borno, which GADM tags `TYPE_2 = "Water body"`. It holds **0 of the 484** cultivated-land
+  features, checked by polygon intersection. Any sentence reporting **how many units were tested**
+  keeps 775 and calls the units *areal units* or *polygons*, never LGAs, because the number of
+  simultaneous local tests is 775, not 774.
+
+**Why now** — the README, the manuscript and the earlier spatial report each said "775 Local
+Government Areas" or "775 LGAs", and `scripts/verify_readme_claims.py` *required* that string, so the
+error was enforced rather than caught. One `chk()` in each R gate carried the same label mistake.
+
+**What changed and what did not** — every analysed number is unchanged: 484 features, 39 areas with a
+feature, 19 significant after BH-FDR, 13 in Kano, 6 in Lagos, 265 negative Gaussian fits, 44 Kano
+excluded, 8.9% extent leak, and every model figure. The analysis still runs over all 775 polygons and
+was not re-run. Only labels, counts-of-units phrasing, and the two gate expectations changed.
+
+**The abstract** — `775` became `774` in "analysed over 774 Local Government Areas": one token, so the
+200-word limit and the abstract's word count are untouched. What the abstract drops is restored in
+Methods (the areal unit is the polygon; 775 of them, 774 LGAs, one water body) and in Limitations (the
+Lake Chad polygon, no result depends on it, 775 simultaneous tests rather than 774).
+
+**The submission** — the version submitted to African Geographical Review says 775 LGAs in its
+abstract and the correction belongs in the revision. The rendered DOCX quoted in the submission-status
+table (6,136 words, 200-word abstract) refers to that submitted render; the source is now slightly
+longer and will be re-rendered for the revision.
+
+**Gates** — `scripts/verify_readme_claims.py` now asserts the two facts separately (774 where the
+README says LGAs, 775 areal units where it reports the count tested) and fails if the boundary layer
+stops holding exactly one Lake Chad polygon. Each R claim gate now asserts both 775 areal units and
+774 `TYPE_2 = "Local Authority"` polygons. No check was deleted, disabled or relaxed; the README's
+stated check counts were updated to the real printed totals (177 across the audit, 62 in the report
+gate, 54 in the manuscript gate, 24 README claims).
+
+---
+
 ## Open decisions
 
 Not yet made. Recorded so they are not silently forgotten.

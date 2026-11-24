@@ -1,6 +1,6 @@
 ---
 title: "Urban Agriculture in Nigerian Cities"
-subtitle: "A spatial analysis of 484 OpenStreetMap features across 775 Local Government Areas"
+subtitle: "A spatial analysis of 484 OpenStreetMap features across 774 Local Government Areas"
 author: "Jerry Zachary Bannister — Statistician, Abubakar Tafawa Balewa University (ATBU), Bauchi, Nigeria"
 date: last-modified
 date-format: "D MMMM YYYY"
@@ -8,7 +8,7 @@ abstract: |
   Urban agriculture is widely promoted as a lever for urban food security in Nigeria, yet
   its spatial distribution has rarely been measured. This study maps cultivated land in five
   Nigerian cities — Abuja, Lagos, Kano, Port Harcourt and Gombe — using 484 OpenStreetMap
-  features, and tests whether their density across 775 Local Government Areas is spatially
+  features, and tests whether their density across 774 Local Government Areas is spatially
   clustered, how it relates to LGA size, and whether apparent patterns survive correction for
   uneven mapping coverage. Density is strongly clustered (Moran's I = 0.300, z = 17.6,
   p < 1e-69). A spatial lag model reduces residual autocorrelation from 0.256 to −0.036, and
@@ -114,7 +114,7 @@ sources <- c(
   "OpenStreetMap Overpass API (aggregate counts)" = "Per-LGA building and highway counts, used as a mapping-coverage control",
   "NASA POWER API" = "Daily temperature, precipitation and humidity, 2023, at five city centroids",
   "World Bank Indicators API" = "National urban population, food production index, undernourishment",
-  "GADM 4.1" = "Administrative boundaries, 775 Local Government Areas"
+  "GADM 4.1" = "Administrative boundaries, 775 polygons (774 Local Government Areas plus the Lake Chad water body)"
 )
 idx <- match(names(sources), prov$source)
 tibble::tibble(
@@ -152,7 +152,7 @@ knitr::kable(cty, caption = "Features by city. The spread is stark: Kano holds 1
 
 ## The unit of analysis
 
-The areal unit is the Local Government Area — 775 of them, from GADM v4.1. LGAs are the right
+The areal unit is the polygon of the GADM v4.1 boundary layer — 775 of them, of which 774 are Local Government Areas and one is the Lake Chad polygon, a water body that contains no mapped feature. LGAs are the right
 unit because zoning and land allocation are LGA responsibilities in Nigeria. They range in area
 from 11.6 to 10,358 km², a nine-hundredfold spread, which is why raw counts cannot be compared
 across them and density is used throughout.
@@ -183,7 +183,7 @@ knitr::kable(stats, caption = "The analysis frame. Note the last row: every poin
 Ninety-five per cent of LGAs have a density of exactly zero. That single fact drives most of the
 methodological choices that follow, and it is worth stating plainly rather than burying:
 
-```{r zero-inflation, fig.height=3.6, fig.width=9, fig.cap="Distribution of urban agriculture density across 775 LGAs. The distribution is a spike at zero with a long right tail, skewness 15.5."}
+```{r zero-inflation, fig.height=3.6, fig.width=9, fig.cap="Distribution of urban agriculture density across 775 areal units. The distribution is a spike at zero with a long right tail, skewness 15.5."}
 p_hist <- ggplot(lga, aes(x = density)) +
   geom_histogram(bins = 60, fill = "#4575b4", colour = "white", linewidth = 0.1) +
   labs(x = "Density (features per km²)", y = "LGAs") +
@@ -234,7 +234,7 @@ tibble::tibble(
   `Expected I` = round(c(mi_d$estimate[2], mi_n$estimate[2]), 5),
   `z` = round(c(mi_d$statistic, mi_n$statistic), 2),
   `p` = c("< 1e-69", "< 1e-16")
-) |> knitr::kable(caption = "Global Moran's I, queen contiguity, 775 LGAs.")
+) |> knitr::kable(caption = "Global Moran's I, queen contiguity, 775 areal units.")
 ```
 
 Density is far more clustered than raw counts (I = 0.300 versus 0.158). That gap is not
@@ -313,7 +313,7 @@ model. Two things were wrong with that:
 1. **Density is a ratio.** Regressing it on its own denominator partly recovers a mechanical
    relationship — the ratio fallacy. The magnitude of the "area effect" is not interpretable.
 2. **Density is 95% zeros and strictly non-negative,** so a Gaussian is the wrong family.
-   The fitted model returned **265 of 775 negative fitted densities**, which are impossible
+   The fitted model returned **265 of 775 areal units fitted with negative densities**, which are impossible
    quantities.
 
 The corrected specification treats the outcome as what it is — a *count* — and puts area in as

@@ -45,7 +45,8 @@ nb <- poly2nb(lga, queen = TRUE); lw <- nb2listw(nb, style = 'W', zero.policy = 
 
 hr('1. Study frame')
 chk('features', nrow(osm), 484, 0)
-chk('LGAs', nrow(lga), 775, 0)
+chk('areal units', nrow(lga), 775, 0)
+chk('LGAs (GADM TYPE_2 Local Authority)', sum(lga[['TYPE_2']] == 'Local Authority'), 774, 0)
 chk('LGAs with a feature', sum(lga$n > 0), 39, 0)
 chk('percent with a feature', round(100 * mean(lga$n > 0), 1), 5.0, 0.05)
 chk('percent at exactly zero', round(100 * mean(lga$density == 0), 1), 95.0, 0.05)

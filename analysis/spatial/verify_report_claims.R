@@ -36,7 +36,8 @@ report <- paste(readLines('docs/spatial-report.qmd', warn = FALSE), collapse = '
 
 hr('1. Structural claims')
 chk('OSM features', nrow(osm), 484, 0)
-chk('LGAs', nrow(lga), 775, 0)
+chk('areal units', nrow(lga), 775, 0)
+chk('LGAs (GADM TYPE_2 Local Authority)', sum(lga[['TYPE_2']] == 'Local Authority'), 774, 0)
 chk('LGAs with >=1 feature', sum(lga$n > 0), 39, 0)
 chk('% of LGAs with a feature', round(100 * mean(lga$n > 0), 1), 5.0, 0.05)
 chk('features reconcile', sum(lga$n), 484, 0)

@@ -1,12 +1,12 @@
 # Where urban agriculture concentrates in Nigerian cities
 
-**A spatial analysis of 484 OpenStreetMap cultivated-land features across 775 Nigerian Local
+**A spatial analysis of 484 OpenStreetMap cultivated-land features across 774 Nigerian Local
 Government Areas, with an explicit correction for uneven mapping coverage.**
 
 [![DOI](https://img.shields.io/badge/status-under%20review-orange)](#submission-status)
 [![Licence: CC BY 4.0](https://img.shields.io/badge/licence-CC%20BY%204.0-blue)](LICENSE)
 [![R 4.5.2](https://img.shields.io/badge/R-4.5.2-276DC3)](renv.lock)
-[![Gates](https://img.shields.io/badge/verification-114%20checks%2C%200%20discrepancies-brightgreen)](#verification)
+[![Gates](https://img.shields.io/badge/verification-0%20discrepancies-brightgreen)](#verification)
 
 **Author:** Jerry Zachary Bannister — Statistician, Abubakar Tafawa Balewa University (ATBU),
 Bauchi, Nigeria · [ORCID 0009-0002-3302-9558](https://orcid.org/0009-0002-3302-9558) ·
@@ -32,7 +32,7 @@ from it by the audit gates.
 ## The finding
 
 Urban cultivation is **not spread evenly across Nigeria**. It concentrates in a small number of
-identifiable LGAs — only 39 of the 775 contain any mapped feature at all — and the pattern is the
+identifiable LGAs — only 39 of the 775 areal units contain any mapped feature at all — and the pattern is the
 same whichever way it is tested:
 
 - **Cultivation is strongly clustered.** Global Moran's *I* = **0.300** (z = 17.6, p < 1e-69).
@@ -53,14 +53,14 @@ merely that it exists.
 
 ### Where
 
-After Benjamini–Hochberg control on 775 LGA-level tests, **19 LGAs** remain significant — **18 high–high clusters and 1 low–high**, **13 in Kano** and **6 in Lagos**, and nowhere
+After Benjamini–Hochberg control on 775 areal-unit tests, **19 LGAs** remain significant — **18 high–high clusters and 1 low–high**, **13 in Kano** and **6 in Lagos**, and nowhere
 else in the country.
 
 <img src="docs/figures/readme/lisa-fdr.png" width="460" alt="Map of Nigeria showing 19 significant LGAs after Benjamini-Hochberg control, clustered in Kano and Lagos">
 
 *The Kano metropolitan ring (Ungogo, Tarauni, Kumbotso) and the contiguous Lagos mainland
 LGAs (Shomolu, Mushin). Grey is not significant — and most of Nigeria is grey, which is the
-finding: only 39 LGAs out of 775 hold any mapped feature, and the clustering sits inside them.*
+finding: of the 775 areal units tested, only 39 LGAs hold any mapped feature, and the clustering sits inside them.*
 
 ## Four hypotheses
 
@@ -90,7 +90,7 @@ documented rather than quietly fixed:
    39.1 — the negative binomial is required, not preferred — and its own dispersion parameter
    (θ = 0.015) confirms the extra-Poisson variation.
 
-   <img src="docs/figures/readme/model-diagnostics.png" width="700" alt="Two histograms: the Gaussian model predicts negative densities for 265 of 775 LGAs; the negative binomial predicts none">
+   <img src="docs/figures/readme/model-diagnostics.png" width="700" alt="Two histograms: the Gaussian model predicts negative densities for 265 of the 775 areal units; the negative binomial predicts none">
 
 2. **No multiplicity control.** LISA flagged 23 LGAs at raw p < 0.05 against 38.8 expected false
    positives across 775 tests. BH-FDR was applied; 19 survive.
@@ -112,7 +112,7 @@ only the frozen files and never touches the network.
 | Cultivated-land features | OpenStreetMap Overpass API | 484 | ODbL © OpenStreetMap contributors |
 | Mapping-coverage control | OpenStreetMap Overpass (aggregate counts) | 78 LGAs | ODbL |
 | Agro-climate | NASA POWER, 2023 daily | 1,825 days | Public domain |
-| Administrative boundaries | GADM v4.1 | 775 LGAs | CC BY 4.0 |
+| Administrative boundaries | GADM v4.1 | 775 polygons (774 LGAs plus the Lake Chad water body) | CC BY 4.0 |
 | National context | World Bank Indicators | 75 rows | CC BY 4.0 |
 
 Each pull's URL, timestamp, row count and licence is recorded in
@@ -152,19 +152,19 @@ Three R gates re-derive every headline number from the raw data and compare it w
 prose claims. They exit non-zero on disagreement, so the manuscript cannot drift from the data.
 
 ```pwsh
-Rscript build.R --audit                  # 175 checks, 0 discrepancies
-python scripts/verify_readme_claims.py   # 23 claims on this page, from the frozen data
+Rscript build.R --audit                  # three gates, 0 discrepancies
+python scripts/verify_readme_claims.py   # 23 claims on this page (+1 page count, needs Word)
 ```
 
 | Gate | Checks | What it asserts |
 |---|---|---|
-| `analysis/spatial/audit_claims.R` | 61 | Every headline figure, from raw data |
-| `analysis/spatial/verify_report_claims.R` | 61 | Every number and figure in the report |
-| `analysis/spatial/verify_manuscript_claims.R` | 53 | Every number quoted in the manuscript |
+| `analysis/spatial/audit_claims.R` | 21 (12 pass, 9 historical flags) | Every headline figure, from raw data |
+| `analysis/spatial/verify_report_claims.R` | 62 | Every number and figure in the report |
+| `analysis/spatial/verify_manuscript_claims.R` | 54 | Every number quoted in the manuscript |
 | `scripts/verify_author_block.py` | 5 artefacts | Author, affiliation, e-mail and ORCID present; no stale name |
 | `scripts/verify_trp_format.py` | — | House style: TNR 12 pt, single-spaced, required sections, anonymised copy clean |
 | `scripts/verify_bib.py` | every DOI | Each reference resolves on Crossref |
-| `scripts/verify_readme_claims.py` | 23 | Every number and page count stated in this README |
+| `scripts/verify_readme_claims.py` | 23 (+1 page count) | Every number and page count stated in this README |
 | `scripts/derive_readme_numbers.R` | — | Writes `results/tables/readme_numbers.csv`, the source of the README's model figures |
 
 `verify_readme_claims.py` is the one that keeps this page honest: every figure above is

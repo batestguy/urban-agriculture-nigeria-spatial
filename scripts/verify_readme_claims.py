@@ -97,7 +97,19 @@ def main() -> None:
         by_state[r["state"]] = by_state.get(r["state"], 0) + 1
     with_points = sum(1 for r in lisa if int(r["n"]) > 0)
 
-    check("LGA count", re.compile(rf"{len(lisa)} (Local Government Areas|LGAs)"), text)
+    # Two different facts, and the README must state each where it belongs. Nigeria has 774
+    # local government areas; the GADM v4.1 layer used here carries one further polygon, the
+    # Lake Chad water body in Borno, which holds none of the 484 features. A sentence about the
+    # country says 774 LGAs; a sentence reporting how many units were tested says 775 and calls
+    # them areal units. One check across both phrases is how the error entered.
+    non_lga = [r for r in lisa if r["lga"] == "Lake Chad"]
+    if len(non_lga) != 1:
+        raise SystemExit(f"expected exactly one Lake Chad polygon, found {len(non_lga)}")
+    n_lga = len(lisa) - len(non_lga)
+    check("LGA count (a fact about Nigeria)",
+          re.compile(rf"{n_lga} (Local Government Areas|LGAs)"), text)
+    check("areal units tested (not all of them LGAs)",
+          re.compile(rf"{len(lisa)} areal units"), text)
     check("LGAs significant after BH-FDR", f"{len(sig_bh)} LGAs", text)
     check("LGAs significant at raw p<0.05", f"{sig_raw} LGAs", text)
     check("high-high clusters", re.compile(rf"{hh} high.high"), text)

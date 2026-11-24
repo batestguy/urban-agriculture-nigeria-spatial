@@ -26,7 +26,7 @@
 #  12  sensitivity (queen/rook, Kano excluded)   -> console
 #  13  claim audit (the gate)                    -> console, exits non-zero on FLAG
 #  14  report verification (61 checks)           -> console, exits non-zero on DIFF
-#  15  manuscript verification (53 checks)       -> console, exits non-zero on DIFF
+#  15  manuscript verification (54 checks)       -> console, exits non-zero on DIFF
 #
 # The OSM exposure fetch is Python (scripts/fetch_osm_exposure.py) and needs the
 # network; it is NOT part of the default run because the analysis must work offline
